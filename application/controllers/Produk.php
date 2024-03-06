@@ -20,6 +20,16 @@ class Produk extends CI_Controller {
 		);
 		$this->template->load('temp','produk_index',$data);
 	}
+    public function foto($id){
+        $this->db->select('*')->from('produk');
+        $this->db->where('id_produk',$id);
+        $user = $this->db->get()->result_array();
+		$data = array(
+			'judul_halaman' => 'Foto Produk',
+            'user'          => $user
+		);
+		$this->template->load('temp','produk_pict',$data);
+	}
     public function simpan(){
         $this->db->from('produk')->where('kode_produk',$this->input->post('kode_produk'));
         $cek = $this->db->get()->result_array();

@@ -11,8 +11,9 @@
 				</h2>
 			</div>
 			<div class="p-5">
-				<form action="<?= base_url('penjualan/tambahkeranjang') ?>" method="post">
+				<form action="<?= base_url('penjualan/addtemp') ?>" method="post">
 					<input type="hidden" name="kode_penjualan" value="<?= $nota ?>">
+					<input type="hidden" name="id_pelanggan" value="<?= $id_pelanggan?>">
 					<div class="preview">
 						<div class="mt-1">
 							<label>Nomor Nota</label>
@@ -61,7 +62,7 @@
 			</div>
 			<div class="p-5">
 				<div class="overflow-x-auto">
-					<?php if($detail==NULL) { ?>
+					<?php if($temp==NULL) { ?>
 					<div class="rounded-md px-5 py-4 mb-2 bg-gray-200 text-gray-600">Belum ada produk yang dipilih,
 						silahkan pilih produk ke keranjang terlebih dahulu.</div>
 					<?php } else { ?>
@@ -78,7 +79,7 @@
 							</tr>
 						</thead>
 						<tbody>
-							<?php $total=0; $no=1; foreach($detail as $row){ ?>
+							<?php $total=0; $no=1; foreach($temp as $row){ ?>
 							<tr>
 								<td class="border-b whitespace-no-wrap"><?= $no; ?></td>
 								<td class="border-b whitespace-no-wrap"><?= $row['kode_produk'] ?></td>
@@ -91,7 +92,7 @@
 								<td class="border-b whitespace-no-wrap">
 									<div class="flex sm:justify-center items-center">
 										<a onClick="return confirm('Apakah anda yakin menghapus produk dari keranjang?')"
-											href="<?= base_url('penjualan/hapus/'.$row['id_detail'].'/'.$row['id_produk']) ?>"
+											href="<?= base_url('penjualan/hapus_temp/'.$row['id_temp']) ?>"
 											class="flex items-center text-theme-6">
 											<i data-feather="trash" class="w-4 h-4 mr-1 ml-2"></i> hapus
 										</a>
@@ -107,7 +108,7 @@
 							</tr>
 						</tbody>
 					</table>
-					<form action="<?= base_url('penjualan/bayar') ?>" method="post">
+					<form action="<?= base_url('penjualan/bayarv2') ?>" method="post">
 						<div class="mt-5 pr-10 pl-10">
 							<input type="number" class="input w-full border mt-2 text-xl" placeholder="Uang yang dibayar" min=1
 								required name="bayar" id="bayar" onkeyup="total()">

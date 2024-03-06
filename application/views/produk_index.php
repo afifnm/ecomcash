@@ -57,13 +57,16 @@
 				<td class="text-right border-b">Rp. <?=  number_format($row['harga']); ?></td>
 				<td class="border-b w-5">
 					<div class="flex sm:justify-center items-center">
+						<a href="<?= base_url('produk/foto/'.$row['id_produk']); ?>" class="flex items-center text-theme-1">
+							<i data-feather="image" class="w-4 h-4 mr-1"></i>
+							Foto </a> 
 						<a href="javascript:;" onclick="edit(
                                 <?php echo $row['id_produk'] ?>,
                                 '<?php echo $row['nama'] ?>',
                                 '<?php echo $row['kode_produk'] ?>',
                                 '<?php echo $row['stok'] ?>',
                                 '<?php echo $row['harga'] ?>'
-                                )" class="flex items-center mr-3" data-toggle="modal" data-target="#edit-data">
+                                )" class="flex items-center mr-3 ml-3" data-toggle="modal" data-target="#edit-data">
 							<i data-feather="check-square" class="w-4 h-4 mr-1"></i> Edit
 						</a>
 						<a href="javascript:;" onclick="hapus(<?php echo $row['id_produk'] ?>)"
