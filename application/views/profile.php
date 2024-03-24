@@ -30,7 +30,6 @@
 							<label>Email</label>
 							<input type="text" name="email" class="input w-full border mt-2" value="<?= $profil->email ?>" required>
 						</div>
-
 						<div class="mt-5">
 							<button
 								class="button w-32 mr-2 mb-2 flex items-center justify-center bg-theme-1 text-white w-full">
