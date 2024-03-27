@@ -20,10 +20,6 @@
 			<td>Tanggal</td>
 			<td> : <?= date_format(date_create($penjualan->tanggal)," D, d M Y"); ?></td>
 		</tr>
-		<tr>
-			<td>Pelanggan</td>
-			<td> : <?= $penjualan->nama; ?></td>
-		</tr>
 	</table>
 	================================ <br>
 	<table>

@@ -19,7 +19,7 @@
 							<input type="text" name="nama_cv" class="input w-full border mt-2" value="<?= $profil->nama_cv ?>" required>
 						</div>
                         <div class="mt-1">
-							<label>Alamat/label>
+							<label>Alamat</label>
 							<input type="text" name="alamat" class="input w-full border mt-2" value="<?= $profil->alamat ?>" required>
 						</div>
                         <div class="mt-1">

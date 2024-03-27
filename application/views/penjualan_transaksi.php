@@ -13,17 +13,11 @@
 			<div class="p-5">
 				<form action="<?= base_url('penjualan/addtemp') ?>" method="post">
 					<input type="hidden" name="kode_penjualan" value="<?= $nota ?>">
-					<input type="hidden" name="id_pelanggan" value="<?= $id_pelanggan?>">
 					<div class="preview">
 						<div class="mt-1">
 							<label>Nomor Nota</label>
 							<input type="text" class="input w-full border mt-2 bg-gray-100" value="#<?= $nota ?>"
 								disabled>
-						</div>
-						<div class="mt-5">
-							<label>Pelanggan</label>
-							<input type="text" class="input w-full border mt-2 bg-gray-100"
-								value="<?= $namapelanggan ?>" disabled>
 						</div>
 						<div class="mt-5">
 							<label>Produk</label>
@@ -114,7 +108,6 @@
 								required name="bayar" id="bayar" onkeyup="total()">
 						</div>
 						<div class="mt-5 pr-10 pl-10">
-							<input type="hidden" name="id_pelanggan" value="<?= $id_pelanggan; ?>">
 							<input type="hidden" name="kode_penjualan" value="<?= $nota; ?>">
 							<input type="hidden" name="total_harga" value="<?= $total; ?>" id="total_harga">
 							<h1 class="input w-full border mt-2 text-xl" id="sisa"> Rp. 0</h1>

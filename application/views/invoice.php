@@ -19,12 +19,6 @@
 				<div class="mt-1"><?= $profil->email ?></div>
 				<div class="mt-1"><?= $profil->alamat ?></div>
 			</div>
-			<div class="lg:text-right mt-10 lg:mt-0 lg:ml-auto">
-				<div class="text-base text-gray-600">Payment to</div>
-				<div class="text-lg font-medium text-theme-1 mt-2"><?= $penjualan->nama ?></div>
-				<div class="mt-1"><?= $penjualan->alamat ?></div>
-				<div class="mt-1"><?= $penjualan->telp ?></div>
-			</div>
 		</div>
 	</div>
 	<div class="px-5 sm:px-16 py-10 sm:py-20">

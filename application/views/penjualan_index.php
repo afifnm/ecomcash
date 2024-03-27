@@ -2,8 +2,7 @@
 	<?php echo $this->session->flashdata('notifikasi', true)?>
 </div>
 <div class="intro-y flex flex-col sm:flex-row items-center mt-8">
-	<a href="javascript:;" data-toggle="modal" data-target="#header-footer-modal-preview"
-		class="button mr-auto inline-block bg-theme-1 text-white">Tambah Penjualan </a>
+	<a href="<?= base_url('penjualan/transaksi/') ?>" class="button mr-auto inline-block bg-theme-1 text-white">Tambah Penjualan </a>
 	<div class="w-full sm:w-auto flex mt-4 sm:mt-0">
 		<a href="javascript:;" data-toggle="modal" data-target="#nota"
 			class="button mr-1 inline-block bg-theme-1 text-white">Cek Nota </a>
@@ -65,7 +64,6 @@
 				<th class="border-b-2 whitespace-no-wrap">NO </th>
 				<th class="border-b-2 whitespace-no-wrap">NO NOTA </th>
 				<th class="border-b-2 whitespace-no-wrap">TANGGAL </th>
-				<th class="border-b-2 whitespace-no-wrap">PELANGGAN </th>
 				<th class="border-b-2 whitespace-no-wrap text-right">NOMINAL </th>
 				<th class="border-b-2 text-center whitespace-no-wrap">ACTIONS</th>
 			</tr>
@@ -76,7 +74,6 @@
 				<td class="text-left border-b"><?= $no; ?></td>
 				<td class="text-left border-b"><?= $row['kode_penjualan']; ?></td>
 				<td class="text-left border-b"><?= date_format(date_create($row['tanggal'])," D, d M Y"); ?></td>
-				<td class="text-left border-b"><?= $row['nama']; ?></td>
 				<td class="text-right border-b">Rp. <?= number_format($row['total_harga']); ?></td>
 				<td class="border-b w-5">
 					<div class="flex sm:justify-center items-center">
@@ -90,42 +87,4 @@
 			<?php $no++; } ?>
 		</tbody>
 	</table>
-</div>
-<div class="modal" id="header-footer-modal-preview">
-	<div class="modal__content modal__content--xl p-2 text-center">
-		<div class="flex items-center px-5 py-5 sm:py-3 border-b border-gray-200">
-			<h2 class="font-medium text-base mr-auto">PILIH PELANGGAN </h2>
-		</div>
-		<div class="intro-y datatable-wrapper box p-1 mt-5">
-			<table class="table table-report table-report--bordered display datatable w-full" style="font-size: 12px;">
-				<thead>
-					<tr>
-						<th class="border-b-2 whitespace-no-wrap">NO </th>
-						<th class="border-b-2 whitespace-no-wrap">NAMA </th>
-						<th class="border-b-2 whitespace-no-wrap">ALAMAT </th>
-						<th class="border-b-2 whitespace-no-wrap text-right">TELP </th>
-						<th class="border-b-2 text-center whitespace-no-wrap">ACTIONS</th>
-					</tr>
-				</thead>
-				<tbody>
-					<?php  $no = 1; foreach ($pelanggan as $row) {?>
-					<tr>
-						<td class="text-left border-b"><?= $no; ?></td>
-						<td class="text-left border-b"><?= $row['nama']; ?></td>
-						<td class="text-left border-b"><?= $row['alamat']; ?></td>
-						<td class="text-right border-b"><?= $row['telp']; ?></td>
-						<td class="border-b w-5">
-							<div class="flex sm:justify-center items-center">
-								<a href="<?= base_url('penjualan/transaksi/'.$row['id_pelanggan']) ?>"
-									class="flex items-center text-theme-1">
-									<i data-feather="play" class="w-4 h-4 mr-1 ml-2"></i> pilih
-								</a>
-							</div>
-						</td>
-					</tr>
-					<?php $no++; } ?>
-				</tbody>
-			</table>
-		</div>
-	</div>
 </div>

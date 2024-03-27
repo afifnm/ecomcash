@@ -31,7 +31,6 @@
 					<th>NO </th>
 					<th>NO NOTA </th>
 					<th>TANGGAL </th>
-					<th>PELANGGAN </th>
 					<th width=300>DESKRIPSI </th>
 					<th>TOTAL </th>
 				</tr>
@@ -42,7 +41,6 @@
 					<td class="a"><?= $no; ?></td>
 					<td class="a"><?= $row['kode_penjualan']; ?></td>
 					<td class="a"><?= date_format(date_create($row['tanggal']),"d M Y"); ?></td>
-					<td class="a"><?= $row['nama']; ?></td>
 					<td>
 						<?php
                         $this->db->from('detail_penjualan a');
@@ -66,7 +64,7 @@
 				</tr>
 				<?php $no++; $total=$total+$row['total_harga'];} ?>
 				<tr>
-					<td colspan="5">-</td>
+					<td colspan="4">-</td>
 					<td style="text-align: right;"><?= number_format($total); ?></td>
 				</tr>
 			</tbody>

@@ -24,8 +24,7 @@ class Home extends CI_Controller {
         $bulan_ini = $this->db->get()->row()->total;
 		if($bulan_ini==NULL){ $bulan_ini =0; }
 
-		$this->db->select('*')->from('penjualan a')->order_by('a.kode_penjualan','DESC');
-		$this->db->join('pelanggan b','a.id_pelanggan=b.id_pelanggan','left');
+		$this->db->select('*')->from('penjualan')->order_by('kode_penjualan','DESC');
 		$this->db->limit(7,0);
         $recent = $this->db->get()->result_array();
 
@@ -36,14 +35,12 @@ class Home extends CI_Controller {
 		$this->db->limit(5,0);
         $produk5 = $this->db->get()->result_array();
 
-		$this->db->from('penjualan a')->order_by('a.kode_penjualan','DESC');
-		$this->db->where("DATE_FORMAT(a.tanggal,'%Y-%m')", $tanggal);
-		$this->db->join('pelanggan b','a.id_pelanggan=b.id_pelanggan','left');
+		$this->db->from('penjualan')->order_by('kode_penjualan','DESC');
+		$this->db->where("DATE_FORMAT(tanggal,'%Y-%m')", $tanggal);
         $user = $this->db->get()->result_array();
 		
 		$data = array(
 			'judul_halaman' => 'Dashboard',
-			'pelanggan'		=> $this->db->from('pelanggan')->order_by('id_pelanggan','ASC')->get()->result_array(),
 			'bulan'			=> $bulan,
 			'hari_ini'		=> $hari_ini,
 			'bulan_ini'		=> $bulan_ini,

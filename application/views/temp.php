@@ -48,13 +48,6 @@
 				</a>
 			</li>
 			<li>
-				<a href="<?= base_url('pelanggan') ?>"
-					class="menu menu--<?php if($halaman=='pelanggan'){ echo "active"; } ?>">
-					<div class="menu__icon"> <i data-feather="users"></i> </div>
-					<div class="menu__title"> Pelanggan </div>
-				</a>
-			</li>
-			<li>
 				<a href="<?= base_url('pengguna') ?>"
 					class="menu menu--<?php if($halaman=='pengguna'){ echo "active"; } ?>">
 					<div class="menu__icon"> <i data-feather="user"></i> </div>
@@ -126,13 +119,6 @@
 					class="top-menu top-menu--<?php if($halaman=='produk'){ echo "active"; } ?>">
 					<div class="top-menu__icon"> <i data-feather="package"></i> </div>
 					<div class="top-menu__title"> Produk </div>
-				</a>
-			</li>
-			<li>
-				<a href="<?= base_url('pelanggan') ?>"
-					class="top-menu top-menu--<?php if($halaman=='pelanggan'){ echo "active"; } ?>">
-					<div class="top-menu__icon"> <i data-feather="users"></i> </div>
-					<div class="top-menu__title"> Pelanggan </div>
 				</a>
 			</li>
 			<li>
