@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Waktu pembuatan: 06 Mar 2024 pada 15.58
+-- Waktu pembuatan: 02 Jul 2024 pada 19.37
 -- Versi server: 10.4.32-MariaDB
 -- Versi PHP: 8.0.30
 
@@ -29,7 +29,7 @@ SET time_zone = "+00:00";
 
 CREATE TABLE `detail_penjualan` (
   `id_detail` int(11) NOT NULL,
-  `kode_penjualan` int(11) NOT NULL,
+  `kode_penjualan` varchar(25) NOT NULL,
   `id_produk` int(11) NOT NULL,
   `jumlah` int(11) NOT NULL,
   `sub_total` decimal(10,0) NOT NULL
@@ -40,18 +40,32 @@ CREATE TABLE `detail_penjualan` (
 --
 
 INSERT INTO `detail_penjualan` (`id_detail`, `kode_penjualan`, `id_produk`, `jumlah`, `sub_total`) VALUES
-(20, 2401241, 6, 2, 160000),
-(21, 2401241, 2, 1, 80000),
-(22, 2401242, 1, 2, 200000),
-(23, 2401242, 4, 1, 180000),
-(24, 2401242, 5, 1, 900000),
-(25, 2401273, 5, 2, 1800000),
-(26, 2401273, 2, 1, 80000),
-(27, 2401294, 6, 2, 160000),
-(34, 2401314, 6, 2, 160000),
-(35, 2401315, 5, 2, 1800000),
-(36, 2403061, 1, 2, 200000),
-(37, 2403061, 2, 1, 80000);
+(5, '2407020101', 4, 2, 110000),
+(6, '2407020101', 1, 2, 266000),
+(7, '2407020202', 4, 1, 55000);
+
+-- --------------------------------------------------------
+
+--
+-- Struktur dari tabel `kategori`
+--
+
+CREATE TABLE `kategori` (
+  `id_kategori` int(11) NOT NULL,
+  `kategori` varchar(30) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data untuk tabel `kategori`
+--
+
+INSERT INTO `kategori` (`id_kategori`, `kategori`) VALUES
+(1, 'Kebutuhan Sehari-hari'),
+(2, 'Fashion'),
+(3, 'Makanan & Minuman'),
+(4, 'Perlengkapan Rumah'),
+(5, 'Buku & Alat Tulis'),
+(8, 'Kantin Skanda');
 
 -- --------------------------------------------------------
 
@@ -72,7 +86,7 @@ CREATE TABLE `konfigurasi` (
 --
 
 INSERT INTO `konfigurasi` (`id_konfigurasi`, `nama_cv`, `alamat`, `telp`, `email`) VALUES
-(1, 'Pipapip Pip', 'Jl. Radjiman Sutedjo 404, Kra', '+6289673333318', 'afifnuruddinmaisaroh@gmail.co');
+(1, 'Pipapip Pip', 'Jl. Radjiman Sutedjo 404, Kra', '+6289673333318', 'afifnuruddinmaisaroh@gmail.com');
 
 -- --------------------------------------------------------
 
@@ -83,7 +97,7 @@ INSERT INTO `konfigurasi` (`id_konfigurasi`, `nama_cv`, `alamat`, `telp`, `email
 CREATE TABLE `pelanggan` (
   `id_pelanggan` int(11) NOT NULL,
   `nama` varchar(30) NOT NULL,
-  `alamat` varchar(30) NOT NULL,
+  `alamat` varchar(80) NOT NULL,
   `telp` varchar(20) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
@@ -92,8 +106,8 @@ CREATE TABLE `pelanggan` (
 --
 
 INSERT INTO `pelanggan` (`id_pelanggan`, `nama`, `alamat`, `telp`) VALUES
-(1, 'Apip', 'kayuapak', '089673333318'),
-(2, 'Maisa', 'polokarto', '08123912312');
+(1, 'Bukan Pelanggan', '-', '-'),
+(2, 'Apip', 'Suruh Kayuapak, Polokarto, Sukoharjo, 57555', '089673333318');
 
 -- --------------------------------------------------------
 
@@ -107,21 +121,19 @@ CREATE TABLE `penjualan` (
   `tanggal` date NOT NULL,
   `total_harga` decimal(10,0) NOT NULL,
   `id_pelanggan` int(11) NOT NULL,
-  `bayar` decimal(10,0) NOT NULL
+  `bayar` decimal(10,0) NOT NULL,
+  `pembayaran` varchar(10) NOT NULL,
+  `bukti` varchar(25) NOT NULL,
+  `transaksi` varchar(10) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data untuk tabel `penjualan`
 --
 
-INSERT INTO `penjualan` (`id_penjualan`, `kode_penjualan`, `tanggal`, `total_harga`, `id_pelanggan`, `bayar`) VALUES
-(2, '2401241', '2024-01-24', 240000, 1, 250000),
-(3, '2401242', '2024-01-24', 1280000, 2, 1280000),
-(4, '2401273', '2023-12-01', 1880000, 1, 2000000),
-(5, '2401294', '2024-01-29', 160000, 1, 200000),
-(6, '2401314', '2024-01-31', 160000, 2, 200000),
-(7, '2401315', '2024-01-31', 1800000, 1, 2000000),
-(8, '2403061', '2024-03-06', 280000, 1, 300000);
+INSERT INTO `penjualan` (`id_penjualan`, `kode_penjualan`, `tanggal`, `total_harga`, `id_pelanggan`, `bayar`, `pembayaran`, `bukti`, `transaksi`) VALUES
+(1, '2407020101', '2024-07-02', 376000, 1, 400000, 'Tunai', '2407020101.jpg', 'Offline'),
+(2, '2407020202', '2024-07-02', 55000, 2, 55000, 'Transfer', '2407020202.jpg', 'Offline');
 
 -- --------------------------------------------------------
 
@@ -131,22 +143,23 @@ INSERT INTO `penjualan` (`id_penjualan`, `kode_penjualan`, `tanggal`, `total_har
 
 CREATE TABLE `produk` (
   `id_produk` int(11) NOT NULL,
-  `kode_produk` varchar(20) NOT NULL,
+  `kode_produk` varchar(30) NOT NULL,
   `nama` varchar(30) NOT NULL,
   `stok` int(11) NOT NULL,
-  `harga` decimal(10,0) NOT NULL
+  `harga` decimal(10,0) NOT NULL,
+  `foto` varchar(20) NOT NULL,
+  `id_kategori` varchar(5) NOT NULL,
+  `jenis` varchar(10) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data untuk tabel `produk`
 --
 
-INSERT INTO `produk` (`id_produk`, `kode_produk`, `nama`, `stok`, `harga`) VALUES
-(1, 'FST002', 'Buku teras', 3, 100000),
-(2, 'TL001', 'Rasa', 0, 80000),
-(4, 'JK09123', 'Weyon Kipas 45 Watt', 3, 180000),
-(5, 'SGN002', 'Segovia GN 107', 3, 900000),
-(6, 'ART0023', 'Aristoteles Journey', 0, 80000);
+INSERT INTO `produk` (`id_produk`, `kode_produk`, `nama`, `stok`, `harga`, `foto`, `id_kategori`, `jenis`) VALUES
+(1, '23123130131', 'Jolly Facial Tisu Wajah', 15, 133000, '20240702113728.jpg', '2', 'Usman'),
+(4, '3123123311', 'Beras Sania 2kg', 33, 55000, '20240702115743.jpg', '1', 'Usman'),
+(5, '1231233', 'Risol Mayo', 50, 2000, '20240702121147.jpg', '8', 'Umum');
 
 -- --------------------------------------------------------
 
@@ -181,9 +194,7 @@ CREATE TABLE `user` (
 --
 
 INSERT INTO `user` (`id_user`, `username`, `password`, `nama`, `level`) VALUES
-(2, 'admin2', '81dc9bdb52d04dc20036dbd8313ed055', 'admin2', 'Admin'),
 (3, 'admin', '21232f297a57a5a743894a0e4a801fc3', 'admin', 'Admin'),
-(4, 'admin3', '21232f297a57a5a743894a0e4a801fc3', 'admin3', 'Admin'),
 (6, 'kasir', 'c7911af3adbd12a035b289556d96470a', 'Apip', 'Kasir');
 
 --
@@ -195,6 +206,12 @@ INSERT INTO `user` (`id_user`, `username`, `password`, `nama`, `level`) VALUES
 --
 ALTER TABLE `detail_penjualan`
   ADD PRIMARY KEY (`id_detail`);
+
+--
+-- Indeks untuk tabel `kategori`
+--
+ALTER TABLE `kategori`
+  ADD PRIMARY KEY (`id_kategori`);
 
 --
 -- Indeks untuk tabel `konfigurasi`
@@ -240,7 +257,13 @@ ALTER TABLE `user`
 -- AUTO_INCREMENT untuk tabel `detail_penjualan`
 --
 ALTER TABLE `detail_penjualan`
-  MODIFY `id_detail` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=38;
+  MODIFY `id_detail` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
+
+--
+-- AUTO_INCREMENT untuk tabel `kategori`
+--
+ALTER TABLE `kategori`
+  MODIFY `id_kategori` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
 
 --
 -- AUTO_INCREMENT untuk tabel `konfigurasi`
@@ -252,25 +275,25 @@ ALTER TABLE `konfigurasi`
 -- AUTO_INCREMENT untuk tabel `pelanggan`
 --
 ALTER TABLE `pelanggan`
-  MODIFY `id_pelanggan` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `id_pelanggan` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- AUTO_INCREMENT untuk tabel `penjualan`
 --
 ALTER TABLE `penjualan`
-  MODIFY `id_penjualan` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
+  MODIFY `id_penjualan` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT untuk tabel `produk`
 --
 ALTER TABLE `produk`
-  MODIFY `id_produk` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+  MODIFY `id_produk` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
 -- AUTO_INCREMENT untuk tabel `temp`
 --
 ALTER TABLE `temp`
-  MODIFY `id_temp` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=18;
+  MODIFY `id_temp` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=27;
 
 --
 -- AUTO_INCREMENT untuk tabel `user`
