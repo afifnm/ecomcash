@@ -2,7 +2,7 @@
 	<div class="border-b border-gray-200 text-center sm:text-left">
 		<div class="px-5 py-10 sm:px-10 sm:py-10">
 			<div class="text-theme-1 font-semibold text-3xl">INVOICE</div>
-			<a href="<?= base_url('penjualan/nota/'.$penjualan->kode_penjualan); ?>" target="_blank"
+			<a href="<?= base_url('admin/penjualan/nota/'.$penjualan->kode_penjualan); ?>" target="_blank"
 			class="button inline-block bg-theme-1 text-white float-right">Cetak Nota </a>
 			<div class="mt-2"> Nomor Nota <span class="font-medium">#<?= $nota ?></span> </div>
 			<div class="mt-1">

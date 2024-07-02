@@ -52,7 +52,7 @@
 		<div class="flex items-center px-5 py-5 sm:py-3 border-b border-gray-200">
 			<h2 class="font-medium text-base mr-auto">TAMBAH PENGGUNA </h2>
 		</div>
-		<form action="<?php echo site_url('pengguna/simpan');?>" method="POST">
+		<form action="<?php echo site_url('admin/pengguna/simpan');?>" method="POST">
 			<div class="p-5 grid grid-cols-12 gap-4 row-gap-3">
 				<div class="col-span-12 sm:col-span-12"><label>Nama </label><input type="text" name="nama" required
 						class="input w-full border mt-2 flex-1" placeholder="masukan nama ..."> </div>
@@ -79,7 +79,7 @@
 		<div class="flex items-center px-5 py-5 sm:py-3 border-b border-gray-200">
 			<h2 class="font-medium text-base mr-auto">PERBARUI PENGGUNA </h2>
 		</div>
-		<form action="<?php echo site_url('pengguna/update');?>" method="POST">
+		<form action="<?php echo site_url('admin/pengguna/update');?>" method="POST">
 			<input type="hidden" name="id" id="id" class="input w-full border mt-2">
 			<div class="p-5 grid grid-cols-12 gap-4 row-gap-3">
 				<div class="col-span-12 sm:col-span-12">
@@ -135,6 +135,6 @@
 
 	function hapus(id) {
 		var link = document.getElementById('link_hapus');
-		link.href = "<?php echo site_url('pengguna/hapus/');?>" + id;
+		link.href = "<?php echo site_url('admin/pengguna/hapus/');?>" + id;
 	};
 </script>

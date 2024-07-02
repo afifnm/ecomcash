@@ -36,7 +36,7 @@ class Pengguna extends CI_Controller {
             <div class="rounded-md px-5 py-4 mb-2 bg-theme-1 text-white">Username sudah digunakan!</div>
             ');
         }
-        redirect('pengguna');
+        redirect($_SERVER["HTTP_REFERER"]);
     }
     public function hapus($id_user){
         $where = array('id_user'   => $id_user );
@@ -44,7 +44,7 @@ class Pengguna extends CI_Controller {
         $this->session->set_flashdata('notifikasi','
         <div class="rounded-md px-5 py-4 mb-2 bg-theme-1 text-white">Data pengguna berhasil dihapus</div>
         ');
-        redirect('pengguna');
+        redirect($_SERVER["HTTP_REFERER"]);
     }
     public function update(){
         $data = array(
@@ -56,7 +56,7 @@ class Pengguna extends CI_Controller {
         $this->session->set_flashdata('notifikasi','
         <div class="rounded-md px-5 py-4 mb-2 bg-theme-1 text-white">Pengguna berhasil diperbarui</div>
         ');
-        redirect('pengguna');
+        redirect($_SERVER["HTTP_REFERER"]);
     }
     public function reset($id_user){
         $data = array(
@@ -67,6 +67,6 @@ class Pengguna extends CI_Controller {
         $this->session->set_flashdata('notifikasi','
         <div class="rounded-md px-5 py-4 mb-2 bg-theme-1 text-white">Reset password pengguna telah dirubah menjadi 1234</div>
         ');
-        redirect('pengguna');  
+        redirect($_SERVER["HTTP_REFERER"]); 
     }
 }

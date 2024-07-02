@@ -46,7 +46,7 @@ class Auth extends CI_Controller {
                 'nama'   => $cek->nama,
             );
             $this->session->set_userdata($data);
-            redirect('home');
+            redirect('admin/home');
         } else {
             $this->session->set_flashdata('notifikasi','
             <div class="rounded-md px-5 py-4 mb-2 bg-theme-1 text-white">Password salah!</div>

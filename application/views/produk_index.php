@@ -4,11 +4,10 @@
 <div class="intro-y flex flex-col sm:flex-row items-center mt-8">
 	<a href="javascript:;" data-toggle="modal" data-target="#header-footer-modal-preview"
 		class="button mr-auto inline-block bg-theme-1 text-white">Tambah Produk </a>
-	<div class="w-full sm:w-auto flex mt-4 ml-5 sm:mt-0">
-
+	<!-- <div class="w-full sm:w-auto flex mt-4 ml-5 sm:mt-0">
 		<a href="javascript:;" data-toggle="modal" data-target="#import"
 			class="button mr-1 inline-block bg-theme-1 text-white">Import </a>
-	</div>
+	</div> -->
 </div>
 <div class="modal" id="import">
 	<div class="modal__content modal__content--lg">
@@ -42,6 +41,8 @@
 				<th class="border-b-2 whitespace-no-wrap">NO </th>
 				<th class="border-b-2 whitespace-no-wrap">NAMA </th>
 				<th class="border-b-2 whitespace-no-wrap">KODE PRODUK </th>
+				<th class="border-b-2 whitespace-no-wrap">KATEGORI </th>
+				<th class="border-b-2 whitespace-no-wrap">JENIS </th>
 				<th class="border-b-2 whitespace-no-wrap">STOK </th>
 				<th class="border-b-2 whitespace-no-wrap text-right">HARGA </th>
 				<th class="border-b-2 text-center whitespace-no-wrap">ACTIONS</th>
@@ -53,11 +54,13 @@
 				<td class="text-left border-b"><?= $no; ?></td>
 				<td class="text-left border-b"><?= $row['nama']; ?></td>
 				<td class="text-left border-b"><?= $row['kode_produk']; ?></td>
+				<td class="text-left border-b"><?= $row['kategori']; ?></td>
+				<td class="text-left border-b"><?= $row['jenis']; ?></td>
 				<td class="text-left border-b"><?= $row['stok']; ?></td>
 				<td class="text-right border-b">Rp. <?=  number_format($row['harga']); ?></td>
 				<td class="border-b w-5">
 					<div class="flex sm:justify-center items-center">
-						<a href="<?= base_url('produk/foto/'.$row['id_produk']); ?>" class="flex items-center text-theme-1">
+						<a href="<?= base_url('assets/produk/'.$row['foto']); ?>" class="flex items-center text-theme-1" target="_blank">
 							<i data-feather="image" class="w-4 h-4 mr-1"></i>
 							Foto </a> 
 						<a href="javascript:;" onclick="edit(
@@ -65,7 +68,9 @@
                                 '<?php echo $row['nama'] ?>',
                                 '<?php echo $row['kode_produk'] ?>',
                                 '<?php echo $row['stok'] ?>',
-                                '<?php echo $row['harga'] ?>'
+                                '<?php echo $row['harga'] ?>',
+                                '<?php echo $row['id_kategori'] ?>',
+                                '<?php echo $row['jenis'] ?>'
                                 )" class="flex items-center mr-3 ml-3" data-toggle="modal" data-target="#edit-data">
 							<i data-feather="check-square" class="w-4 h-4 mr-1"></i> Edit
 						</a>
@@ -85,15 +90,28 @@
 		<div class="flex items-center px-5 py-5 sm:py-3 border-b border-gray-200">
 			<h2 class="font-medium text-base mr-auto">TAMBAH PRODUK </h2>
 		</div>
-		<form action="<?php echo site_url('produk/simpan');?>" method="POST">
+		<form action="<?php echo site_url('admin/produk/simpan');?>" method="POST" enctype='multipart/form-data'>
 			<div class="p-5 grid grid-cols-12 gap-4 row-gap-3">
 				<div class="col-span-12 sm:col-span-12">
 					<label>Nama </label>
-					<input type="text" name="nama" required class="input w-full border mt-2 flex-1.">
+					<input type="text" name="nama" class="input w-full border mt-2 flex-1." required>
 				</div>
 				<div class="col-span-12 sm:col-span-12">
 					<label>Kode Produk</label>
 					<input type="text" name="kode_produk" class="input w-full border mt-2 flex-1" required>
+				</div>
+				<div class="col-span-12 sm:col-span-12"><label>Kategori Produk</label>
+					<select name="id_kategori" class="input w-full border mt-2 flex-1">
+						<?php foreach ($kategori as $row) { ?>
+							<option value="<?= $row['id_kategori'] ?>"><?= $row['kategori'] ?></option>
+						<?php } ?>
+					</select>
+				</div>
+				<div class="col-span-12 sm:col-span-12"><label>Jenis Produk</label>
+					<select name="jenis" class="input w-full border mt-2 flex-1">
+						<option value="Usman">Usman</option>
+						<option value="Umum">Umum</option>
+					</select>
 				</div>
 				<div class="col-span-12 sm:col-span-12">
 					<label>Stok</label>
@@ -102,6 +120,10 @@
 				<div class="col-span-12 sm:col-span-12">
 					<label>Harga</label>
 					<input type="number" name="harga" class="input w-full border mt-2 flex-1" required>
+				</div>
+				<div class="col-span-12 sm:col-span-12">
+					<label>Foto</label>
+					<input type="file" name="foto" class="input w-full border mt-2 flex-1" required>
 				</div>
 			</div>
 			<div class="px-5 py-3 text-right border-t border-gray-200">
@@ -116,7 +138,7 @@
 		<div class="flex items-center px-5 py-5 sm:py-3 border-b border-gray-200">
 			<h2 class="font-medium text-base mr-auto">PERBARUI PRODUK </h2>
 		</div>
-		<form action="<?php echo site_url('produk/update');?>" method="POST">
+		<form action="<?php echo site_url('admin/produk/update');?>" method="POST" enctype='multipart/form-data'>
 			<input type="hidden" name="id_produk" id="id" class="input w-full border mt-2">
 			<div class="p-5 grid grid-cols-12 gap-4 row-gap-3">
 				<div class="col-span-12 sm:col-span-12">
@@ -125,16 +147,34 @@
 				</div>
 				<div class="col-span-12 sm:col-span-12">
 					<label>Kode Produk</label>
-					<input type="text" name="kode_produk" class="input w-full border mt-2 flex-1" id="kode_produk"
-						readonly>
+					<input type="text" name="kode_produk" class="input w-full border mt-2 flex-1" id="kode_produk">
 				</div>
 				<div class="col-span-12 sm:col-span-12">
-					<label>Stok</label>
+					<label>Kategori Produk</label>
+					<select name="id_kategori" id="id_kategori" class="input w-full border mt-2 flex-1">
+						<?php foreach ($kategori as $row) { ?>
+							<option value="<?= $row['id_kategori'] ?>"><?= $row['kategori'] ?></option>
+						<?php } ?>
+					</select>
+				</div>
+				<div class="col-span-12 sm:col-span-12">
+					<label>Jenis Produk</label>
+					<select name="jenis" id="jenis" class="input w-full border mt-2 flex-1">
+						<option value="Usman">Usman</option>
+						<option value="Umum">Umum</option>
+					</select>
+				</div>
+				<div class="col-span-12 sm:col-span-12">
+					<label>Stok Awal</label>
 					<input type="number" name="stok" class="input w-full border mt-2 flex-1" id="stok">
 				</div>
 				<div class="col-span-12 sm:col-span-12">
 					<label>Harga</label>
 					<input type="number" name="harga" class="input w-full border mt-2 flex-1" id="harga">
+				</div>
+				<div class="col-span-12 sm:col-span-12">
+					<label>Foto</label>
+					<input type="file" name="foto" id="foto" class="input w-full border mt-2 flex-1">
 				</div>
 			</div>
 			<div class="px-5 py-3 text-right border-t border-gray-200">
@@ -162,16 +202,17 @@
 </div>
 <!-- END: Delete Confirmation Modal -->
 <script>
-	function edit(id, nama, kode_produk, stok, harga) {
+	function edit(id, nama, kode_produk, stok, harga, id_kategori, jenis) {
 		document.getElementById('id').value = id;
 		document.getElementById('nama').value = nama;
 		document.getElementById('kode_produk').value = kode_produk;
 		document.getElementById('stok').value = stok;
 		document.getElementById('harga').value = harga;
+		document.getElementById('id_kategori').value = id_kategori; // Populate Kategori Produk
+		document.getElementById('jenis').value = jenis; // Populate Jenis Produk
 	};
-
 	function hapus(id) {
 		var link = document.getElementById('link_hapus');
-		link.href = "<?php echo site_url('produk/hapus/');?>" + id;
+		link.href = "<?php echo site_url('admin/produk/hapus/');?>" + id;
 	};
 </script>

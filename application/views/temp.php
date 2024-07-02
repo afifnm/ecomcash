@@ -16,7 +16,7 @@
 <!-- END: Head -->
 
 <body class="app">
-	<?php $halaman = $this->uri->segment(1);?>
+	<?php $halaman = $this->uri->segment(2);?>
 	<!-- BEGIN: Mobile Menu -->
 	<div class="mobile-menu md:hidden">
 		<div class="mobile-menu-bar">
@@ -28,27 +28,27 @@
 		</div>
 		<ul class="border-t border-theme-24 py-5 hidden">
 			<li>
-				<a href="<?= base_url('home') ?>" class="menu menu--<?php if($halaman=='home'){ echo "active"; } ?>">
+				<a href="<?= base_url('admin/home') ?>" class="menu menu--<?php if($halaman=='home'){ echo "active"; } ?>">
 					<div class="menu__icon"> <i data-feather="home"></i> </div>
 					<div class="menu__title"> Dashboard </div>
 				</a>
 			</li>
 			<li>
-				<a href="<?= base_url('penjualan') ?>"
+				<a href="<?= base_url('admin/penjualan') ?>"
 					class="menu menu--<?php if($halaman=='penjualan'){ echo "active"; } ?>">
 					<div class="menu__icon"> <i data-feather="shopping-cart"></i> </div>
 					<div class="menu__title"> Penjualan </div>
 				</a>
 			</li>
 			<li>
-				<a href="<?= base_url('produk') ?>"
+				<a href="<?= base_url('admin/produk') ?>"
 					class="menu menu--<?php if($halaman=='produk'){ echo "active"; } ?>">
 					<div class="menu__icon"> <i data-feather="package"></i> </div>
 					<div class="menu__title"> Produk </div>
 				</a>
 			</li>
 			<li>
-				<a href="<?= base_url('pengguna') ?>"
+				<a href="<?= base_url('admin/pengguna') ?>"
 					class="menu menu--<?php if($halaman=='pengguna'){ echo "active"; } ?>">
 					<div class="menu__icon"> <i data-feather="user"></i> </div>
 					<div class="menu__title"> Pengguna </div>
@@ -101,30 +101,44 @@
 	<nav class="top-nav">
 		<ul>
 			<li>
-				<a href="<?= base_url('home') ?>"
+				<a href="<?= base_url('admin/home') ?>"
 					class="top-menu top-menu--<?php if($halaman=='home'){ echo "active"; } ?>">
 					<div class="top-menu__icon"> <i data-feather="home"></i> </div>
 					<div class="top-menu__title"> Dashboard </div>
 				</a>
 			</li>
 			<li>
-				<a href="<?= base_url('penjualan') ?>"
+				<a href="<?= base_url('admin/penjualan') ?>"
 					class="top-menu top-menu--<?php if($halaman=='penjualan'){ echo "active"; } ?>">
 					<div class="top-menu__icon"> <i data-feather="shopping-cart"></i> </div>
 					<div class="top-menu__title"> Penjualan </div>
 				</a>
 			</li>
 			<li>
-				<a href="<?= base_url('produk') ?>"
+				<a href="<?= base_url('admin/produk') ?>"
 					class="top-menu top-menu--<?php if($halaman=='produk'){ echo "active"; } ?>">
 					<div class="top-menu__icon"> <i data-feather="package"></i> </div>
 					<div class="top-menu__title"> Produk </div>
 				</a>
 			</li>
 			<li>
-				<a href="<?= base_url('pengguna') ?>"
-					class="top-menu top-menu--<?php if($halaman=='pengguna'){ echo "active"; } ?>">
+				<a href="<?= base_url('admin/kategori') ?>"
+					class="top-menu top-menu--<?php if($halaman=='kategori'){ echo "active"; } ?>">
+					<div class="top-menu__icon"> <i data-feather="grid"></i> </div>
+					<div class="top-menu__title"> Kategori </div>
+				</a>
+			</li>
+			<li>
+				<a href="<?= base_url('admin/pelanggan') ?>"
+					class="top-menu top-menu--<?php if($halaman=='pelanggan'){ echo "active"; } ?>">
 					<div class="top-menu__icon"> <i data-feather="user"></i> </div>
+					<div class="top-menu__title"> Pelanggan </div>
+				</a>
+			</li>
+			<li>
+				<a href="<?= base_url('admin/pengguna') ?>"
+					class="top-menu top-menu--<?php if($halaman=='pengguna'){ echo "active"; } ?>">
+					<div class="top-menu__icon"> <i data-feather="user-check"></i> </div>
 					<div class="top-menu__title"> Pengguna </div>
 				</a>
 			</li>

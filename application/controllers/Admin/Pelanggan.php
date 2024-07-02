@@ -27,7 +27,7 @@ class Pelanggan extends CI_Controller {
         $this->session->set_flashdata('notifikasi','
         <div class="rounded-md px-5 py-4 mb-2 bg-theme-1 text-white">Pelanggan berhasil disimpan</div>
         ');
-        redirect('pelanggan');
+        redirect($_SERVER['HTTP_REFERER']);
     }
     public function hapus($id_pelanggan){
         $where = array('id_pelanggan'   => $id_pelanggan );
@@ -35,7 +35,7 @@ class Pelanggan extends CI_Controller {
         $this->session->set_flashdata('notifikasi','
         <div class="rounded-md px-5 py-4 mb-2 bg-theme-1 text-white">Pengguna berhasil dihapus</div>
         ');
-        redirect('pelanggan');
+        redirect($_SERVER['HTTP_REFERER']);
     }
     public function update(){
         $data = array(
@@ -48,7 +48,7 @@ class Pelanggan extends CI_Controller {
         $this->session->set_flashdata('notifikasi','
         <div class="rounded-md px-5 py-4 mb-2 bg-theme-1 text-white">Pengguna berhasil diperbarui</div>
         ');
-        redirect('pelanggan');
+        redirect($_SERVER['HTTP_REFERER']);
     }
     public function transaksi($id_pelanggan){
 		$this->db->from('penjualan a')->order_by('a.tanggal','DESC');
