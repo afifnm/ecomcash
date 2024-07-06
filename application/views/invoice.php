@@ -4,6 +4,10 @@
 			<div class="text-theme-1 font-semibold text-3xl">INVOICE</div>
 			<a href="<?= base_url('admin/penjualan/nota/'.$penjualan->kode_penjualan); ?>" target="_blank"
 			class="button inline-block bg-theme-1 text-white float-right">Cetak Nota </a>
+			<?php if($penjualan->pembayaran=="Transfer"){ ?>
+			<a href="<?= base_url('assets/bukti/'.$penjualan->bukti); ?>" class="button inline-block bg-theme-1 text-white float-right ml-3 mr-3" target="_blank">
+				Bukti Transfer </a> 
+			<?php } ?>
 			<div class="mt-2"> Nomor Nota <span class="font-medium">#<?= $nota ?></span> </div>
 			<div class="mt-1">
 				<?php

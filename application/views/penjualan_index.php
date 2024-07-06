@@ -30,6 +30,15 @@
 						<input type="date" name="tanggal2" class="input w-full border col-span-4" required>
 					</div>
 				</div>
+				<div class="mt-3">
+					<label>Jenis Produk</label>
+					<div class="relative mt-2">
+						<select name="jenis" class="input w-full border mt-2 flex-1">
+							<option value="Usman">Usman</option>
+							<option value="Umum">Umum</option>
+						</select>
+					</div>
+				</div>
 			</div>
 			<div class="px-5 py-3 text-right border-t border-gray-200">
 				<button type="submit" class="button w-30 bg-theme-1 text-white">Tampilkan</button>

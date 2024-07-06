@@ -21,14 +21,19 @@ class Penjualan extends CI_Controller {
 	public function laporan(){
 		$tanggal1 = $this->input->get('tanggal1');
         $tanggal2 = $this->input->get('tanggal2');
+        $jenis = $this->input->get('jenis');
 		$this->db->from('penjualan a')->order_by('a.tanggal','ASC');
 		$this->db->where('a.tanggal <=', $tanggal2);
         $this->db->where('a.tanggal >=', $tanggal1); 
+		if($jenis<>0){
+			$this->db->where('a.jenis', $jenis); 
+		}
         $penjualan = $this->db->get()->result_array();
 		$data = array(
 			'penjualan'		=> $penjualan,
 			'tanggal1'		=> $tanggal1,
-			'tanggal2'		=> $tanggal2
+			'tanggal2'		=> $tanggal2,
+			'jenis'		    => $jenis,
 		);
 		$this->load->view('penjualan_laporan',$data);
 	}

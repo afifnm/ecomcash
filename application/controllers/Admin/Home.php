@@ -48,6 +48,7 @@ class Home extends CI_Controller {
 			'recent'		=> $recent,
 			'user'			=> $user,
 			'produk5'		=> $produk5,
+			'pelanggan'		=> $this->View_model->get_pelanggan()
 		);
 		$this->template->load('temp','dashboard',$data);
 	}
