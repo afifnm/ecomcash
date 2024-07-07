@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Waktu pembuatan: 02 Jul 2024 pada 19.37
+-- Waktu pembuatan: 07 Jul 2024 pada 15.25
 -- Versi server: 10.4.32-MariaDB
 -- Versi PHP: 8.0.30
 
@@ -52,20 +52,19 @@ INSERT INTO `detail_penjualan` (`id_detail`, `kode_penjualan`, `id_produk`, `jum
 
 CREATE TABLE `kategori` (
   `id_kategori` int(11) NOT NULL,
-  `kategori` varchar(30) NOT NULL
+  `kategori` varchar(30) NOT NULL,
+  `foto` varchar(20) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data untuk tabel `kategori`
 --
 
-INSERT INTO `kategori` (`id_kategori`, `kategori`) VALUES
-(1, 'Kebutuhan Sehari-hari'),
-(2, 'Fashion'),
-(3, 'Makanan & Minuman'),
-(4, 'Perlengkapan Rumah'),
-(5, 'Buku & Alat Tulis'),
-(8, 'Kantin Skanda');
+INSERT INTO `kategori` (`id_kategori`, `kategori`, `foto`) VALUES
+(9, 'Kebutuhan Sehari-hari', '20240707131624.jpg'),
+(10, 'Makanan & Minuman', '20240707131934.jpg'),
+(11, 'Perlengkapan Rumah', '20240707132349.jpg'),
+(12, 'Skincare', '20240707132404.jpg');
 
 -- --------------------------------------------------------
 
@@ -76,7 +75,7 @@ INSERT INTO `kategori` (`id_kategori`, `kategori`) VALUES
 CREATE TABLE `konfigurasi` (
   `id_konfigurasi` int(11) NOT NULL,
   `nama_cv` varchar(50) NOT NULL,
-  `alamat` varchar(50) NOT NULL,
+  `alamat` varchar(100) NOT NULL,
   `telp` varchar(20) NOT NULL,
   `email` varchar(30) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
@@ -86,7 +85,7 @@ CREATE TABLE `konfigurasi` (
 --
 
 INSERT INTO `konfigurasi` (`id_konfigurasi`, `nama_cv`, `alamat`, `telp`, `email`) VALUES
-(1, 'Pipapip Pip', 'Jl. Radjiman Sutedjo 404, Kra', '+6289673333318', 'afifnuruddinmaisaroh@gmail.com');
+(1, 'KOPSISMART ', 'Jl. Yos Sudarso, Jengglong, Bejen, Kec. Karanganyar, Kabupaten Karanganyar, Jawa Tengah 57716', '+6289673333318', 'afifnuruddinmaisaroh@gmail.com');
 
 -- --------------------------------------------------------
 
@@ -157,9 +156,9 @@ CREATE TABLE `produk` (
 --
 
 INSERT INTO `produk` (`id_produk`, `kode_produk`, `nama`, `stok`, `harga`, `foto`, `id_kategori`, `jenis`) VALUES
-(1, '23123130131', 'Jolly Facial Tisu Wajah', 15, 133000, '20240702113728.jpg', '2', 'Usman'),
-(4, '3123123311', 'Beras Sania 2kg', 33, 55000, '20240702115743.jpg', '1', 'Usman'),
-(5, '1231233', 'Risol Mayo', 50, 2000, '20240702121147.jpg', '8', 'Umum');
+(1, '23123130131', 'Jolly Facial Tisu Wajah', 15, 133000, '20240702113728.jpg', '9', 'Usman'),
+(4, '3123123311', 'Beras Sania 2kg', 33, 55000, '20240702115743.jpg', '9', 'Usman'),
+(5, '1231233', 'Risol Mayo', 50, 2000, '20240702121147.jpg', '10', 'Umum');
 
 -- --------------------------------------------------------
 
@@ -263,7 +262,7 @@ ALTER TABLE `detail_penjualan`
 -- AUTO_INCREMENT untuk tabel `kategori`
 --
 ALTER TABLE `kategori`
-  MODIFY `id_kategori` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
+  MODIFY `id_kategori` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
 
 --
 -- AUTO_INCREMENT untuk tabel `konfigurasi`

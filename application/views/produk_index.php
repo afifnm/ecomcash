@@ -54,7 +54,7 @@
 				<td class="text-left border-b"><?= $no; ?></td>
 				<td class="text-left border-b"><?= $row['nama']; ?></td>
 				<td class="text-left border-b"><?= $row['kode_produk']; ?></td>
-				<td class="text-left border-b"><?= $row['kategori']; ?></td>
+				<td class="text-left border-b"><?php if($row['kategori']==NULL) { echo "Lain-lain"; } else { echo $row['kategori']; } ?></td>
 				<td class="text-left border-b"><?= $row['jenis']; ?></td>
 				<td class="text-left border-b"><?= $row['stok']; ?></td>
 				<td class="text-right border-b">Rp. <?=  number_format($row['harga']); ?></td>
@@ -175,7 +175,7 @@
 				<div class="col-span-12 sm:col-span-12">
 					<label>Foto</label>
 					<input type="file" name="foto" id="foto" class="input w-full border mt-2 flex-1">
-				</div>
+				</div> 
 			</div>
 			<div class="px-5 py-3 text-right border-t border-gray-200">
 				<button type="submit" class="button w-20 bg-theme-1 text-white">Simpan</button>

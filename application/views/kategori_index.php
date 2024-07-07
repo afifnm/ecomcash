@@ -32,14 +32,30 @@
 							class="flex items-center text-theme-6" data-toggle="modal" data-target="#hapus-data">
 							<i data-feather="trash-2" class="w-4 h-4 mr-1"></i>
 							Delete </a>
+							<a href="<?= base_url('assets/kategori/'.$row['foto']) ?>" target="_blank"
+							class="flex items-center text-theme-1">
+							<i data-feather="grid" class="w-4 h-4 mr-1 ml-2"></i> Lihat Foto Kategori
+						</a>
 						<a href="<?= base_url('admin/produk/kategori/'.$row['id_kategori']) ?>"
 							class="flex items-center text-theme-1">
-							<i data-feather="package" class="w-4 h-4 mr-1 ml-2"></i> Produk
+							<i data-feather="package" class="w-4 h-4 mr-1 ml-2"></i> Lihat Produk
 						</a>
 					</div>
 				</td>
 			</tr>
 			<?php $no++; } ?>
+			<tr>
+				<td class="text-left border-b"><?= $no; ?></td>
+				<td class="text-left border-b">Lain-lain</td>
+				<td class="border-b w-5">
+					<div class="flex sm:justify-center items-center">
+						<a href="<?= base_url('admin/produk/kategori/0') ?>"
+							class="flex items-center text-theme-1">
+							<i data-feather="package" class="w-4 h-4 mr-1 ml-2"></i> Lihat Produk
+						</a>
+					</div>
+				</td>
+			</tr>
 		</tbody>
 	</table>
 </div>
@@ -48,11 +64,17 @@
 		<div class="flex items-center px-5 py-5 sm:py-3 border-b border-gray-200">
 			<h2 class="font-medium text-base mr-auto">TAMBAH KATEGORI </h2>
 		</div>
-		<form action="<?php echo site_url('admin/kategori/simpan');?>" method="POST">
+		<form action="<?php echo site_url('admin/kategori/simpan');?>" method="POST" enctype='multipart/form-data'>
 			<div class="p-5 grid grid-cols-12 gap-4 row-gap-3">
 				<div class="col-span-12 sm:col-span-12">
 					<label>Kategori </label>
 					<input type="text" name="kategori" required class="input w-full border mt-2 flex-1.">
+				</div>
+			</div>
+			<div class="p-5 grid grid-cols-12 gap-4 row-gap-3">
+				<div class="col-span-12 sm:col-span-12">
+					<label>Foto</label>
+					<input type="file" name="foto" id="foto" class="input w-full border mt-2 flex-1" required>
 				</div>
 			</div>
 			<div class="px-5 py-3 text-right border-t border-gray-200">
@@ -67,12 +89,18 @@
 		<div class="flex items-center px-5 py-5 sm:py-3 border-b border-gray-200">
 			<h2 class="font-medium text-base mr-auto">PERBARUI KATEGORI </h2>
 		</div>
-		<form action="<?php echo site_url('admin/kategori/update');?>" method="POST">
+		<form action="<?php echo site_url('admin/kategori/update');?>" method="POST" enctype='multipart/form-data'>
 			<input type="hidden" name="id_kategori" id="id" class="input w-full border mt-2">
 			<div class="p-5 grid grid-cols-12 gap-4 row-gap-3">
 				<div class="col-span-12 sm:col-span-12">
 					<label>Kategori </label>
 					<input type="text" name="kategori" required class="input w-full border mt-2 flex-1." id="kategori">
+				</div>
+			</div>
+			<div class="p-5 grid grid-cols-12 gap-4 row-gap-3">
+				<div class="col-span-12 sm:col-span-12">
+					<label>Foto</label>
+					<input type="file" name="foto" id="foto" class="input w-full border mt-2 flex-1">
 				</div>
 			</div>
 			<div class="px-5 py-3 text-right border-t border-gray-200">

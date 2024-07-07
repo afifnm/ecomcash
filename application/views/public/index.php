@@ -4,8 +4,8 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Ecommerce Tailwind</title>
-    <link rel="shortcut icon" href="<?= base_url('assets/public/')?>assets/images/favicon/favicon.ico" type="image/x-icon">
+    <title><?= $title; ?></title>
+    <link rel="shortcut icon" href="<?= base_url('assets/logo.png')?>" type="image/x-icon">
     <link rel="stylesheet" href="<?= base_url('assets/public/')?>assets/css/main.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -19,14 +19,14 @@
     <?php require_once('_nav.php'); ?>
     <!-- ./navbar -->
     <!-- banner -->
-    <div class="bg-cover bg-no-repeat bg-center py-36" style="background-image: url('<?= base_url('assets/public/')?>assets/images/banner-bg.jpg');">
+    <div class="bg-cover bg-no-repeat bg-center py-36" style="background-image: url('<?= base_url('assets/back.jpg')?>');">
         <div class="container">
             <h1 class="text-6xl text-gray-800 font-medium mb-4 capitalize">
-                KOPSISMART <br> Murah Cepat Terpercaya
+                <?= $site['nama_cv'] ?> <br> Murah Cepat Terpercaya
             </h1>
-            <p>Selamat datang di KOPSISMART! Temukan kebutuhan sehari-hari Anda dengan kemudahan dan kenyamanan. Dari makanan hingga perawatan pribadi, kami hadir untuk memenuhi setiap kebutuhan Anda. Jelajahi beragam produk berkualitas dengan harga terjangkau. Mulai belanja sekarang dan nikmati pengalaman berbelanja online yang menyenangkan bersama kami.</p>
+            <p>Selamat datang di <?= $site['nama_cv'] ?>! Temukan kebutuhan sehari-hari Anda dengan kemudahan dan kenyamanan. Dari makanan hingga perawatan pribadi, kami hadir untuk memenuhi setiap kebutuhan Anda. Jelajahi beragam produk berkualitas dengan harga terjangkau. Mulai belanja sekarang dan nikmati pengalaman berbelanja online yang menyenangkan bersama kami.</p>
             <div class="mt-12">
-                <a href="#" class="bg-primary border border-primary text-white px-8 py-3 font-medium 
+                <a href="<?= base_url('produk') ?>" class="bg-primary border border-primary text-white px-8 py-3 font-medium 
                     rounded-md hover:bg-transparent hover:text-primary">Mulai Belanja</a>
             </div>
         </div>
@@ -63,641 +63,74 @@
 
     <!-- categories -->
     <div class="container py-16">
-        <h2 class="text-2xl font-medium text-gray-800 uppercase mb-6">shop by category</h2>
-        <div class="grid grid-cols-3 gap-3">
-            <div class="relative rounded-sm overflow-hidden group">
-                <img src="<?= base_url('assets/public/')?>assets/images/category/category-1.jpg" alt="category 1" class="w-full">
-                <a href="#"
-                    class="absolute inset-0 bg-black bg-opacity-40 flex items-center justify-center text-xl text-white font-roboto font-medium group-hover:bg-opacity-60 transition">Bedroom</a>
-            </div>
-            <div class="relative rounded-sm overflow-hidden group">
-                <img src="<?= base_url('assets/public/')?>assets/images/category/category-2.jpg" alt="category 1" class="w-full">
-                <a href="#"
-                    class="absolute inset-0 bg-black bg-opacity-40 flex items-center justify-center text-xl text-white font-roboto font-medium group-hover:bg-opacity-60 transition">Mattrass</a>
-            </div>
-            <div class="relative rounded-sm overflow-hidden group">
-                <img src="<?= base_url('assets/public/')?>assets/images/category/category-3.jpg" alt="category 1" class="w-full">
-                <a href="#"
-                    class="absolute inset-0 bg-black bg-opacity-40 flex items-center justify-center text-xl text-white font-roboto font-medium group-hover:bg-opacity-60 transition">Outdoor
-                </a>
-            </div>
-            <div class="relative rounded-sm overflow-hidden group">
-                <img src="<?= base_url('assets/public/')?>assets/images/category/category-4.jpg" alt="category 1" class="w-full">
-                <a href="#"
-                    class="absolute inset-0 bg-black bg-opacity-40 flex items-center justify-center text-xl text-white font-roboto font-medium group-hover:bg-opacity-60 transition">Sofa</a>
-            </div>
-            <div class="relative rounded-sm overflow-hidden group">
-                <img src="<?= base_url('assets/public/')?>assets/images/category/category-5.jpg" alt="category 1" class="w-full">
-                <a href="#"
-                    class="absolute inset-0 bg-black bg-opacity-40 flex items-center justify-center text-xl text-white font-roboto font-medium group-hover:bg-opacity-60 transition">Living
-                    Room</a>
-            </div>
-            <div class="relative rounded-sm overflow-hidden group">
-                <img src="<?= base_url('assets/public/')?>assets/images/category/category-6.jpg" alt="category 1" class="w-full">
-                <a href="#"
-                    class="absolute inset-0 bg-black bg-opacity-40 flex items-center justify-center text-xl text-white font-roboto font-medium group-hover:bg-opacity-60 transition">Kitchen</a>
-            </div>
+        <h2 class="text-2xl font-medium text-gray-800 uppercase mb-6">Kategori Produk</h2>
+        <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+            <?php foreach($this->View_model->get_kategori() as $kategori) { ?> 
+                <div class="relative rounded-sm overflow-hidden group">
+                    <img src="<?= base_url('assets/kategori/'.$kategori['foto']) ?>" alt="category 1" class="w-full">
+                    <a href="<?= base_url('produk/k/'.$kategori['id_kategori']) ?>"
+                        class="absolute inset-0 bg-black bg-opacity-40 flex items-center justify-center text-xl text-white font-roboto font-medium group-hover:bg-opacity-60 transition"><?= $kategori['kategori'] ?></a>
+                </div>
+            <?php } ?>
         </div>
     </div>
     <!-- ./categories -->
 
     <!-- new arrival -->
     <div class="container pb-16">
-        <h2 class="text-2xl font-medium text-gray-800 uppercase mb-6">top new arrival</h2>
-        <div class="grid grid-cols-1 md:grid-cols-4 gap-6">
+        <h2 class="text-2xl font-medium text-gray-800 uppercase mb-6">PRODUK TERBARU</h2>
+        <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+        <?php foreach($this->View_model->get_produk_terbaru(8) as $produkTerbaru) { ?> 
             <div class="bg-white shadow rounded overflow-hidden group">
                 <div class="relative">
-                    <img src="<?= base_url('assets/public/')?>assets/images/products/product1.jpg" alt="product 1" class="w-full">
-                    <div class="absolute inset-0 bg-black bg-opacity-40 flex items-center 
-                    justify-center gap-2 opacity-0 group-hover:opacity-100 transition">
-                        <a href="#"
-                            class="text-white text-lg w-9 h-8 rounded-full bg-primary flex items-center justify-center hover:bg-gray-800 transition"
-                            title="view product">
-                            <i class="fa-solid fa-magnifying-glass"></i>
-                        </a>
-                        <a href="#"
-                            class="text-white text-lg w-9 h-8 rounded-full bg-primary flex items-center justify-center hover:bg-gray-800 transition"
-                            title="add to wishlist">
-                            <i class="fa-solid fa-heart"></i>
-                        </a>
-                    </div>
+                    <img src="<?= base_url('assets/produk/'.$produkTerbaru['foto'])?>" alt="product 1" class="h-auto max-w-lg w-full">
                 </div>
                 <div class="pt-4 pb-3 px-4">
-                    <a href="#">
-                        <h4 class="uppercase font-medium text-xl mb-2 text-gray-800 hover:text-primary transition">Guyer
-                            Chair</h4>
-                    </a>
+                    <h4 class="uppercase font-medium fs-4 md:text-xl mb-2 text-gray-800 hover:text-primary transition"><?= $produkTerbaru['nama']; ?></h4>
                     <div class="flex items-baseline mb-1 space-x-2">
-                        <p class="text-xl text-primary font-semibold">$45.00</p>
-                        <p class="text-sm text-gray-400 line-through">$55.90</p>
-                    </div>
-                    <div class="flex items-center">
-                        <div class="flex gap-1 text-sm text-yellow-400">
-                            <span><i class="fa-solid fa-star"></i></span>
-                            <span><i class="fa-solid fa-star"></i></span>
-                            <span><i class="fa-solid fa-star"></i></span>
-                            <span><i class="fa-solid fa-star"></i></span>
-                            <span><i class="fa-solid fa-star"></i></span>
-                        </div>
-                        <div class="text-xs text-gray-500 ml-3">(150)</div>
+                        <p class="fs-4 md:text-xl text-primary font-semibold">Rp. <?= number_format($produkTerbaru['harga']); ?></p>
                     </div>
                 </div>
-                <a href="#"
-                    class="block w-full py-1 text-center text-white bg-primary border border-primary rounded-b hover:bg-transparent hover:text-primary transition">Add
-                    to cart</a>
+                <a href="<?= base_url('produk/v/'.$produkTerbaru['id_produk']) ?>"
+                    class="block w-full py-1 text-center text-white bg-primary border border-primary rounded-b hover:bg-transparent hover:text-primary transition">
+                    Lihat Produk</a>
             </div>
-            <div class="bg-white shadow rounded overflow-hidden group">
-                <div class="relative">
-                    <img src="<?= base_url('assets/public/')?>assets/images/products/product4.jpg" alt="product 1" class="w-full">
-                    <div class="absolute inset-0 bg-black bg-opacity-40 flex items-center 
-                    justify-center gap-2 opacity-0 group-hover:opacity-100 transition">
-                        <a href="#"
-                            class="text-white text-lg w-9 h-8 rounded-full bg-primary flex items-center justify-center hover:bg-gray-800 transition"
-                            title="view product">
-                            <i class="fa-solid fa-magnifying-glass"></i>
-                        </a>
-                        <a href="#"
-                            class="text-white text-lg w-9 h-8 rounded-full bg-primary flex items-center justify-center hover:bg-gray-800 transition"
-                            title="add to wishlist">
-                            <i class="fa-solid fa-heart"></i>
-                        </a>
-                    </div>
-                </div>
-                <div class="pt-4 pb-3 px-4">
-                    <a href="#">
-                        <h4 class="uppercase font-medium text-xl mb-2 text-gray-800 hover:text-primary transition">Bed
-                            King Size</h4>
-                    </a>
-                    <div class="flex items-baseline mb-1 space-x-2">
-                        <p class="text-xl text-primary font-semibold">$45.00</p>
-                        <p class="text-sm text-gray-400 line-through">$55.90</p>
-                    </div>
-                    <div class="flex items-center">
-                        <div class="flex gap-1 text-sm text-yellow-400">
-                            <span><i class="fa-solid fa-star"></i></span>
-                            <span><i class="fa-solid fa-star"></i></span>
-                            <span><i class="fa-solid fa-star"></i></span>
-                            <span><i class="fa-solid fa-star"></i></span>
-                            <span><i class="fa-solid fa-star"></i></span>
-                        </div>
-                        <div class="text-xs text-gray-500 ml-3">(150)</div>
-                    </div>
-                </div>
-                <a href="#"
-                    class="block w-full py-1 text-center text-white bg-primary border border-primary rounded-b hover:bg-transparent hover:text-primary transition">Add
-                    to cart</a>
-            </div>
-            <div class="bg-white shadow rounded overflow-hidden group">
-                <div class="relative">
-                    <img src="<?= base_url('assets/public/')?>assets/images/products/product2.jpg" alt="product 1" class="w-full">
-                    <div class="absolute inset-0 bg-black bg-opacity-40 flex items-center 
-                    justify-center gap-2 opacity-0 group-hover:opacity-100 transition">
-                        <a href="#"
-                            class="text-white text-lg w-9 h-8 rounded-full bg-primary flex items-center justify-center hover:bg-gray-800 transition"
-                            title="view product">
-                            <i class="fa-solid fa-magnifying-glass"></i>
-                        </a>
-                        <a href="#"
-                            class="text-white text-lg w-9 h-8 rounded-full bg-primary flex items-center justify-center hover:bg-gray-800 transition"
-                            title="add to wishlist">
-                            <i class="fa-solid fa-heart"></i>
-                        </a>
-                    </div>
-                </div>
-                <div class="pt-4 pb-3 px-4">
-                    <a href="#">
-                        <h4 class="uppercase font-medium text-xl mb-2 text-gray-800 hover:text-primary transition">
-                            Couple Sofa</h4>
-                    </a>
-                    <div class="flex items-baseline mb-1 space-x-2">
-                        <p class="text-xl text-primary font-semibold">$45.00</p>
-                        <p class="text-sm text-gray-400 line-through">$55.90</p>
-                    </div>
-                    <div class="flex items-center">
-                        <div class="flex gap-1 text-sm text-yellow-400">
-                            <span><i class="fa-solid fa-star"></i></span>
-                            <span><i class="fa-solid fa-star"></i></span>
-                            <span><i class="fa-solid fa-star"></i></span>
-                            <span><i class="fa-solid fa-star"></i></span>
-                            <span><i class="fa-solid fa-star"></i></span>
-                        </div>
-                        <div class="text-xs text-gray-500 ml-3">(150)</div>
-                    </div>
-                </div>
-                <a href="#"
-                    class="block w-full py-1 text-center text-white bg-primary border border-primary rounded-b hover:bg-transparent hover:text-primary transition">Add
-                    to cart</a>
-            </div>
-            <div class="bg-white shadow rounded overflow-hidden group">
-                <div class="relative">
-                    <img src="<?= base_url('assets/public/')?>assets/images/products/product3.jpg" alt="product 1" class="w-full">
-                    <div class="absolute inset-0 bg-black bg-opacity-40 flex items-center 
-                    justify-center gap-2 opacity-0 group-hover:opacity-100 transition">
-                        <a href="#"
-                            class="text-white text-lg w-9 h-8 rounded-full bg-primary flex items-center justify-center hover:bg-gray-800 transition"
-                            title="view product">
-                            <i class="fa-solid fa-magnifying-glass"></i>
-                        </a>
-                        <a href="#"
-                            class="text-white text-lg w-9 h-8 rounded-full bg-primary flex items-center justify-center hover:bg-gray-800 transition"
-                            title="add to wishlist">
-                            <i class="fa-solid fa-heart"></i>
-                        </a>
-                    </div>
-                </div>
-                <div class="pt-4 pb-3 px-4">
-                    <a href="#">
-                        <h4 class="uppercase font-medium text-xl mb-2 text-gray-800 hover:text-primary transition">
-                            Mattrass X</h4>
-                    </a>
-                    <div class="flex items-baseline mb-1 space-x-2">
-                        <p class="text-xl text-primary font-semibold">$45.00</p>
-                        <p class="text-sm text-gray-400 line-through">$55.90</p>
-                    </div>
-                    <div class="flex items-center">
-                        <div class="flex gap-1 text-sm text-yellow-400">
-                            <span><i class="fa-solid fa-star"></i></span>
-                            <span><i class="fa-solid fa-star"></i></span>
-                            <span><i class="fa-solid fa-star"></i></span>
-                            <span><i class="fa-solid fa-star"></i></span>
-                            <span><i class="fa-solid fa-star"></i></span>
-                        </div>
-                        <div class="text-xs text-gray-500 ml-3">(150)</div>
-                    </div>
-                </div>
-                <a href="#"
-                    class="block w-full py-1 text-center text-white bg-primary border border-primary rounded-b hover:bg-transparent hover:text-primary transition">Add
-                    to cart</a>
-            </div>
+        <?php } ?>
         </div>
     </div>
     <!-- ./new arrival -->
 
     <!-- ads -->
     <div class="container pb-16">
-        <a href="#">
-            <img src="<?= base_url('assets/public/')?>assets/images/offer.jpg" alt="ads" class="w-full">
+        <a href="https://pipapip.web.id/" target="_blank">
+            <img src="<?= base_url('assets/offer.jpg')?>" alt="ads" class="w-full">
         </a>
     </div>
     <!-- ./ads -->
 
     <!-- product -->
     <div class="container pb-16">
-        <h2 class="text-2xl font-medium text-gray-800 uppercase mb-6">recomended for you</h2>
-        <div class="grid grid-cols-2 md:grid-cols-4 gap-6">
+        <h2 class="text-2xl font-medium text-gray-800 uppercase mb-6">PRODUK TERLARIS</h2>
+        <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+        <?php foreach($this->View_model->get_produk_terlaris(8) as $produkTerbaru) { ?> 
             <div class="bg-white shadow rounded overflow-hidden group">
                 <div class="relative">
-                    <img src="<?= base_url('assets/public/')?>assets/images/products/product1.jpg" alt="product 1" class="w-full">
-                    <div class="absolute inset-0 bg-black bg-opacity-40 flex items-center 
-                    justify-center gap-2 opacity-0 group-hover:opacity-100 transition">
-                        <a href="#"
-                            class="text-white text-lg w-9 h-8 rounded-full bg-primary flex items-center justify-center hover:bg-gray-800 transition"
-                            title="view product">
-                            <i class="fa-solid fa-magnifying-glass"></i>
-                        </a>
-                        <a href="#"
-                            class="text-white text-lg w-9 h-8 rounded-full bg-primary flex items-center justify-center hover:bg-gray-800 transition"
-                            title="add to wishlist">
-                            <i class="fa-solid fa-heart"></i>
-                        </a>
-                    </div>
+                    <img src="<?= base_url('assets/produk/'.$produkTerbaru['foto'])?>" alt="product 1" class="h-auto max-w-lg w-full">
                 </div>
                 <div class="pt-4 pb-3 px-4">
-                    <a href="#">
-                        <h4 class="uppercase font-medium text-xl mb-2 text-gray-800 hover:text-primary transition">Guyer
-                            Chair</h4>
-                    </a>
+                    <h4 class="uppercase font-medium fs-4 md:text-xl mb-2 text-gray-800 hover:text-primary transition"><?= $produkTerbaru['nama']; ?></h4>
                     <div class="flex items-baseline mb-1 space-x-2">
-                        <p class="text-xl text-primary font-semibold">$45.00</p>
-                        <p class="text-sm text-gray-400 line-through">$55.90</p>
-                    </div>
-                    <div class="flex items-center">
-                        <div class="flex gap-1 text-sm text-yellow-400">
-                            <span><i class="fa-solid fa-star"></i></span>
-                            <span><i class="fa-solid fa-star"></i></span>
-                            <span><i class="fa-solid fa-star"></i></span>
-                            <span><i class="fa-solid fa-star"></i></span>
-                            <span><i class="fa-solid fa-star"></i></span>
-                        </div>
-                        <div class="text-xs text-gray-500 ml-3">(150)</div>
+                        <p class="fs-4 md:text-xl text-primary font-semibold">Rp. <?= number_format($produkTerbaru['harga']); ?></p>
                     </div>
                 </div>
-                <a href="#"
-                    class="block w-full py-1 text-center text-white bg-primary border border-primary rounded-b hover:bg-transparent hover:text-primary transition">Add
-                    to cart</a>
+                <a href="<?= base_url('produk/v/'.$produkTerbaru['id_produk']) ?>"
+                    class="block w-full py-1 text-center text-white bg-primary border border-primary rounded-b hover:bg-transparent hover:text-primary transition">
+                    Lihat Produk</a>
             </div>
-            <div class="bg-white shadow rounded overflow-hidden group">
-                <div class="relative">
-                    <img src="<?= base_url('assets/public/')?>assets/images/products/product4.jpg" alt="product 1" class="w-full">
-                    <div class="absolute inset-0 bg-black bg-opacity-40 flex items-center 
-                    justify-center gap-2 opacity-0 group-hover:opacity-100 transition">
-                        <a href="#"
-                            class="text-white text-lg w-9 h-8 rounded-full bg-primary flex items-center justify-center hover:bg-gray-800 transition"
-                            title="view product">
-                            <i class="fa-solid fa-magnifying-glass"></i>
-                        </a>
-                        <a href="#"
-                            class="text-white text-lg w-9 h-8 rounded-full bg-primary flex items-center justify-center hover:bg-gray-800 transition"
-                            title="add to wishlist">
-                            <i class="fa-solid fa-heart"></i>
-                        </a>
-                    </div>
-                </div>
-                <div class="pt-4 pb-3 px-4">
-                    <a href="#">
-                        <h4 class="uppercase font-medium text-xl mb-2 text-gray-800 hover:text-primary transition">Bed
-                            King Size</h4>
-                    </a>
-                    <div class="flex items-baseline mb-1 space-x-2">
-                        <p class="text-xl text-primary font-semibold">$45.00</p>
-                        <p class="text-sm text-gray-400 line-through">$55.90</p>
-                    </div>
-                    <div class="flex items-center">
-                        <div class="flex gap-1 text-sm text-yellow-400">
-                            <span><i class="fa-solid fa-star"></i></span>
-                            <span><i class="fa-solid fa-star"></i></span>
-                            <span><i class="fa-solid fa-star"></i></span>
-                            <span><i class="fa-solid fa-star"></i></span>
-                            <span><i class="fa-solid fa-star"></i></span>
-                        </div>
-                        <div class="text-xs text-gray-500 ml-3">(150)</div>
-                    </div>
-                </div>
-                <a href="#"
-                    class="block w-full py-1 text-center text-white bg-primary border border-primary rounded-b hover:bg-transparent hover:text-primary transition">Add
-                    to cart</a>
-            </div>
-            <div class="bg-white shadow rounded overflow-hidden group">
-                <div class="relative">
-                    <img src="<?= base_url('assets/public/')?>assets/images/products/product2.jpg" alt="product 1" class="w-full">
-                    <div class="absolute inset-0 bg-black bg-opacity-40 flex items-center 
-                    justify-center gap-2 opacity-0 group-hover:opacity-100 transition">
-                        <a href="#"
-                            class="text-white text-lg w-9 h-8 rounded-full bg-primary flex items-center justify-center hover:bg-gray-800 transition"
-                            title="view product">
-                            <i class="fa-solid fa-magnifying-glass"></i>
-                        </a>
-                        <a href="#"
-                            class="text-white text-lg w-9 h-8 rounded-full bg-primary flex items-center justify-center hover:bg-gray-800 transition"
-                            title="add to wishlist">
-                            <i class="fa-solid fa-heart"></i>
-                        </a>
-                    </div>
-                </div>
-                <div class="pt-4 pb-3 px-4">
-                    <a href="#">
-                        <h4 class="uppercase font-medium text-xl mb-2 text-gray-800 hover:text-primary transition">
-                            Couple Sofa</h4>
-                    </a>
-                    <div class="flex items-baseline mb-1 space-x-2">
-                        <p class="text-xl text-primary font-semibold">$45.00</p>
-                        <p class="text-sm text-gray-400 line-through">$55.90</p>
-                    </div>
-                    <div class="flex items-center">
-                        <div class="flex gap-1 text-sm text-yellow-400">
-                            <span><i class="fa-solid fa-star"></i></span>
-                            <span><i class="fa-solid fa-star"></i></span>
-                            <span><i class="fa-solid fa-star"></i></span>
-                            <span><i class="fa-solid fa-star"></i></span>
-                            <span><i class="fa-solid fa-star"></i></span>
-                        </div>
-                        <div class="text-xs text-gray-500 ml-3">(150)</div>
-                    </div>
-                </div>
-                <a href="#"
-                    class="block w-full py-1 text-center text-white bg-primary border border-primary rounded-b hover:bg-transparent hover:text-primary transition">Add
-                    to cart</a>
-            </div>
-            <div class="bg-white shadow rounded overflow-hidden group">
-                <div class="relative">
-                    <img src="<?= base_url('assets/public/')?>assets/images/products/product3.jpg" alt="product 1" class="w-full">
-                    <div class="absolute inset-0 bg-black bg-opacity-40 flex items-center 
-                    justify-center gap-2 opacity-0 group-hover:opacity-100 transition">
-                        <a href="#"
-                            class="text-white text-lg w-9 h-8 rounded-full bg-primary flex items-center justify-center hover:bg-gray-800 transition"
-                            title="view product">
-                            <i class="fa-solid fa-magnifying-glass"></i>
-                        </a>
-                        <a href="#"
-                            class="text-white text-lg w-9 h-8 rounded-full bg-primary flex items-center justify-center hover:bg-gray-800 transition"
-                            title="add to wishlist">
-                            <i class="fa-solid fa-heart"></i>
-                        </a>
-                    </div>
-                </div>
-                <div class="pt-4 pb-3 px-4">
-                    <a href="#">
-                        <h4 class="uppercase font-medium text-xl mb-2 text-gray-800 hover:text-primary transition">
-                            Mattrass X</h4>
-                    </a>
-                    <div class="flex items-baseline mb-1 space-x-2">
-                        <p class="text-xl text-primary font-semibold">$45.00</p>
-                        <p class="text-sm text-gray-400 line-through">$55.90</p>
-                    </div>
-                    <div class="flex items-center">
-                        <div class="flex gap-1 text-sm text-yellow-400">
-                            <span><i class="fa-solid fa-star"></i></span>
-                            <span><i class="fa-solid fa-star"></i></span>
-                            <span><i class="fa-solid fa-star"></i></span>
-                            <span><i class="fa-solid fa-star"></i></span>
-                            <span><i class="fa-solid fa-star"></i></span>
-                        </div>
-                        <div class="text-xs text-gray-500 ml-3">(150)</div>
-                    </div>
-                </div>
-                <a href="#"
-                    class="block w-full py-1 text-center text-white bg-primary border border-primary rounded-b hover:bg-transparent hover:text-primary transition">Add
-                    to cart</a>
-            </div>
-            <div class="bg-white shadow rounded overflow-hidden group">
-                <div class="relative">
-                    <img src="<?= base_url('assets/public/')?>assets/images/products/product1.jpg" alt="product 1" class="w-full">
-                    <div class="absolute inset-0 bg-black bg-opacity-40 flex items-center 
-                    justify-center gap-2 opacity-0 group-hover:opacity-100 transition">
-                        <a href="#"
-                            class="text-white text-lg w-9 h-8 rounded-full bg-primary flex items-center justify-center hover:bg-gray-800 transition"
-                            title="view product">
-                            <i class="fa-solid fa-magnifying-glass"></i>
-                        </a>
-                        <a href="#"
-                            class="text-white text-lg w-9 h-8 rounded-full bg-primary flex items-center justify-center hover:bg-gray-800 transition"
-                            title="add to wishlist">
-                            <i class="fa-solid fa-heart"></i>
-                        </a>
-                    </div>
-                </div>
-                <div class="pt-4 pb-3 px-4">
-                    <a href="#">
-                        <h4 class="uppercase font-medium text-xl mb-2 text-gray-800 hover:text-primary transition">Guyer
-                            Chair</h4>
-                    </a>
-                    <div class="flex items-baseline mb-1 space-x-2">
-                        <p class="text-xl text-primary font-semibold">$45.00</p>
-                        <p class="text-sm text-gray-400 line-through">$55.90</p>
-                    </div>
-                    <div class="flex items-center">
-                        <div class="flex gap-1 text-sm text-yellow-400">
-                            <span><i class="fa-solid fa-star"></i></span>
-                            <span><i class="fa-solid fa-star"></i></span>
-                            <span><i class="fa-solid fa-star"></i></span>
-                            <span><i class="fa-solid fa-star"></i></span>
-                            <span><i class="fa-solid fa-star"></i></span>
-                        </div>
-                        <div class="text-xs text-gray-500 ml-3">(150)</div>
-                    </div>
-                </div>
-                <a href="#"
-                    class="block w-full py-1 text-center text-white bg-primary border border-primary rounded-b hover:bg-transparent hover:text-primary transition">Add
-                    to cart</a>
-            </div>
-            <div class="bg-white shadow rounded overflow-hidden group">
-                <div class="relative">
-                    <img src="<?= base_url('assets/public/')?>assets/images/products/product4.jpg" alt="product 1" class="w-full">
-                    <div class="absolute inset-0 bg-black bg-opacity-40 flex items-center 
-                    justify-center gap-2 opacity-0 group-hover:opacity-100 transition">
-                        <a href="#"
-                            class="text-white text-lg w-9 h-8 rounded-full bg-primary flex items-center justify-center hover:bg-gray-800 transition"
-                            title="view product">
-                            <i class="fa-solid fa-magnifying-glass"></i>
-                        </a>
-                        <a href="#"
-                            class="text-white text-lg w-9 h-8 rounded-full bg-primary flex items-center justify-center hover:bg-gray-800 transition"
-                            title="add to wishlist">
-                            <i class="fa-solid fa-heart"></i>
-                        </a>
-                    </div>
-                </div>
-                <div class="pt-4 pb-3 px-4">
-                    <a href="#">
-                        <h4 class="uppercase font-medium text-xl mb-2 text-gray-800 hover:text-primary transition">Bed
-                            King Size</h4>
-                    </a>
-                    <div class="flex items-baseline mb-1 space-x-2">
-                        <p class="text-xl text-primary font-semibold">$45.00</p>
-                        <p class="text-sm text-gray-400 line-through">$55.90</p>
-                    </div>
-                    <div class="flex items-center">
-                        <div class="flex gap-1 text-sm text-yellow-400">
-                            <span><i class="fa-solid fa-star"></i></span>
-                            <span><i class="fa-solid fa-star"></i></span>
-                            <span><i class="fa-solid fa-star"></i></span>
-                            <span><i class="fa-solid fa-star"></i></span>
-                            <span><i class="fa-solid fa-star"></i></span>
-                        </div>
-                        <div class="text-xs text-gray-500 ml-3">(150)</div>
-                    </div>
-                </div>
-                <a href="#"
-                    class="block w-full py-1 text-center text-white bg-primary border border-primary rounded-b hover:bg-transparent hover:text-primary transition">Add
-                    to cart</a>
-            </div>
-            <div class="bg-white shadow rounded overflow-hidden group">
-                <div class="relative">
-                    <img src="<?= base_url('assets/public/')?>assets/images/products/product2.jpg" alt="product 1" class="w-full">
-                    <div class="absolute inset-0 bg-black bg-opacity-40 flex items-center 
-                    justify-center gap-2 opacity-0 group-hover:opacity-100 transition">
-                        <a href="#"
-                            class="text-white text-lg w-9 h-8 rounded-full bg-primary flex items-center justify-center hover:bg-gray-800 transition"
-                            title="view product">
-                            <i class="fa-solid fa-magnifying-glass"></i>
-                        </a>
-                        <a href="#"
-                            class="text-white text-lg w-9 h-8 rounded-full bg-primary flex items-center justify-center hover:bg-gray-800 transition"
-                            title="add to wishlist">
-                            <i class="fa-solid fa-heart"></i>
-                        </a>
-                    </div>
-                </div>
-                <div class="pt-4 pb-3 px-4">
-                    <a href="#">
-                        <h4 class="uppercase font-medium text-xl mb-2 text-gray-800 hover:text-primary transition">
-                            Couple Sofa</h4>
-                    </a>
-                    <div class="flex items-baseline mb-1 space-x-2">
-                        <p class="text-xl text-primary font-semibold">$45.00</p>
-                        <p class="text-sm text-gray-400 line-through">$55.90</p>
-                    </div>
-                    <div class="flex items-center">
-                        <div class="flex gap-1 text-sm text-yellow-400">
-                            <span><i class="fa-solid fa-star"></i></span>
-                            <span><i class="fa-solid fa-star"></i></span>
-                            <span><i class="fa-solid fa-star"></i></span>
-                            <span><i class="fa-solid fa-star"></i></span>
-                            <span><i class="fa-solid fa-star"></i></span>
-                        </div>
-                        <div class="text-xs text-gray-500 ml-3">(150)</div>
-                    </div>
-                </div>
-                <a href="#"
-                    class="block w-full py-1 text-center text-white bg-primary border border-primary rounded-b hover:bg-transparent hover:text-primary transition">Add
-                    to cart</a>
-            </div>
-            <div class="bg-white shadow rounded overflow-hidden group">
-                <div class="relative">
-                    <img src="<?= base_url('assets/public/')?>assets/images/products/product3.jpg" alt="product 1" class="w-full">
-                    <div class="absolute inset-0 bg-black bg-opacity-40 flex items-center 
-                    justify-center gap-2 opacity-0 group-hover:opacity-100 transition">
-                        <a href="#"
-                            class="text-white text-lg w-9 h-8 rounded-full bg-primary flex items-center justify-center hover:bg-gray-800 transition"
-                            title="view product">
-                            <i class="fa-solid fa-magnifying-glass"></i>
-                        </a>
-                        <a href="#"
-                            class="text-white text-lg w-9 h-8 rounded-full bg-primary flex items-center justify-center hover:bg-gray-800 transition"
-                            title="add to wishlist">
-                            <i class="fa-solid fa-heart"></i>
-                        </a>
-                    </div>
-                </div>
-                <div class="pt-4 pb-3 px-4">
-                    <a href="#">
-                        <h4 class="uppercase font-medium text-xl mb-2 text-gray-800 hover:text-primary transition">
-                            Mattrass X</h4>
-                    </a>
-                    <div class="flex items-baseline mb-1 space-x-2">
-                        <p class="text-xl text-primary font-semibold">$45.00</p>
-                        <p class="text-sm text-gray-400 line-through">$55.90</p>
-                    </div>
-                    <div class="flex items-center">
-                        <div class="flex gap-1 text-sm text-yellow-400">
-                            <span><i class="fa-solid fa-star"></i></span>
-                            <span><i class="fa-solid fa-star"></i></span>
-                            <span><i class="fa-solid fa-star"></i></span>
-                            <span><i class="fa-solid fa-star"></i></span>
-                            <span><i class="fa-solid fa-star"></i></span>
-                        </div>
-                        <div class="text-xs text-gray-500 ml-3">(150)</div>
-                    </div>
-                </div>
-                <a href="#"
-                    class="block w-full py-1 text-center text-white bg-primary border border-primary rounded-b hover:bg-transparent hover:text-primary transition">Add
-                    to cart</a>
-            </div>
+        <?php } ?>
         </div>
     </div>
     <!-- ./product -->
-
-    <!-- footer -->
-    <footer class="bg-white pt-16 pb-12 border-t border-gray-100">
-        <div class="container grid grid-cols-1 ">
-            <div class="col-span-1 space-y-4">
-                <img src="<?= base_url('assets/public/')?>assets/images/logo.svg" alt="logo" class="w-30">
-                <div class="mr-2">
-                    <p class="text-gray-500">
-                        Lorem ipsum dolor sit amet consectetur adipisicing elit. Quia, hic?
-                    </p>
-                </div>
-                <div class="flex space-x-5">
-                    <a href="#" class="text-gray-400 hover:text-gray-500"><i
-                            class="fa-brands fa-facebook-square"></i></a>
-                    <a href="#" class="text-gray-400 hover:text-gray-500"><i
-                            class="fa-brands fa-instagram-square"></i></a>
-                    <a href="#" class="text-gray-400 hover:text-gray-500"><i
-                            class="fa-brands fa-twitter-square"></i></a>
-                    <a href="#" class="text-gray-400 hover:text-gray-500">
-                        <i class="fa-brands fa-github-square"></i>
-                    </a>
-                </div>
-            </div>
-
-            <div class="col-span-2 grid grid-cols-2 gap-4">
-                <div class="grid grid-cols-2 gap-4 md:gap-8">
-                    <div>
-                        <h3 class="text-sm font-semibold text-gray-400 uppercase tracking-wider">Solutions</h3>
-                        <div class="mt-4 space-y-4">
-                            <a href="#" class="text-base text-gray-500 hover:text-gray-900 block">Marketing</a>
-                            <a href="#" class="text-base text-gray-500 hover:text-gray-900 block">Analitycs</a>
-                            <a href="#" class="text-base text-gray-500 hover:text-gray-900 block">Commerce</a>
-                            <a href="#" class="text-base text-gray-500 hover:text-gray-900 block">Insights</a>
-                        </div>
-                    </div>
-
-                    <div>
-                        <h3 class="text-sm font-semibold text-gray-400 uppercase tracking-wider">Support</h3>
-                        <div class="mt-4 space-y-4">
-                            <a href="#" class="text-base text-gray-500 hover:text-gray-900 block">Pricing</a>
-                            <!-- <a href="#" class="text-base text-gray-500 hover:text-gray-900 block">Documentation</a> -->
-                            <a href="#" class="text-base text-gray-500 hover:text-gray-900 block">Guides</a>
-                            <a href="#" class="text-base text-gray-500 hover:text-gray-900 block">API Status</a>
-                        </div>
-                    </div>
-                </div>
-                <div class="grid grid-cols-2 gap-8">
-                    <div>
-                        <h3 class="text-sm font-semibold text-gray-400 uppercase tracking-wider">Solutions</h3>
-                        <div class="mt-4 space-y-4">
-                            <a href="#" class="text-base text-gray-500 hover:text-gray-900 block">Marketing</a>
-                            <a href="#" class="text-base text-gray-500 hover:text-gray-900 block">Analitycs</a>
-                            <a href="#" class="text-base text-gray-500 hover:text-gray-900 block">Commerce</a>
-                            <a href="#" class="text-base text-gray-500 hover:text-gray-900 block">Insights</a>
-                        </div>
-                    </div>
-
-                    <div>
-                        <h3 class="text-sm font-semibold text-gray-400 uppercase tracking-wider">Support</h3>
-                        <div class="mt-4 space-y-4">
-                            <a href="#" class="text-base text-gray-500 hover:text-gray-900 block">Pricing</a>
-                            <!-- <a href="#" class="text-base text-gray-500 hover:text-gray-900 block">Documentation</a> -->
-                            <a href="#" class="text-base text-gray-500 hover:text-gray-900 block">Guides</a>
-                            <a href="#" class="text-base text-gray-500 hover:text-gray-900 block">API Status</a>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </footer>
-    <!-- ./footer -->
-
-    <!-- copyright -->
-    <div class="bg-gray-800 py-4">
-        <div class="container flex items-center justify-between">
-            <p class="text-white">&copy; TailCommerce - All Right Reserved</p>
-            <div>
-                <img src="<?= base_url('assets/public/')?>assets/images/methods.png" alt="methods" class="h-5">
-            </div>
-        </div>
-    </div>
-    <!-- ./copyright -->
+    <?php require_once('_footer.php') ?>
 </body>
-
 </html>
