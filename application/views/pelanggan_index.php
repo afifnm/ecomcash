@@ -2,8 +2,8 @@
 	<?php echo $this->session->flashdata('notifikasi', true)?>
 </div>
 <div class="intro-y flex flex-col sm:flex-row items-center mt-8">
-		<a href="javascript:;" data-toggle="modal" data-target="#header-footer-modal-preview"
-			class="button inline-block bg-theme-1 text-white">Tambah Pelanggan </a>
+	<a href="javascript:;" data-toggle="modal" data-target="#header-footer-modal-preview"
+		class="button inline-block bg-theme-1 text-white">Tambah Pelanggan </a>
 </div>
 <!-- BEGIN: Datatable -->
 <div class="intro-y datatable-wrapper box p-5 mt-5">

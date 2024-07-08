@@ -38,6 +38,7 @@ class Produk extends CI_Controller {
 	}
     public function simpan(){
         $this->db->from('produk')->where('kode_produk',$this->input->post('kode_produk'));
+        $this->db->or_where('slug',create_slug($this->input->post('nama')));
         $cek = $this->db->get()->result_array();
         if($cek==NULL){
             date_default_timezone_set("Asia/Jakarta");
@@ -62,6 +63,7 @@ class Produk extends CI_Controller {
                 'kode_produk'  => $this->input->post('kode_produk'),
                 'stok'         => $this->input->post('stok'),
                 'nama'         => $this->input->post('nama'),
+                'slug'         => create_slug($this->input->post('nama')),
                 'harga'        => $this->input->post('harga'),
                 'id_kategori'  => $this->input->post('id_kategori'),
                 'jenis'        => $this->input->post('jenis'),
@@ -73,7 +75,7 @@ class Produk extends CI_Controller {
             ');
         } else {
             $this->session->set_flashdata('notifikasi','
-            <div class="rounded-md px-5 py-4 mb-2 bg-theme-1 text-white">Kode produk sudah digunakan, silahkan ulangi lagi.</div>
+            <div class="rounded-md px-5 py-4 mb-2 bg-theme-1 text-white">Kode produk atau produk sudah dimasukan, silahkan ulangi lagi.</div>
             ');
         }
         redirect($_SERVER['HTTP_REFERER']);
@@ -113,6 +115,7 @@ class Produk extends CI_Controller {
             'kode_produk'  => $this->input->post('kode_produk'),
             'stok'         => $this->input->post('stok'),
             'nama'         => $this->input->post('nama'),
+            'slug'         => create_slug($this->input->post('nama')),
             'harga'        => $this->input->post('harga'),
             'id_kategori'  => $this->input->post('id_kategori'),
             'jenis'        => $this->input->post('jenis'),

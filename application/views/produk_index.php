@@ -115,11 +115,11 @@
 				</div>
 				<div class="col-span-12 sm:col-span-12">
 					<label>Stok</label>
-					<input type="number" name="stok" class="input w-full border mt-2 flex-1" required>
+					<input type="number" name="stok" class="input w-full border mt-2 flex-1" required min="0">
 				</div>
 				<div class="col-span-12 sm:col-span-12">
 					<label>Harga</label>
-					<input type="number" name="harga" class="input w-full border mt-2 flex-1" required>
+					<input type="number" name="harga" class="input w-full border mt-2 flex-1" required min="0">
 				</div>
 				<div class="col-span-12 sm:col-span-12">
 					<label>Foto</label>
@@ -166,11 +166,11 @@
 				</div>
 				<div class="col-span-12 sm:col-span-12">
 					<label>Stok Awal</label>
-					<input type="number" name="stok" class="input w-full border mt-2 flex-1" id="stok">
+					<input type="number" name="stok" class="input w-full border mt-2 flex-1" id="stok" min="0">
 				</div>
 				<div class="col-span-12 sm:col-span-12">
 					<label>Harga</label>
-					<input type="number" name="harga" class="input w-full border mt-2 flex-1" id="harga">
+					<input type="number" name="harga" class="input w-full border mt-2 flex-1" id="harga" min="0">
 				</div>
 				<div class="col-span-12 sm:col-span-12">
 					<label>Foto</label>

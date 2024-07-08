@@ -15,6 +15,14 @@ class Kategori extends CI_Controller {
 		$this->template->load('temp','kategori_index',$data);
 	}
     public function simpan(){
+        $this->db->from('kategori')->where('slug',create_slug($this->input->post('kategori')));
+        $cek = $this->db->get()->result_array();
+        if($cek<>NULL){
+            $this->session->set_flashdata('notifikasi','
+            <div class="rounded-md px-5 py-4 mb-2 bg-theme-1 text-white">Kategori produk sudah ada</div>
+            ');
+            redirect($_SERVER['HTTP_REFERER']);            
+        }
         date_default_timezone_set("Asia/Jakarta");
         $namafoto = date('YmdHis').'.jpg';
         $config['upload_path']          = 'assets/kategori/';
@@ -35,6 +43,7 @@ class Kategori extends CI_Controller {
         }   
         $data = array(
             'kategori'  => $this->input->post('kategori'),
+            'slug'      => create_slug($this->input->post('kategori')),
             'foto'      => $namafoto,
         );
         $this->db->insert('kategori',$data);
@@ -75,7 +84,8 @@ class Kategori extends CI_Controller {
             $data = array('upload_data' => $this->upload->data());
         }   
         $data = array(
-            'kategori'  => $this->input->post('kategori')
+            'kategori'  => $this->input->post('kategori'),
+            'slug'      => create_slug($this->input->post('kategori')),
         );
         $where = array('id_kategori'   => $this->input->post('id_kategori') );
         $this->db->update('kategori',$data,$where);

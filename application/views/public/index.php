@@ -68,7 +68,7 @@
             <?php foreach($this->View_model->get_kategori() as $kategori) { ?> 
                 <div class="relative rounded-sm overflow-hidden group">
                     <img src="<?= base_url('assets/kategori/'.$kategori['foto']) ?>" alt="category 1" class="w-full">
-                    <a href="<?= base_url('produk/k/'.$kategori['id_kategori']) ?>"
+                    <a href="<?= base_url('produk/k/'.$kategori['slug']) ?>"
                         class="absolute inset-0 bg-black bg-opacity-40 flex items-center justify-center text-xl text-white font-roboto font-medium group-hover:bg-opacity-60 transition"><?= $kategori['kategori'] ?></a>
                 </div>
             <?php } ?>
@@ -91,7 +91,7 @@
                         <p class="fs-4 md:text-xl text-primary font-semibold">Rp. <?= number_format($produkTerbaru['harga']); ?></p>
                     </div>
                 </div>
-                <a href="<?= base_url('produk/v/'.$produkTerbaru['id_produk']) ?>"
+                <a href="<?= base_url('produk/v/'.$produkTerbaru['slug']) ?>"
                     class="block w-full py-1 text-center text-white bg-primary border border-primary rounded-b hover:bg-transparent hover:text-primary transition">
                     Lihat Produk</a>
             </div>
@@ -123,7 +123,7 @@
                         <p class="fs-4 md:text-xl text-primary font-semibold">Rp. <?= number_format($produkTerbaru['harga']); ?></p>
                     </div>
                 </div>
-                <a href="<?= base_url('produk/v/'.$produkTerbaru['id_produk']) ?>"
+                <a href="<?= base_url('produk/v/'.$produkTerbaru['slug']) ?>"
                     class="block w-full py-1 text-center text-white bg-primary border border-primary rounded-b hover:bg-transparent hover:text-primary transition">
                     Lihat Produk</a>
             </div>
