@@ -1,11 +1,13 @@
 <!-- navbar -->
-<nav class="bg-gray-800">
+<nav class="bg-gray-800 py-2">
     <div class="container flex">
         <div class="px-8 py-4 bg-primary md:flex items-center cursor-pointer relative group hidden">
             <span class="text-white">
                 <i class="fa-solid fa-bars"></i>
             </span>
-            <h2 class="text-2xl text-white"><?= $site['nama_cv'] ?></h2>
+            <a href="<?= base_url('beranda') ?>">
+                <h2 class="text-2xl text-white"><?= $site['nama_cv'] ?></h2>
+            </a> 
         </div>
 
         <div class="flex items-center justify-between flex-grow md:pl-12 py-5">

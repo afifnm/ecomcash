@@ -16,11 +16,7 @@
 </head>
 
 <body>
-    <?php require_once('_header.php'); ?>
-    <!-- ./header -->
     <?php require_once('_nav.php'); ?>
-    <!-- ./navbar -->
-    <!-- ./features -->
     <!-- product-detail -->
     <div class="container grid grid-cols-2 gap-6 py-16">
         <div class="p-10">
