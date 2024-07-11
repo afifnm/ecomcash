@@ -18,51 +18,63 @@
 <body>
     <?php require_once('_nav.php'); ?>
     <!-- product-detail -->
+    <div id="myalert" style="margin-bottom: 20px;">
+        <?= $this->session->flashdata('notifikasi', true)?>
+    </div>
     <div class="container grid grid-cols-2 gap-6 py-16">
         <div class="p-10">
             <img src="<?= base_url('assets/produk/'.$produk->foto) ?>" alt="product" class="w-full">
         </div>
-        <div>
-            <h2 class="text-3xl font-medium uppercase mb-2"><?= $produk->nama ?></h2>
-            <div class="space-y-2">
-                <p class="text-gray-800 font-semibold space-x-2">
-                    <span>Stok</span>
-                    <?php if($produk->stok>0){ ?>
-                    <span class="text-green-600"> : <?= $produk->stok; ?></span>
-                    <?php } else { ?>
-                    <span class="text-red-600"> : Habis</span>
-                    <?php } ?>
-                </p>
-                <p class="space-x-2">
-                    <span class="text-gray-800 font-semibold">Kategori : </span>
-                    <span class="text-gray-600"><?= $produk->kategori ?></span>
-                </p>
-            </div>
-            <div class="flex items-baseline mb-1 space-x-2 font-roboto mt-4">
-                <p class="text-xl text-primary font-semibold">Rp. <?= number_format($produk->harga) ?></p>
-            </div>
-            <div class="mt-4">
-                <h3 class="text-sm text-gray-800 uppercase mb-1">Jumlah</h3>
-                <div class="flex border border-gray-300 text-gray-600 divide-x divide-gray-300 w-max">
-                    <button type="button"
-                        class="px-4 py-3 text-gray-600 text-sm border-r border-gray-300 focus:outline-none"
-                        onclick="decreaseValue()">-</button>
-                    <input type="text" name="jumlah" min="1" value="1" id="jumlah"
-                        class="border-0 px-4 py-3 text-gray-600 text-sm text-center focus:ring-0 focus:border-primary placeholder-gray-400"
-                        style="width: 50px;" oninput="this.value = this.value.replace(/[^0-9]/g, '');">
-                    <button type="button"
-                        class="px-4 py-3 text-gray-600 text-sm border-l border-gray-300 focus:outline-none"
-                        onclick="increaseValue()">+</button>
+        <form action="<?= base_url('customer/addKeranjang') ?>" method="post">
+            <input type="hidden" name="id_produk" value="<?= $produk->id_produk ?>">
+            <div>
+                <h2 class="text-3xl font-medium uppercase mb-2"><?= $produk->nama ?></h2>
+                <div class="space-y-2">
+                    <p class="text-gray-800 font-semibold space-x-2">
+                        <span>Stok</span>
+                        <?php if($produk->stok>0){ ?>
+                        <span class="text-green-600"> : <?= $produk->stok; ?></span>
+                        <?php } else { ?>
+                        <span class="text-red-600"> : Habis</span>
+                        <?php } ?>
+                    </p>
+                    <p class="space-x-2">
+                        <span class="text-gray-800 font-semibold">Kategori : </span>
+                        <span class="text-gray-600"><?= $produk->kategori ?></span>
+                    </p>
                 </div>
-
+                <div class="flex items-baseline mb-1 space-x-2 font-roboto mt-4">
+                    <p class="text-xl text-primary font-semibold">Rp. <?= number_format($produk->harga) ?></p>
+                </div>
+                <div class="mt-4">
+                    <h3 class="text-sm text-gray-800 uppercase mb-1">Jumlah</h3>
+                    <div class="flex border border-gray-300 text-gray-600 divide-x divide-gray-300 w-max">
+                        <button type="button"
+                            class="px-4 py-3 text-gray-600 text-sm border-r border-gray-300 focus:outline-none"
+                            onclick="decreaseValue()">-</button>
+                        <input type="text" name="jumlah" min="1" value="1" id="jumlah"
+                            class="border-0 px-4 py-3 text-gray-600 text-sm text-center focus:ring-0 focus:border-primary placeholder-gray-400"
+                            style="width: 50px;" oninput="this.value = this.value.replace(/[^0-9]/g, '');">
+                        <button type="button"
+                            class="px-4 py-3 text-gray-600 text-sm border-l border-gray-300 focus:outline-none"
+                            onclick="increaseValue()">+</button>
+                    </div>
+                </div>
+                <div class="mt-6 flex gap-3 border-b border-gray-200 pb-5 pt-5">
+                <?php if($this->session->userdata('login')=="Frontend"){ ?>
+                    <button type="submit"
+                        class="bg-primary border border-primary text-white px-8 py-2 font-medium rounded uppercase flex items-center gap-2 hover:bg-transparent hover:text-primary transition">
+                        <i class="fa-solid fa-bag-shopping"></i> Tambah ke keranjang
+                    </button>
+                <?php } else { ?>
+                    <a href="<?= base_url('login') ?>"
+                        class="bg-primary border border-primary text-white px-8 py-2 font-medium rounded uppercase flex items-center gap-2 hover:bg-transparent hover:text-primary transition">
+                        <i class="fa-solid fa-bag-shopping"></i> SILAHKAN LOGIN TERLEBIH DAHULU
+                    </a>
+                <?php } ?>
+                </div>
             </div>
-            <div class="mt-6 flex gap-3 border-b border-gray-200 pb-5 pt-5">
-                <a href="#"
-                    class="bg-primary border border-primary text-white px-8 py-2 font-medium rounded uppercase flex items-center gap-2 hover:bg-transparent hover:text-primary transition">
-                    <i class="fa-solid fa-bag-shopping"></i> Tambah ke keranjang
-                </a>
-            </div>
-        </div>
+        </form>
     </div>
     <!-- ./product-detail -->
 

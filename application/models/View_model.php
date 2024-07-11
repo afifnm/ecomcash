@@ -89,5 +89,15 @@ class View_model extends CI_Model{
         $this->db->where('id_pelanggan', $id_pelanggan)->from('pelanggan');
         return $this->db->get()->row()->nama;
     }
-
+    //customer
+    public function get_jumlah_keranjang($id_pelanggan) {
+        $this->db->where('id_pelanggan',$id_pelanggan);
+        return $this->db->count_all('keranjang');
+    }
+    public function get_keranjang($id_pelanggan){
+		$this->db->select('a.*, b.*, c.kategori')->from('keranjang a')
+		         ->join('produk b','a.id_produk=b.id_produk','left')
+		         ->join('kategori c','b.id_kategori=c.id_kategori','left');
+        return $this->db->get()->result_array();
+    }
 }

@@ -15,8 +15,22 @@
                 <a href="<?= base_url('beranda') ?>" class="text-gray-200 hover:text-white transition">Beranda</a>
                 <a href="<?= base_url('produk') ?>" class="text-gray-200 hover:text-white transition">Belanja</a>
                 <a href="<?= base_url('beranda/tentangkami') ?>" class="text-gray-200 hover:text-white transition">Tentang Kami</a>
+                <?php if($this->session->userdata('login')=="Frontend"){ ?>
+                <a href="<?= base_url('customer/keranjang') ?>" class="text-gray-200 hover:text-white transition">
+                    Keranjang Belanja
+                    (<?= $this->View_model->get_jumlah_keranjang($this->session->userdata('id_pelanggan')) ?>)
+                </a>
+                <?php } ?>
             </div>
-            <a href="<?= base_url('login') ?>" class="text-gray-200 hover:text-white transition">Login</a>
+            <?php if($this->session->userdata('login')=="Frontend"){ ?>
+                <a href="<?= base_url('customer') ?>" class="text-gray-200 hover:text-white transition">
+                    <?= $this->session->userdata('nama') ?>
+                </a>
+            <?php } else { ?>
+                <a href="<?= base_url('login') ?>" class="text-gray-200 hover:text-white transition">
+                    Login
+                </a>
+            <?php } ?>
         </div>
     </div>
 </nav>

@@ -18,9 +18,12 @@
     <!-- login -->
     <div class="contain py-16">
         <div class="max-w-lg mx-auto shadow px-6 py-7 rounded overflow-hidden">
+            <div id="myalert" style="margin-bottom: 20px;">
+                <?= $this->session->flashdata('notifikasi', true)?>
+            </div>
             <h2 class="text-2xl uppercase font-medium mb-1">Register</h2>
             <p class="text-gray-600 mb-6 text-sm">Buat akun anda untuk memulai belanja</p>
-            <form action="<?= base_url('login/simpan') ?>" method="post" autocomplete="off">
+            <form action="<?= base_url('login/simpan') ?>" method="post" autocomplete="off"  onsubmit="return validateForm()">
                 <div class="space-y-2">
                     <div>
                         <label for="email" class="text-gray-600 mb-2 block">Email address</label>
@@ -36,7 +39,7 @@
                     </div>
                     <div>
                         <label for="password" class="text-gray-600 mb-2 block">Konfirmasi Password</label>
-                        <input type="password" name="passwordKonf" id="password" required
+                        <input type="password" name="passwordKonf" id="passwordKonf" required
                             class="block w-full border border-gray-300 px-4 py-3 text-gray-600 text-sm rounded focus:ring-0 focus:border-primary placeholder-gray-400"
                             placeholder="*******">
                     </div>
@@ -53,15 +56,15 @@
                             placeholder="Alamat Lengkap">
                     </div>
                     <div>
-                        <label for="alamat" class="text-gray-600 mb-2 block">No. Telp (Whatsapp)</label>
-                        <input type="alamat" name="alamat" id="alamat" required
+                        <label for="telp" class="text-gray-600 mb-2 block">No. Telp (Whatsapp)</label>
+                        <input type="telp" name="telp" id="telp" required
                             class="block w-full border border-gray-300 px-4 py-3 text-gray-600 text-sm rounded focus:ring-0 focus:border-primary placeholder-gray-400"
                             placeholder="Tulis dengan format +62896733333">
                     </div>
                 </div>
                 <div class="mt-4">
                     <button type="submit"
-                        class="block w-full py-2 text-center text-white bg-primary border border-primary rounded hover:bg-transparent hover:text-primary transition uppercase font-roboto font-medium">Login</button>
+                        class="block w-full py-2 text-center text-white bg-primary border border-primary rounded hover:bg-transparent hover:text-primary transition uppercase font-roboto font-medium">Register</button>
                 </div>
             </form>
             <!-- login with -->
@@ -75,5 +78,16 @@
     </div>
     <!-- ./login -->
     <?php require_once('_footer.php') ?>
+    <script>
+        function validateForm() {
+            var password = document.getElementById("password").value;
+            var passwordKonf = document.getElementById("passwordKonf").value;
+            if (password !== passwordKonf) {
+                alert("Password dan konfirmasi password tidak sesuai.");
+                return false;
+            }
+            return true;
+        }
+    </script>
 </body>
 </html>

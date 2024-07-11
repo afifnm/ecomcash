@@ -55,20 +55,22 @@ class Produk extends CI_Controller{
         );
         $this->load->view('public/produkAll',array_merge($data));
     }
-    public function p($keyword,$id=NULL){ //berdasarkan kategori
+    public function p(){ //berdasarkan kategori
         $site = $this->Konfigurasi_model->listing();
-        $judul = $this->View_model->get_kategori_nama($keyword);
-        $config['base_url'] = site_url('produk/k/'.$keyword); // Base URL untuk pagination
-        $config['total_rows'] = $this->View_model->get_produkKategori_total($keyword); // Total produk
-        $config['per_page'] = 16; // Produk per halaman
-        $this->html_pagination();
-        $this->pagination->initialize($config);
+        $keyword = $this->input->get('keyword', TRUE);
+        $this->db->like('nama', $keyword);
+        $query = $this->db->get('produk'); // Sesuaikan nama tabel Anda
+        $produk = $query->result_array();
+        if($produk==NULL){
+            $judul = 'Produk tidak ditemukan';
+        } else {
+            $judul = $keyword;
+        }
         $data = array(
             'title'                 => $judul. ' | '.$site['nama_cv'],
             'site'                  => $site,
             'judul'                 => $judul,
-            'produk'                => $this->View_model->get_produkKategori_pagination($keyword,$config['per_page'], $id),
-            'pagination'            => $this->pagination->create_links(),
+            'produk'                => $produk,
             'kategori'              => $this->View_model->get_kategori_dan_jumlah_produk()
         );
         $this->load->view('public/produkAll',array_merge($data));

@@ -29,3 +29,7 @@
         </div>
     </div>
     <!-- ./copyright -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+    <script>
+    $('#myalert').delay('slow').slideDown('slow').delay(2500).slideUp(800);
+  	</script>

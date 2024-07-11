@@ -41,9 +41,10 @@ class Auth extends CI_Controller {
         } else if($cek->password==$password){
             $data = array(
                 'id_user'   => $cek->id_user,
-                'username'   => $cek->username,
-                'level'   => $cek->level,
-                'nama'   => $cek->nama,
+                'username'  => $cek->username,
+                'level'     => $cek->level,
+                'nama'      => $cek->nama,
+                'login'     => 'Backend'
             );
             $this->session->set_userdata($data);
             redirect('admin/home');

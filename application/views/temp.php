@@ -156,7 +156,7 @@
 	
 	<script>
     $('#myalert').delay('slow').slideDown('slow').delay(6500).slideUp(600);
-  </script>
+  	</script>
 </body>
 
 </html>
