@@ -253,6 +253,7 @@ class Penjualan extends CI_Controller {
 			'pembayaran'		=> $this->input->post('pembayaran'),
 			'bukti'				=> $nota.'.jpg',
 			'transaksi'			=> 'Offline',
+			'status'			=> 'selesai',
 			'tanggal'			=> date('Y-m-d'),
 		);
 		$this->db->insert('penjualan',$data);

@@ -1,20 +1,8 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title><?= $title; ?></title>
-    <link rel="shortcut icon" href="<?= base_url('assets/logo.png')?>" type="image/x-icon">
-    <link rel="stylesheet" href="<?= base_url('assets/public/')?>assets/css/main.css">
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link
-        href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&family=Roboto:wght@400;500;700&display=swap"
-        rel="stylesheet">
+    <?php require_once('_css.php'); ?>
 </head>
-
 <body>
     <?php require_once('_nav.php'); ?>
     <!-- wrapper -->
@@ -52,11 +40,13 @@
                 </div>
             </div>
             <?php } ?>
+            <a href="<?= base_url('customer/checkout') ?>" class="block w-full py-3 px-4 text-center text-white bg-primary border border-primary rounded-md hover:bg-transparent hover:text-primary transition font-medium">
+                Buat Pesanan
+            </a>
         </div>
         <!-- ./wishlist -->
     </div>
     <!-- ./wrapper -->
     <?php require_once('_footer.php') ?>
 </body>
-
 </html>
