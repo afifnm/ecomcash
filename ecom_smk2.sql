@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jul 11, 2024 at 09:54 AM
+-- Generation Time: Jul 12, 2024 at 09:02 AM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.0.30
 
@@ -20,6 +20,20 @@ SET time_zone = "+00:00";
 --
 -- Database: `ecom_smk2`
 --
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `checkout`
+--
+
+CREATE TABLE `checkout` (
+  `id_checkout` int(11) NOT NULL,
+  `kode_penjualan` varchar(30) NOT NULL,
+  `id_produk` int(11) NOT NULL,
+  `jumlah` int(11) NOT NULL,
+  `subtotal` decimal(10,0) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
 
@@ -150,16 +164,17 @@ CREATE TABLE `penjualan` (
   `bayar` decimal(10,0) NOT NULL,
   `pembayaran` varchar(10) NOT NULL,
   `bukti` varchar(25) NOT NULL,
-  `transaksi` varchar(10) NOT NULL
+  `transaksi` varchar(10) NOT NULL,
+  `status` enum('selesai','proses','dibatalkan') NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data for table `penjualan`
 --
 
-INSERT INTO `penjualan` (`id_penjualan`, `kode_penjualan`, `tanggal`, `total_harga`, `id_pelanggan`, `bayar`, `pembayaran`, `bukti`, `transaksi`) VALUES
-(1, '2407020101', '2024-07-02', 376000, 1, 400000, 'Tunai', '2407020101.jpg', 'Offline'),
-(2, '2407020202', '2024-07-02', 55000, 2, 55000, 'Transfer', '2407020202.jpg', 'Offline');
+INSERT INTO `penjualan` (`id_penjualan`, `kode_penjualan`, `tanggal`, `total_harga`, `id_pelanggan`, `bayar`, `pembayaran`, `bukti`, `transaksi`, `status`) VALUES
+(1, '2407020101', '2024-07-02', 376000, 1, 400000, 'Tunai', '2407020101.jpg', 'Offline', 'selesai'),
+(2, '2407020202', '2024-07-02', 55000, 2, 55000, 'Transfer', '2407020202.jpg', 'Offline', 'selesai');
 
 -- --------------------------------------------------------
 
@@ -229,6 +244,12 @@ INSERT INTO `user` (`id_user`, `username`, `password`, `nama`, `level`) VALUES
 --
 
 --
+-- Indexes for table `checkout`
+--
+ALTER TABLE `checkout`
+  ADD PRIMARY KEY (`id_checkout`);
+
+--
 -- Indexes for table `detail_penjualan`
 --
 ALTER TABLE `detail_penjualan`
@@ -285,6 +306,12 @@ ALTER TABLE `user`
 --
 -- AUTO_INCREMENT for dumped tables
 --
+
+--
+-- AUTO_INCREMENT for table `checkout`
+--
+ALTER TABLE `checkout`
+  MODIFY `id_checkout` int(11) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT for table `detail_penjualan`
