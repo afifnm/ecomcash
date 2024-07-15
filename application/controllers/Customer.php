@@ -31,6 +31,15 @@ class Customer extends CI_Controller{
         );
         $this->load->view('public/customerKeranjang',array_merge($data));
     }
+    public function pesanan(){
+        $site = $this->Konfigurasi_model->listing();
+        $data = array(
+            'title'                 => 'Pesanan Belanja | '.$site['nama_cv'],
+            'site'                  => $site,
+            'pesanan'               => $this->View_model->get_pesanan($this->session->userdata('id_pelanggan'))
+        );
+        $this->load->view('public/customerPesanan',array_merge($data));
+    }
     public function checkout(){
         $site = $this->Konfigurasi_model->listing();
         $data = array(
@@ -39,6 +48,24 @@ class Customer extends CI_Controller{
             'keranjang'             => $this->View_model->get_keranjang($this->session->userdata('id_pelanggan'))
         );
         $this->load->view('public/customerCheckout',array_merge($data));
+    }
+    public function detail($kode_penjualan){
+        $site = $this->Konfigurasi_model->listing();
+		$this->db->select('*')->from('penjualan ')
+                              ->where('kode_penjualan',$kode_penjualan);
+        $penjualan = $this->db->get()->row();
+
+		$this->db->from('detail_penjualan a');
+		$this->db->join('produk b','a.id_produk=b.id_produk','left');
+		$this->db->where('a.kode_penjualan',$kode_penjualan);
+		$detail = $this->db->get()->result_array();
+        $data = array(
+            'title'                 => $kode_penjualan.' | '.$site['nama_cv'],
+            'site'                  => $site,
+            'penjualan'             => $penjualan,
+            'detail'                => $detail
+        );
+        $this->load->view('public/customerDetail',array_merge($data));
     }
     public function update(){
         $data = array(
@@ -155,18 +182,18 @@ class Customer extends CI_Controller{
 		}else{
 			$data = array('upload_data' => $this->upload->data());
 		} 
-		$this->db->from('temp a');
-		$this->db->join('produk b','a.id_produk=b.id_produk','left');
-		$this->db->where('a.id_user',$this->session->userdata('id_user'));
-		$this->db->where('a.id_pelanggan',$this->input->post('id_pelanggan'));
-		$temp = $this->db->get()->result_array();
+		$this->db->from('keranjang a')
+                ->join('produk b','a.id_produk=b.id_produk','left')
+                ->where('a.id_pelanggan',$id_pelanggan);
+		$keranjang = $this->db->get()->result_array();
 		$total = 0; //nilai awal
-		foreach($temp as $row){
-			if($row['stok']<$row['jumlah']){ //jika ada produk yang stok kurang langsung pindah ke halaman transaksi
-				$this->session->set_flashdata('notifikasi','
-				<div class="rounded-md px-5 py-4 mb-2 bg-theme-1 text-white">Produk dipilih tidak mencukupi.</div>
-				');
-				redirect($_SERVER["HTTP_REFERER"]);
+		foreach($keranjang as $row){
+			if($row['stok']<$row['jumlah']){ //jika ada produk yang stok kurang langsung pindah ke halaman keranjang
+                $this->session->set_flashdata('notifikasi','
+                <h2 class="block w-full py-2 text-center text-white bg-primary border border-primary rounded">
+                Produk dipilih tidak mencukupi stok, cek kembali pesanan anda.</h2>
+                ');
+				redirect('customer/keranjang');
 			}
 			$total = $total+$row['jumlah']*$row['harga'];
 			
@@ -182,28 +209,43 @@ class Customer extends CI_Controller{
 			$where = array( 'id_produk' => $row['id_produk']);
 			$this->db->update('produk',$data2,$where); //update tabel produk stoknya
 			
-			$where2 = array(
-				'id_user'		=> $this->session->userdata('id_user'),
-				'id_pelanggan'	=> $this->input->post('id_pelanggan')
-			);
-			$this->db->delete('temp',$where2); //hapus dari tabel temp 
+			$where2 = array('id_pelanggan'	=> $id_pelanggan);
+			$this->db->delete('keranjang',$where2); //hapus dari tabel keranjang 
 		}
 		//bagian input ke tabel penjualan
 		$data = array(
 			'kode_penjualan' 	=> $nota,
 			'total_harga'		=> $total,
-			'bayar'				=> $this->input->post('bayar'),
-			'id_pelanggan'		=> $this->input->post('id_pelanggan'),
+			'bayar'				=> $total,
+			'id_pelanggan'		=> $id_pelanggan,
 			'pembayaran'		=> $this->input->post('pembayaran'),
 			'bukti'				=> $nota.'.jpg',
-			'transaksi'			=> 'Offline',
-			'status'			=> 'selesai',
+			'transaksi'			=> 'Online',
+			'status'			=> 'proses',
 			'tanggal'			=> date('Y-m-d'),
 		);
 		$this->db->insert('penjualan',$data);
 		$this->session->set_flashdata('notifikasi','
 		<div class="rounded-md px-5 py-4 mb-2 bg-theme-1 text-white">Penjualan berhasil.</div>
 		');
-		redirect('admin/penjualan/invoice/'.$nota);
+		redirect('customer/pesanan');
+	}
+    public function cancel($kode_penjualan){ 
+        $data2 = array( 'status' => 'dibatalkan');
+        $where = array( 'kode_penjualan' => $kode_penjualan);
+        $this->db->update('penjualan',$data2,$where); //update tabel produk stoknya
+		$this->session->set_flashdata('notifikasi','
+		<div class="rounded-md px-5 py-4 mb-2 bg-theme-1 text-white">Pesananmu berhasil dibatalkan.</div>
+		');
+        $this->db->select('*')->from('detail_penjualan a')
+                ->join('produk b','a.id_produk=b.id_produk','left')
+                ->where('a.kode_penjualan',$kode_penjualan);
+		$detail = $this->db->get()->result_array();
+        foreach($detail as $row){
+			$data2 = array( 'stok' => $row['stok']+$row['jumlah']);
+			$where = array( 'id_produk' => $row['id_produk']);
+			$this->db->update('produk',$data2,$where); //update tabel produk stoknya
+		}
+		redirect($_SERVER['HTTP_REFERER']);
 	}
 }

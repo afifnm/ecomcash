@@ -100,4 +100,10 @@ class View_model extends CI_Model{
 		         ->join('kategori c','b.id_kategori=c.id_kategori','left');
         return $this->db->get()->result_array();
     }
+    public function get_pesanan($id_pelanggan){
+		$this->db->select('*')->from('penjualan')
+                 ->order_by('kode_penjualan','DESC')
+                 ->where('id_pelanggan',$id_pelanggan);
+        return $this->db->get()->result_array();
+    }
 }

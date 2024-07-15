@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jul 12, 2024 at 09:02 AM
+-- Generation Time: Jul 15, 2024 at 10:28 AM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.0.30
 
@@ -20,20 +20,6 @@ SET time_zone = "+00:00";
 --
 -- Database: `ecom_smk2`
 --
-
--- --------------------------------------------------------
-
---
--- Table structure for table `checkout`
---
-
-CREATE TABLE `checkout` (
-  `id_checkout` int(11) NOT NULL,
-  `kode_penjualan` varchar(30) NOT NULL,
-  `id_produk` int(11) NOT NULL,
-  `jumlah` int(11) NOT NULL,
-  `subtotal` decimal(10,0) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
 
@@ -56,7 +42,10 @@ CREATE TABLE `detail_penjualan` (
 INSERT INTO `detail_penjualan` (`id_detail`, `kode_penjualan`, `id_produk`, `jumlah`, `sub_total`) VALUES
 (5, '2407020101', 4, 2, 110000),
 (6, '2407020101', 1, 2, 266000),
-(7, '2407020202', 4, 1, 55000);
+(7, '2407020202', 4, 1, 55000),
+(9, '2407150503', 4, 2, 110000),
+(10, '2407150503', 5, 3, 6000),
+(11, '2407150504', 4, 3, 165000);
 
 -- --------------------------------------------------------
 
@@ -93,14 +82,6 @@ CREATE TABLE `keranjang` (
   `id_pelanggan` int(11) NOT NULL,
   `jumlah` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-
---
--- Dumping data for table `keranjang`
---
-
-INSERT INTO `keranjang` (`id_keranjang`, `id_produk`, `id_pelanggan`, `jumlah`) VALUES
-(6, 4, 5, 2),
-(7, 5, 5, 3);
 
 -- --------------------------------------------------------
 
@@ -174,7 +155,9 @@ CREATE TABLE `penjualan` (
 
 INSERT INTO `penjualan` (`id_penjualan`, `kode_penjualan`, `tanggal`, `total_harga`, `id_pelanggan`, `bayar`, `pembayaran`, `bukti`, `transaksi`, `status`) VALUES
 (1, '2407020101', '2024-07-02', 376000, 1, 400000, 'Tunai', '2407020101.jpg', 'Offline', 'selesai'),
-(2, '2407020202', '2024-07-02', 55000, 2, 55000, 'Transfer', '2407020202.jpg', 'Offline', 'selesai');
+(2, '2407020202', '2024-07-02', 55000, 2, 55000, 'Transfer', '2407020202.jpg', 'Offline', 'selesai'),
+(3, '2407150503', '2024-07-15', 116000, 5, 116000, 'Tunai', '2407150503.jpg', 'Online', 'dibatalkan'),
+(4, '2407150504', '2024-07-15', 165000, 5, 165000, 'Transfer', '2407150504.jpg', 'Online', 'dibatalkan');
 
 -- --------------------------------------------------------
 
@@ -200,8 +183,8 @@ CREATE TABLE `produk` (
 
 INSERT INTO `produk` (`id_produk`, `kode_produk`, `nama`, `slug`, `stok`, `harga`, `foto`, `id_kategori`, `jenis`) VALUES
 (1, '23123130131', 'Jolly Facial Tisu Wajah', 'jolly-facial-tisu-wajah', 15, 133000, '20240702113728.jpg', '9', 'Usman'),
-(4, '3123123311', 'Beras Sania 2kg', 'beras-sania-2kg', 33, 55000, '20240702115743.jpg', '9', 'Usman'),
-(5, '1231233', 'Risol Mayo', 'risol-mayo', 50, 2000, '20240702121147.jpg', '10', 'Umum');
+(4, '3123123311', 'Beras Sania 2kg', 'beras-sania-2kg', 30, 55000, '20240702115743.jpg', '9', 'Usman'),
+(5, '1231233', 'Risol Mayo', 'risol-mayo', 33, 2000, '20240702121147.jpg', '10', 'Umum');
 
 -- --------------------------------------------------------
 
@@ -242,12 +225,6 @@ INSERT INTO `user` (`id_user`, `username`, `password`, `nama`, `level`) VALUES
 --
 -- Indexes for dumped tables
 --
-
---
--- Indexes for table `checkout`
---
-ALTER TABLE `checkout`
-  ADD PRIMARY KEY (`id_checkout`);
 
 --
 -- Indexes for table `detail_penjualan`
@@ -308,16 +285,10 @@ ALTER TABLE `user`
 --
 
 --
--- AUTO_INCREMENT for table `checkout`
---
-ALTER TABLE `checkout`
-  MODIFY `id_checkout` int(11) NOT NULL AUTO_INCREMENT;
-
---
 -- AUTO_INCREMENT for table `detail_penjualan`
 --
 ALTER TABLE `detail_penjualan`
-  MODIFY `id_detail` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
+  MODIFY `id_detail` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
 
 --
 -- AUTO_INCREMENT for table `kategori`
@@ -329,7 +300,7 @@ ALTER TABLE `kategori`
 -- AUTO_INCREMENT for table `keranjang`
 --
 ALTER TABLE `keranjang`
-  MODIFY `id_keranjang` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
+  MODIFY `id_keranjang` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
 
 --
 -- AUTO_INCREMENT for table `konfigurasi`
@@ -347,7 +318,7 @@ ALTER TABLE `pelanggan`
 -- AUTO_INCREMENT for table `penjualan`
 --
 ALTER TABLE `penjualan`
-  MODIFY `id_penjualan` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id_penjualan` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- AUTO_INCREMENT for table `produk`

@@ -9,6 +9,7 @@
 				Bukti Transfer </a> 
 			<?php } ?>
 			<div class="mt-2"> Nomor Nota <span class="font-medium">#<?= $nota ?></span> </div>
+			<div class="mt-2"> Pesanan <span class="font-medium"><?= $penjualan->status ?></span> </div>
 			<div class="mt-1">
 				<?php
                 $date=date_create($penjualan->tanggal);

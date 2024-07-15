@@ -115,6 +115,13 @@
 				</a>
 			</li>
 			<li>
+				<a href="<?= base_url('admin/pesanan') ?>"
+					class="top-menu top-menu--<?php if($halaman=='pesanan'){ echo "active"; } ?>">
+					<div class="top-menu__icon"> <i data-feather="globe"></i> </div>
+					<div class="top-menu__title"> Pesanan Online </div>
+				</a>
+			</li>
+			<li>
 				<a href="<?= base_url('admin/produk') ?>"
 					class="top-menu top-menu--<?php if($halaman=='produk'){ echo "active"; } ?>">
 					<div class="top-menu__icon"> <i data-feather="package"></i> </div>
