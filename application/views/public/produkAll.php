@@ -2,6 +2,12 @@
 <html lang="en">
 <head>
     <?php require_once('_css.php'); ?>
+    <style>
+        .menu li.active a {
+            background-color: #007bff; /* Warna latar belakang untuk menu aktif */
+            color: white; /* Warna teks untuk menu aktif */
+        }
+    </style>
 </head>
 <body>
     <?php require_once('_nav.php'); ?>

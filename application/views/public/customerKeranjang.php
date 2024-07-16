@@ -39,10 +39,11 @@
                     <i class="fa-solid fa-trash"></i>
                 </div>
             </div>
-            <a href="<?= base_url('customer/checkout') ?>" class="block w-full py-3 px-4 text-center text-white bg-primary border border-primary rounded-md hover:bg-transparent hover:text-primary transition font-medium">
+            <?php } if($keranjang==NULL) { echo "Keranjang kosong"; } else { ?>
+                <a href="<?= base_url('customer/checkout') ?>" class="block w-full py-3 px-4 text-center text-white bg-primary border border-primary rounded-md hover:bg-transparent hover:text-primary transition font-medium">
                 Buat Pesanan
             </a>
-            <?php } if($keranjang==NULL) { echo "Keranjang kosong"; } ?>
+            <?php } ?>
         </div>
         <!-- ./wishlist -->
     </div>

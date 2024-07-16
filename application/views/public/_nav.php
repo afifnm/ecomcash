@@ -13,8 +13,8 @@
         <div class="flex items-center justify-between flex-grow md:pl-12 py-5">
             <div class="flex items-center space-x-6 capitalize">
                 <a href="<?= base_url('beranda') ?>" class="text-gray-200 hover:text-white transition">Beranda</a>
-                <a href="<?= base_url('produk') ?>" class="text-gray-200 hover:text-white transition">Belanja</a>
-                <a href="<?= base_url('beranda/tentangkami') ?>" class="text-gray-200 hover:text-white transition">Tentang Kami</a>
+                <a href="<?= base_url('produk') ?>" class="text-gray-200 hover:text-white transition">Mulai Belanja</a>
+                <a href="<?= base_url('beranda/alur') ?>" class="text-gray-200 hover:text-white transition">Alur Belanja</a>
                 <?php if($this->session->userdata('login')=="Frontend"){ ?>
                 <a href="<?= base_url('customer/keranjang') ?>" class="text-gray-200 hover:text-white transition">
                     Keranjang Belanja

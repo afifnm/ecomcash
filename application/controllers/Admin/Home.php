@@ -10,8 +10,8 @@ class Home extends CI_Controller {
 	public function index(){
 		date_default_timezone_set("Asia/Jakarta");
 		$tanggal = date('Y-m');
-		$bulan = $this->db->from('penjualan')
-				->where("DATE_FORMAT(tanggal,'%Y-%m')", $tanggal)
+		$online = $this->db->from('penjualan')
+				->where("status", 'proses')
 				->count_all_results();
 
 		$tanggal = date("Y-m-d");
@@ -54,7 +54,7 @@ class Home extends CI_Controller {
 		
 		$data = array(
 			'judul_halaman' => 'Dashboard',
-			'bulan'			=> $bulan,
+			'online'		=> $online,
 			'hari_ini'		=> $hari_ini,
 			'bulan_ini'		=> $bulan_ini,
 			'produk'		=> $this->db->from('produk')->count_all_results(),

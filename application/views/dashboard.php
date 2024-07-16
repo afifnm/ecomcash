@@ -27,6 +27,14 @@
 				<div class="col-span-12 sm:col-span-6 xl:col-span-3 intro-y">
 					<div class="report-box zoom-in">
 						<div class="box p-5">
+							<div class="text-2xl font-bold leading-8 mt-6">Rp. <?= number_format($hari_ini) ?></div>
+							<div class="text-base text-gray-600 mt-1">penjualan hari ini</div>
+						</div>
+					</div>
+				</div>
+				<div class="col-span-12 sm:col-span-6 xl:col-span-3 intro-y">
+					<div class="report-box zoom-in">
+						<div class="box p-5">
 							<div class="text-2xl font-bold leading-8 mt-6">Rp. <?= number_format($bulan_ini) ?></div>
 							<div class="text-base text-gray-600 mt-1">penjualan bulan ini</div>
 						</div>
@@ -35,16 +43,8 @@
 				<div class="col-span-12 sm:col-span-6 xl:col-span-3 intro-y">
 					<div class="report-box zoom-in">
 						<div class="box p-5">
-							<div class="text-4xl font-bold leading-8 mt-6"><?= $bulan ?></div>
-							<div class="text-base text-gray-600 mt-1">transaksi (bulan ini)</div>
-						</div>
-					</div>
-				</div>
-				<div class="col-span-12 sm:col-span-6 xl:col-span-3 intro-y">
-					<div class="report-box zoom-in">
-						<div class="box p-5">
-							<div class="text-4xl font-bold leading-8 mt-6"><?= $produk ?></div>
-							<div class="text-base text-gray-600 mt-1">produk</div>
+							<div class="text-4xl font-bold leading-8 mt-6"><?= $online ?></div>
+							<div class="text-base text-gray-600 mt-1">transaksi online masuk</div>
 						</div>
 					</div>
 				</div>
@@ -53,32 +53,32 @@
 		<div class="col-span-8">
 			<?php 
 			$bulan_now =  date('Y-m');
-			$this->db->select('sum(total_harga) as total')->from('penjualan');
+			$this->db->select('sum(total_harga) as total')->from('penjualan')->where('status', 'selesai');
 			$this->db->where("DATE_FORMAT(tanggal,'%Y-%m')", $bulan_now);
 			$total_now = $this->db->get()->row()->total;
 
 			$bulan_1 =  date('Y-m',strtotime("-1 Months"));
-			$this->db->select('sum(total_harga) as total')->from('penjualan');
+			$this->db->select('sum(total_harga) as total')->from('penjualan')->where('status', 'selesai');
 			$this->db->where("DATE_FORMAT(tanggal,'%Y-%m')", $bulan_1);
 			$total_1 = $this->db->get()->row()->total;
 
 			$bulan_2 =  date('Y-m',strtotime("-2 Months"));
-			$this->db->select('sum(total_harga) as total')->from('penjualan');
+			$this->db->select('sum(total_harga) as total')->from('penjualan')->where('status', 'selesai');
 			$this->db->where("DATE_FORMAT(tanggal,'%Y-%m')", $bulan_2);
 			$total_2= $this->db->get()->row()->total;
 
 			$bulan_3 =  date('Y-m',strtotime("-3 Months"));
-			$this->db->select('sum(total_harga) as total')->from('penjualan');
+			$this->db->select('sum(total_harga) as total')->from('penjualan')->where('status', 'selesai');
 			$this->db->where("DATE_FORMAT(tanggal,'%Y-%m')", $bulan_3);
 			$total_3 = $this->db->get()->row()->total;
 
 			$bulan_4 =  date('Y-m',strtotime("-4 Months"));
-			$this->db->select('sum(total_harga) as total')->from('penjualan');
+			$this->db->select('sum(total_harga) as total')->from('penjualan')->where('status', 'selesai');
 			$this->db->where("DATE_FORMAT(tanggal,'%Y-%m')", $bulan_4);
 			$total_4 = $this->db->get()->row()->total;
 
 			$bulan_5 =  date('Y-m',strtotime("-5 Months"));
-			$this->db->select('sum(total_harga) as total')->from('penjualan');
+			$this->db->select('sum(total_harga) as total')->from('penjualan')->where('status', 'selesai');
 			$this->db->where("DATE_FORMAT(tanggal,'%Y-%m')", $bulan_5);
 			$total_5 = $this->db->get()->row()->total;
 			if($total_now==NULL){ $total_now = 0;}

@@ -3,7 +3,7 @@ class Produk extends CI_Controller{
     public function __construct(){
         parent::__construct();
     }
-    function html_pagination(){
+    private function html_pagination(){
         // Konfigurasi tambahan untuk pagination dengan Tailwind CSS
         $config['full_tag_open'] = '<ul class="flex justify-center space-x-1">';
         $config['full_tag_close'] = '</ul>';
