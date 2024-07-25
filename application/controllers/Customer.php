@@ -55,6 +55,7 @@ class Customer extends CI_Controller{
                               ->where('kode_penjualan',$kode_penjualan);
         $penjualan = $this->db->get()->row();
 
+        $this->db->select('a.*, b.nama, b.kode_produk');
 		$this->db->from('detail_penjualan a');
 		$this->db->join('produk b','a.id_produk=b.id_produk','left');
 		$this->db->where('a.kode_penjualan',$kode_penjualan);
@@ -201,7 +202,7 @@ class Customer extends CI_Controller{
 				'kode_penjualan' => $nota,
 				'id_produk' => $row['id_produk'],
 				'jumlah' => $row['jumlah'],
-				'sub_total ' => $row['jumlah']*$row['harga'],
+				'harga' => $row['harga'],
 			);
 			$this->db->insert('detail_penjualan',$data); //input ke tabel detail penjualan 
 			

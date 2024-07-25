@@ -80,6 +80,7 @@ class Penjualan extends CI_Controller {
 		$this->db->from('penjualan')->order_by('tanggal','DESC')->where('kode_penjualan',$kode_pelanjualan);
         $penjualan = $this->db->get()->row();
 
+		$this->db->select('a.*, b.nama, b.kode_produk');
 		$this->db->from('detail_penjualan a');
 		$this->db->join('produk b','a.id_produk=b.id_produk','left');
 		$this->db->where('a.kode_penjualan',$kode_pelanjualan);
@@ -113,6 +114,7 @@ class Penjualan extends CI_Controller {
 		$this->db->from('penjualan ')->order_by('tanggal','DESC')->where('kode_penjualan',$kode_pelanjualan);
         $penjualan = $this->db->get()->row();
 
+		$this->db->select('a.*, b.nama, b.kode_produk');
 		$this->db->from('detail_penjualan a');
 		$this->db->join('produk b','a.id_produk=b.id_produk','left');
 		$this->db->where('a.kode_penjualan',$kode_pelanjualan);
@@ -211,10 +213,10 @@ class Penjualan extends CI_Controller {
 		}else{
 			$data = array('upload_data' => $this->upload->data());
 		} 
-		$this->db->from('temp a');
-		$this->db->join('produk b','a.id_produk=b.id_produk','left');
-		$this->db->where('a.id_user',$this->session->userdata('id_user'));
-		$this->db->where('a.id_pelanggan',$this->input->post('id_pelanggan'));
+		$this->db->from('temp a')
+				->join('produk b','a.id_produk=b.id_produk','left')
+				->where('a.id_user',$this->session->userdata('id_user'))
+				->where('a.id_pelanggan',$this->input->post('id_pelanggan'));
 		$temp = $this->db->get()->result_array();
 		$total = 0; //nilai awal
 		foreach($temp as $row){
@@ -230,7 +232,7 @@ class Penjualan extends CI_Controller {
 				'kode_penjualan' => $nota,
 				'id_produk' => $row['id_produk'],
 				'jumlah' => $row['jumlah'],
-				'sub_total ' => $row['jumlah']*$row['harga'],
+				'harga ' => $row['harga'],
 			);
 			$this->db->insert('detail_penjualan',$data); //input ke tabel detail penjualan 
 			
@@ -262,4 +264,25 @@ class Penjualan extends CI_Controller {
 		');
 		redirect('admin/penjualan/invoice/'.$nota);
 	}
+	public function cancel($kode_penjualan){
+		$status = 'dibatalkan';
+		$this->db->from('detail_penjualan a')
+				->join('produk b','a.id_produk=b.id_produk','left')
+				->where('a.kode_penjualan',$kode_penjualan);
+		$detail = $this->db->get()->result_array();
+		foreach($detail as $row){
+			$data2 = array( 'stok' => $row['stok']+$row['jumlah']);
+			$where = array( 'id_produk' => $row['id_produk']);
+			$this->db->update('produk',$data2,$where); //update tabel produk stoknya
+		}
+        $data = array(
+            'status'  => $status,
+        );
+        $where = array('kode_penjualan'   => $kode_penjualan );
+        $this->db->update('penjualan',$data,$where);
+        $this->session->set_flashdata('notifikasi','
+        <div class="rounded-md px-5 py-4 mb-2 bg-theme-1 text-white">Transaksi penjualan telah '.$status.'.</div>
+        ');
+        redirect($_SERVER["HTTP_REFERER"]);
+    }
 }

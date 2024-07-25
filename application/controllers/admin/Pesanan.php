@@ -12,6 +12,7 @@ class Pesanan extends CI_Controller {
                 ->from('penjualan')
                 ->order_by('id_penjualan','DESC')
                 ->join('pelanggan', 'pelanggan.id_pelanggan = penjualan.id_pelanggan')
+                ->where('transaksi','Online')
                 ->where('pembayaran','Tunai');
         $user = $this->db->get()->result_array();
 		$data = array(
@@ -22,19 +23,19 @@ class Pesanan extends CI_Controller {
 		$this->template->load('temp','pesanan_index',$data);
 	}
 
-	public function cek($kode_pelanjualan){
+	public function cek($kode_penjualan){
 		$this->db->select('*');
-		$this->db->from('penjualan')->order_by('tanggal','DESC')->where('kode_penjualan',$kode_pelanjualan);
+		$this->db->from('penjualan')->order_by('tanggal','DESC')->where('kode_penjualan',$kode_penjualan);
         $penjualan = $this->db->get()->row();
 
 		$this->db->from('detail_penjualan a');
 		$this->db->join('produk b','a.id_produk=b.id_produk','left');
-		$this->db->where('a.kode_penjualan',$kode_pelanjualan);
+		$this->db->where('a.kode_penjualan',$kode_penjualan);
 		$detail = $this->db->get()->result_array();
 
 		$data = array(
-			'judul_halaman' => 'Cek Pesanan '.$kode_pelanjualan,
-			'nota'			=> $kode_pelanjualan,
+			'judul_halaman' => 'Cek Pesanan '.$kode_penjualan,
+			'nota'			=> $kode_penjualan,
 			'penjualan'		=> $penjualan,
 			'detail'		=> $detail,
 			'profil'		=> $this->db->from('konfigurasi')->get()->row()
@@ -42,35 +43,44 @@ class Pesanan extends CI_Controller {
 		$this->template->load('temp','pesanan_cek',$data);
 	}
 
-	public function nota($kode_pelanjualan){
+	public function nota($kode_penjualan){
 		$this->db->select('*');
-		$this->db->from('penjualan ')->order_by('tanggal','DESC')->where('kode_penjualan',$kode_pelanjualan);
+		$this->db->from('penjualan ')->order_by('tanggal','DESC')->where('kode_penjualan',$kode_penjualan);
         $penjualan = $this->db->get()->row();
 
 		$this->db->from('detail_penjualan a');
 		$this->db->join('produk b','a.id_produk=b.id_produk','left');
-		$this->db->where('a.kode_penjualan',$kode_pelanjualan);
+		$this->db->where('a.kode_penjualan',$kode_penjualan);
 		$detail = $this->db->get()->result_array();
 
 		$data = array(
-			'judul_halaman' => 'Invoice '.$kode_pelanjualan,
-			'nota'			=> $kode_pelanjualan,
+			'judul_halaman' => 'Invoice '.$kode_penjualan,
+			'nota'			=> $kode_penjualan,
 			'penjualan'		=> $penjualan,
 			'detail'		=> $detail,
 			'profil'		=> $this->db->from('konfigurasi')->get()->row()
 		);
 		$this->load->view('nota',$data);
 	}
-	public function approve($status,$kode_pelanjualan){
+	public function approve($status,$kode_penjualan){
 		if($status==1){
 			$status = 'selesai';
 		} else {
-			$status = 'dibatalakan';
+			$status = 'dibatalkan';
+			$this->db->from('detail_penjualan a')
+					->join('produk b','a.id_produk=b.id_produk','left')
+					->where('a.kode_penjualan',$kode_penjualan);
+			$detail = $this->db->get()->result_array();
+			foreach($detail as $row){
+				$data2 = array( 'stok' => $row['stok']+$row['jumlah']);
+				$where = array( 'id_produk' => $row['id_produk']);
+				$this->db->update('produk',$data2,$where); //update tabel produk stoknya
+			}
 		}
         $data = array(
             'status'  => $status,
         );
-        $where = array('kode_penjualan'   => $kode_pelanjualan );
+        $where = array('kode_penjualan'   => $kode_penjualan );
         $this->db->update('penjualan',$data,$where);
         $this->session->set_flashdata('notifikasi','
         <div class="rounded-md px-5 py-4 mb-2 bg-theme-1 text-white">Transaksi penjualan telah '.$status.'.</div>

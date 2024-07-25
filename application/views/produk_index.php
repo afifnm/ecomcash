@@ -4,6 +4,8 @@
 <div class="intro-y flex flex-col sm:flex-row items-center mt-8">
 	<a href="javascript:;" data-toggle="modal" data-target="#header-footer-modal-preview"
 		class="button mr-auto inline-block bg-theme-1 text-white">Tambah Produk </a>
+		<a href="javascript:;" onclick="showMutasiProduk()" class="button bg-theme-1 text-white" data-toggle="modal" data-target="#mutasi-produk-modal">Lihat Mutasi Produk</a>
+
 	<!-- <div class="w-full sm:w-auto flex mt-4 ml-5 sm:mt-0">
 		<a href="javascript:;" data-toggle="modal" data-target="#import"
 			class="button mr-1 inline-block bg-theme-1 text-white">Import </a>
@@ -43,7 +45,8 @@
 				<th class="border-b-2 whitespace-no-wrap">KODE PRODUK </th>
 				<th class="border-b-2 whitespace-no-wrap">KATEGORI </th>
 				<th class="border-b-2 whitespace-no-wrap">JENIS </th>
-				<th class="border-b-2 whitespace-no-wrap">STOK </th>
+				<th class="border-b-2 whitespace-no-wrap">STOK TOKO </th>
+				<th class="border-b-2 whitespace-no-wrap">STOK GUDANG</th>
 				<th class="border-b-2 whitespace-no-wrap text-right">HARGA </th>
 				<th class="border-b-2 text-center whitespace-no-wrap">ACTIONS</th>
 			</tr>
@@ -57,9 +60,18 @@
 				<td class="text-left border-b"><?php if($row['kategori']==NULL) { echo "Lain-lain"; } else { echo $row['kategori']; } ?></td>
 				<td class="text-left border-b"><?= $row['jenis']; ?></td>
 				<td class="text-left border-b"><?= $row['stok']; ?></td>
+				<td class="text-left border-b"><?= $row['stok_gudang']; ?></td>
 				<td class="text-right border-b">Rp. <?=  number_format($row['harga']); ?></td>
 				<td class="border-b w-5">
 					<div class="flex sm:justify-center items-center">
+						<a href="javascript:;" onclick="mutasi(
+							<?= $row['id_produk'] ?>,
+							'<?= $row['nama'] ?>',
+							<?= $row['stok'] ?>,
+							<?= $row['stok_gudang'] ?>
+							)" class="flex items-center text-theme-3 ml-3 mr-2" data-toggle="modal" data-target="#mutasi-modal">
+							<i data-feather="repeat" class="w-4 h-4 mr-1"></i> Mutasi
+						</a>
 						<a href="<?= base_url('assets/produk/'.$row['foto']); ?>" class="flex items-center text-theme-1" target="_blank">
 							<i data-feather="image" class="w-4 h-4 mr-1"></i>
 							Foto </a> 
@@ -114,8 +126,8 @@
 					</select>
 				</div>
 				<div class="col-span-12 sm:col-span-12">
-					<label>Stok</label>
-					<input type="number" name="stok" class="input w-full border mt-2 flex-1" required min="0">
+					<label>Stok Awal</label>
+					<input type="number" name="stok" class="input w-full border mt-2 flex-1" required min="0" value="0">
 				</div>
 				<div class="col-span-12 sm:col-span-12">
 					<label>Harga</label>
@@ -165,8 +177,8 @@
 					</select>
 				</div>
 				<div class="col-span-12 sm:col-span-12">
-					<label>Stok Awal</label>
-					<input type="number" name="stok" class="input w-full border mt-2 flex-1" id="stok" min="0">
+					<label>Stok</label>
+					<input type="number" name="stok" class="input w-full border mt-2 flex-1" id="stok" readonly>
 				</div>
 				<div class="col-span-12 sm:col-span-12">
 					<label>Harga</label>
@@ -201,18 +213,129 @@
 	</div>
 </div>
 <!-- END: Delete Confirmation Modal -->
+
+<!-- BEGIN: Mutasi Confirmation Modal -->
+<div class="modal" id="mutasi-modal">
+    <div class="modal__content">
+        <div class="flex items-center px-5 py-5 sm:py-3 border-b border-gray-200">
+            <h2 class="font-medium text-base mr-auto">MUTASI PRODUK</h2>
+        </div>
+        <form action="<?php echo site_url('admin/produk/mutasi'); ?>" method="POST" onsubmit="return validateMutasi()">
+            <input type="hidden" name="id_produk" id="mutasi-id" class="input w-full border mt-2">
+            <div class="p-5 grid grid-cols-12 gap-4 row-gap-3">
+                <div class="col-span-12 sm:col-span-12">
+                    <label>Nama Produk</label>
+                    <input type="text" id="mutasi-nama" class="input w-full border mt-2 flex-1." readonly>
+                </div>
+                <div class="col-span-12 sm:col-span-12">
+                    <label>Stok Toko</label>
+                    <input type="number" id="mutasi-stok" class="input w-full border mt-2 flex-1" readonly>
+                </div>
+                <div class="col-span-12 sm:col-span-12">
+                    <label>Stok Gudang</label>
+                    <input type="number" id="mutasi-stok-gudang" class="input w-full border mt-2 flex-1" readonly>
+                </div>
+                <div class="col-span-12 sm:col-span-12">
+                    <label>Jumlah Mutasi</label>
+                    <input type="number" name="jumlah" id="mutasi-jumlah" class="input w-full border mt-2 flex-1" required min="0">
+                    <span id="mutasi-warning" style="color:red; display:none;">Jumlah mutasi melebihi stok gudang!</span>
+                </div>
+            </div>
+            <div class="px-5 py-3 text-right border-t border-gray-200">
+                <button type="submit" class="button w-20 bg-theme-1 text-white">Simpan</button>
+            </div>
+        </form>
+    </div>
+</div>
+<!-- END: Mutasi Confirmation Modal -->
+ <!-- BEGIN: Mutasi Produk Modal -->
+<div class="modal" id="mutasi-produk-modal">
+    <div class="modal__content modal__content--xl">
+        <div class="flex items-center px-5 py-5 sm:py-3 border-b border-gray-200">
+            <h2 class="font-medium text-base mr-auto">TABEL MUTASI PRODUK</h2>
+        </div>
+        <div class="p-5">
+            <table class="table table-report table-report--bordered display datatable w-full">
+                <thead>
+                    <tr>
+                        <th class="border-b-2 whitespace-no-wrap">Nama Produk</th>
+                        <th class="border-b-2 whitespace-no-wrap">Jumlah</th>
+                        <th class="border-b-2 whitespace-no-wrap">Tanggal</th>
+                        <th class="border-b-2 whitespace-no-wrap">Tanggal</th>
+                    </tr>
+                </thead>
+                <tbody id="mutasi-produk-tbody">
+                    <!-- Data will be populated here via JavaScript -->
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+<!-- END: Mutasi Produk Modal -->
 <script>
-	function edit(id, nama, kode_produk, stok, harga, id_kategori, jenis) {
-		document.getElementById('id').value = id;
-		document.getElementById('nama').value = nama;
-		document.getElementById('kode_produk').value = kode_produk;
-		document.getElementById('stok').value = stok;
-		document.getElementById('harga').value = harga;
-		document.getElementById('id_kategori').value = id_kategori; // Populate Kategori Produk
-		document.getElementById('jenis').value = jenis; // Populate Jenis Produk
-	};
-	function hapus(id) {
-		var link = document.getElementById('link_hapus');
-		link.href = "<?php echo site_url('admin/produk/hapus/');?>" + id;
-	};
+    function edit(id, nama, kode_produk, stok, harga, id_kategori, jenis) {
+        document.getElementById('id').value = id;
+        document.getElementById('nama').value = nama;
+        document.getElementById('kode_produk').value = kode_produk;
+        document.getElementById('stok').value = stok;
+        document.getElementById('harga').value = harga;
+        document.getElementById('id_kategori').value = id_kategori; // Populate Kategori Produk
+        document.getElementById('jenis').value = jenis; // Populate Jenis Produk
+    }
+
+    function hapus(id) {
+        var link = document.getElementById('link_hapus');
+        link.href = "<?php echo site_url('admin/produk/hapus/'); ?>" + id;
+    }
+
+    function mutasi(id, nama, stok, stok_gudang) {
+        document.getElementById('mutasi-id').value = id;
+        document.getElementById('mutasi-nama').value = nama;
+        document.getElementById('mutasi-stok').value = stok;
+        document.getElementById('mutasi-stok-gudang').value = stok_gudang;
+    }
+
+    document.getElementById('mutasi-jumlah').addEventListener('input', function() {
+        var jumlahMutasi = parseInt(this.value);
+        var stokGudang = parseInt(document.getElementById('mutasi-stok-gudang').value);
+
+        if (jumlahMutasi > stokGudang) {
+            document.getElementById('mutasi-warning').style.display = 'block';
+        } else {
+            document.getElementById('mutasi-warning').style.display = 'none';
+        }
+    });
+
+    function validateMutasi() {
+        var jumlahMutasi = parseInt(document.getElementById('mutasi-jumlah').value);
+        var stokGudang = parseInt(document.getElementById('mutasi-stok-gudang').value);
+
+        if (jumlahMutasi > stokGudang) {
+            alert('Jumlah mutasi melebihi stok gudang!');
+            return false;
+        }
+        return true;
+    }
+</script>
+<script>
+	
+    function showMutasiProduk() {
+        fetch("<?php echo site_url('admin/produk/get_mutasi_produk'); ?>")
+            .then(response => response.json())
+            .then(data => {
+                var tbody = document.getElementById('mutasi-produk-tbody');
+                tbody.innerHTML = ''; // Clear existing data
+                data.forEach(function(mutasi) {
+                    var tr = document.createElement('tr');
+                    tr.innerHTML = `
+                        <td class="text-left border-b">${mutasi.nama}</td>
+                        <td class="text-left border-b">${mutasi.jumlah}</td>
+                        <td class="text-left border-b">${mutasi.tanggal}</td>
+                    `;
+                    tbody.appendChild(tr);
+                });
+            })
+            .catch(error => console.error('Error:', error));
+    }
+    document.getElementById('mutasi-produk-modal').addEventListener('show.bs.modal', showMutasiProduk);
 </script>

@@ -86,7 +86,7 @@
                         <a class="button w-32 flex items-center justify-center bg-theme-1 text-white text-lg px-4 py-2" id="cancel-btn">
                             Batalkan
                         </a>
-                    </div>
+                    </div> 
                     <?php } ?>
                 </div>
             </div>
@@ -113,7 +113,7 @@
                 // Arahkan ke URL jika disetujui
                 window.location.href = '<?= base_url('admin/pesanan/approve/1/'.$nota) ?>';
             }
-        })
+        }) 
     });
     document.getElementById('cancel-btn').addEventListener('click', function(e) {
         e.preventDefault();

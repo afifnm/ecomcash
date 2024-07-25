@@ -1,9 +1,15 @@
+<div id="myalert" style="margin-top: 10px;">
+    <?php echo $this->session->flashdata('notifikasi', true)?>
+</div>
 <div class="intro-y box overflow-hidden mt-5">
 	<div class="border-b border-gray-200 text-center sm:text-left">
 		<div class="px-5 py-10 sm:px-10 sm:py-10">
 			<div class="text-theme-1 font-semibold text-3xl">INVOICE</div>
 			<a href="<?= base_url('admin/penjualan/nota/'.$penjualan->kode_penjualan); ?>" target="_blank"
-			class="button inline-block bg-theme-1 text-white float-right">Cetak Nota </a>
+			class="button inline-block bg-theme-1 text-white float-right ml-5 mr-5">Cetak Nota </a>
+			<?php if($penjualan->status<>'dibatalkan'){ ?>
+				<a class="button inline-block bg-theme-1 text-white float-right" id="cancel-btn"> Batalkan Transaksi</a>
+			<?php } ?>
 			<?php if($penjualan->pembayaran=="Transfer"){ ?>
 			<a href="<?= base_url('assets/bukti/'.$penjualan->bukti); ?>" class="button inline-block bg-theme-1 text-white float-right ml-3 mr-3" target="_blank">
 				Bukti Transfer </a> 
@@ -65,3 +71,25 @@
 		</div>
 	</div>
 </div>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+ <!-- Include Feather Icons -->
+ <script src="https://unpkg.com/feather-icons"></script>
+<script>
+    feather.replace();
+    document.getElementById('cancel-btn').addEventListener('click', function(e) {
+        e.preventDefault();
+        Swal.fire({
+            title: 'Apakah Anda yakin membatalakan ini?',
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Ya, batalkan!'
+        }).then((result) => {
+            if (result.isConfirmed) {
+                // Arahkan ke URL jika disetujui
+                window.location.href = '<?= base_url('admin/penjualan/cancel/'.$nota) ?>';
+            }
+        })
+    });
+</script>

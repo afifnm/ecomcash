@@ -111,7 +111,7 @@
 				<a href="<?= base_url('admin/penjualan') ?>"
 					class="top-menu top-menu--<?php if($halaman=='penjualan'){ echo "active"; } ?>">
 					<div class="top-menu__icon"> <i data-feather="shopping-cart"></i> </div>
-					<div class="top-menu__title"> Penjualan </div>
+					<div class="top-menu__title"> Penjualan (Keluar)</div>
 				</a>
 			</li>
 			<li>
@@ -119,6 +119,13 @@
 					class="top-menu top-menu--<?php if($halaman=='pesanan'){ echo "active"; } ?>">
 					<div class="top-menu__icon"> <i data-feather="globe"></i> </div>
 					<div class="top-menu__title"> Pesanan Online </div>
+				</a>
+			</li>
+			<li>
+				<a href="<?= base_url('admin/pembelian') ?>"
+					class="top-menu top-menu--<?php if($halaman=='pembelian'){ echo "active"; } ?>">
+					<div class="top-menu__icon"> <i data-feather="server"></i> </div>
+					<div class="top-menu__title"> Pembelian (Masuk) </div>
 				</a>
 			</li>
 			<li>
@@ -160,7 +167,7 @@
 	<!-- BEGIN: JS Assets-->
 	<script src="<?= base_url('assets/')?>dist/js/app.js"></script>
 	<!-- END: JS Assets-->
-	
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
 	<script>
     $('#myalert').delay('slow').slideDown('slow').delay(6500).slideUp(600);
   	</script>

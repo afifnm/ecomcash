@@ -3,6 +3,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 class Produk extends CI_Controller {
 	public function __construct(){
 		parent::__construct();
+        date_default_timezone_set("Asia/Jakarta");
 		if($this->session->userdata('login')!=="Backend"){
 			redirect('auth');
 		}
@@ -41,7 +42,6 @@ class Produk extends CI_Controller {
         $this->db->or_where('slug',create_slug($this->input->post('nama')));
         $cek = $this->db->get()->result_array();
         if($cek==NULL){
-            date_default_timezone_set("Asia/Jakarta");
             $namafoto = date('YmdHis').'.jpg';
             $config['upload_path']          = 'assets/produk/';
             $config['max_size'] = 500 * 1024; //3 * 1024 * 1024; //3Mb; 0=unlimited
@@ -126,5 +126,41 @@ class Produk extends CI_Controller {
         <div class="rounded-md px-5 py-4 mb-2 bg-theme-1 text-white">Produk berhasil diperbarui.</div>
         ');
         redirect($_SERVER['HTTP_REFERER']);
+    }
+    public function mutasi(){
+        $this->db->from('produk')->where('id_produk',$this->input->post('id_produk'));
+        $dataLama = $this->db->get()->row();
+        $jumlah = $this->input->post('jumlah');
+        $data = array(
+            'stok'         => $dataLama->stok+$jumlah,
+            'stok_gudang'  => $dataLama->stok_gudang-$jumlah
+        );
+        $where = array('id_produk'   => $this->input->post('id_produk') );
+        $this->db->update('produk',$data,$where);
+        //bagian input ke tabel mutasi
+		$data = array(
+			'id_produk' 	    => $dataLama->id_produk,
+			'jumlah'			=> $jumlah,
+			'id_user'			=> $this->session->userdata('id_user'),
+			'tanggal'			=> date('Y-m-d'),
+		);
+		$this->db->insert('mutasi',$data);
+        $this->session->set_flashdata('notifikasi','
+        <div class="rounded-md px-5 py-4 mb-2 bg-theme-1 text-white">Produk telah berhasil dipindahkan ke toko.</div>
+        ');
+        redirect($_SERVER['HTTP_REFERER']);
+    }
+    // Controller function to fetch mutasi data
+    public function get_mutasi_produk(){
+        $this->db->select('*')
+                ->from('mutasi a')
+                ->join('produk b','a.id_produk=b.id_produk','left')
+                ->order_by('a.id_mutasi','DESC');
+        $mutasi_data = $this->db->get()->result_array();
+        // Format tanggal
+        foreach ($mutasi_data as &$mutasi) {
+            $mutasi['tanggal'] = date('l, d F Y', strtotime($mutasi['tanggal']));
+        }
+        echo json_encode($mutasi_data);
     }
 }
