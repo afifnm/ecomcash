@@ -41,7 +41,7 @@
                     </div>
                     <div id="buktiWrapper" style="display: none;">
                         <label for="bukti" class="text-gray-600 mb-2 block">Bukti Pembayaran (Transfer)</label>
-                        <input type="file" name="bukti" id="bukti" class="block w-full border border-gray-300 px-4 py-3 text-gray-600 text-sm rounded focus:ring-0 focus:border-primary placeholder-gray-400">
+                        <input type="file" name="bukti" id="bukti" accept=".jpeg, .jpg" class="block w-full border border-gray-300 px-4 py-3 text-gray-600 text-sm rounded focus:ring-0 focus:border-primary placeholder-gray-400">
                     </div>
                 </div>
                 <div class="flex items-center mb-4 mt-2">

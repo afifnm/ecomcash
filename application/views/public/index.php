@@ -23,24 +23,45 @@
     <div class="container py-16">
         <div class="w-10/12 grid grid-cols-1 md:grid-cols-3 gap-6 mx-auto justify-center">
             <div class="border border-primary rounded-sm px-3 py-6 flex justify-center items-center gap-5">
-                <img src="<?= base_url('assets/public/')?>assets/images/icons/delivery-van.svg" alt="Delivery" class="w-12 h-12 object-contain">
+                <img src="<?= base_url('assets/alur/1.svg')?>" alt="Delivery" class="w-12 h-12 object-contain">
                 <div>
-                    <h4 class="font-medium capitalize text-lg">Free Ongkir</h4>
-                    <p class="text-gray-500 text-sm">Radius 2 km SMKN 2 Karanganyar</p>
+                    <h4 class="font-medium capitalize text-lg">1. Register dan Login</h4>
+                    <p class="text-gray-500 text-sm">sebelum mulai belanja, buat akun (register) kemudian login</p>
                 </div>
             </div>
             <div class="border border-primary rounded-sm px-3 py-6 flex justify-center items-center gap-5">
-                <img src="<?= base_url('assets/public/')?>assets/images/icons/money-back.svg" alt="Delivery" class="w-12 h-12 object-contain">
+                <img src="<?= base_url('assets/alur/2.svg')?>" alt="Delivery" class="w-12 h-12 object-contain">
                 <div>
-                    <h4 class="font-medium capitalize text-lg">Uang Kembali</h4>
-                    <p class="text-gray-500 text-sm">Apabila produk salah</p>
+                    <h4 class="font-medium capitalize text-lg">2. Pilih Barang</h4>
+                    <p class="text-gray-500 text-sm">Pilih barang 'tambahkan ke keranjang’. untuk melihat barang di keranjang, klik keranjang</p>
                 </div>
             </div>
             <div class="border border-primary rounded-sm px-3 py-6 flex justify-center items-center gap-5">
-                <img src="<?= base_url('assets/public/')?>assets/images/icons/service-hours.svg" alt="Delivery" class="w-12 h-12 object-contain">
+                <img src="<?= base_url('assets/alur/3.svg')?>" alt="Delivery" class="w-12 h-12 object-contain">
                 <div>
-                    <h4 class="font-medium capitalize text-lg">Layanan 24 Jam</h4>
-                    <p class="text-gray-500 text-sm">Customer support</p>
+                    <h4 class="font-medium capitalize text-lg">3. Cek Pesanan</h4>
+                    <p class="text-gray-500 text-sm">cek kembali pesanan barang apa saja yang ingin dibeli</p>
+                </div>
+            </div>
+            <div class="border border-primary rounded-sm px-3 py-6 flex justify-center items-center gap-5">
+                <img src="<?= base_url('assets/alur/4.svg')?>" alt="Delivery" class="w-12 h-12 object-contain">
+                <div>
+                    <h4 class="font-medium capitalize text-lg">4. Pembayaran</h4>
+                    <p class="text-gray-500 text-sm">lakukan checkout dan pilih metode pembayaran (tunai/transfer)</p>
+                </div>
+            </div>
+            <div class="border border-primary rounded-sm px-3 py-6 flex justify-center items-center gap-5">
+                <img src="<?= base_url('assets/alur/5.svg')?>" alt="Delivery" class="w-12 h-12 object-contain">
+                <div>
+                    <h4 class="font-medium capitalize text-lg">5. Konfirmasi ke Admin</h4>
+                    <p class="text-gray-500 text-sm">setelah melakukan pembayaran, konfirmasi ke admin kopsismart melalui Whatsapp</p>
+                </div>
+            </div>
+            <div class="border border-primary rounded-sm px-3 py-6 flex justify-center items-center gap-5">
+                <img src="<?= base_url('assets/alur/6.svg')?>" alt="Delivery" class="w-12 h-12 object-contain">
+                <div>
+                    <h4 class="font-medium capitalize text-lg">6. Ambil Pesanan</h4>
+                    <p class="text-gray-500 text-sm">datangi tempat kopsis atau lakukan cod untuk mendapatkan barangmu</p>
                 </div>
             </div>
         </div>
@@ -48,7 +69,7 @@
     <!-- ./features -->
     <div class="container">
         <h2 class="text-2xl font-medium text-gray-800 uppercase mb-6">PENCARIAN</h2>
-        <div class="grid grid-cols-6 md:grid-cols-6 gap-4">
+        <div class="grid grid-cols-1 md:grid-cols-1 gap-4">
             <?php require_once('_search.php') ?>
         </div> 
     </div> 

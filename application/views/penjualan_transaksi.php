@@ -119,7 +119,7 @@
                         </div>
                         <div class="mt-1 pr-10 pl-10" id="bukti_transfer_container" style="display: none;">
                             <label for="bukti" class="input border text-xl" id="bukti_label">Masukan bukti transfer</label>
-                            <input type="file" class="input border text-lg" placeholder="Bukti transfer" name="bukti" id="bukti"
+                            <input type="file" class="input border text-lg" placeholder="Bukti transfer" name="bukti" id="bukti" accept=".jpeg, .jpg"
                                 onchange="updateBuktiLabel(this)">
                         </div>
                         <div class="mt-3 pr-10 pl-10">

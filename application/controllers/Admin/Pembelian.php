@@ -43,7 +43,7 @@ class Pembelian extends CI_Controller {
 		$this->db->where("DATE_FORMAT(tanggal,'%Y-%m')", $tanggal);
 		$jumlah = $this->db->count_all_results()+1;
 		$nota = date('ymd').$jumlah;
-		$this->db->from('produk')->where('stok >',0)->order_by('nama','ASC');
+		$this->db->from('produk')->order_by('nama','ASC');
 		$produk = $this->db->get()->result_array();
 
 		$this->db->from('detail_pembelian a');

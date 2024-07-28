@@ -13,12 +13,4 @@ class Beranda extends CI_Controller{
         );
         $this->load->view('public/index',array_merge($data));
     }
-    public function alur(){
-        $site = $this->Konfigurasi_model->listing();
-        $data = array(
-            'title'                 => 'Alur Belanja | '.$site['nama_cv'],
-            'site'                  => $site,
-        );
-        $this->load->view('public/alur',array_merge($data));
-    }
 }

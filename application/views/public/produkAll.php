@@ -17,7 +17,7 @@
     <?php require_once('_nav.php'); ?>
     <div class="container py-5">
         <h2 class="text-2xl font-medium text-gray-800 uppercase mb-6">PENCARIAN</h2>
-        <div class="grid grid-cols-6 md:grid-cols-6 gap-4">
+        <div class="grid grid-cols-1 md:grid-cols-1 gap-4">
             <?php require_once('_search.php') ?>
         </div> 
     </div> 
@@ -56,9 +56,11 @@
             </div>
         <?php } ?>
         </div>
+        <?php if($this->uri->segment(2)!=='p'){?>
         <div class="py-5">
             <?= $pagination; ?>
         </div>
+        <?php } ?>
     </div>
     <!-- ./new arrival -->
 

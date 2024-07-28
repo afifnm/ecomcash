@@ -109,7 +109,7 @@
                     <form action="<?= base_url('admin/pembelian/bayarv2') ?>" method="post" id="form_pembayaran" enctype="multipart/form-data" onsubmit="return validateForm()">
                         <div class="mt-1 pr-10 pl-10" id="bukti_transfer_container">
                             <label for="bukti" class="input border text-xl" id="bukti_label">Masukan bukti pembayaran</label>
-                            <input type="file" class="input border text-lg" placeholder="Bukti pembayaran" name="bukti" id="bukti"
+                            <input type="file" class="input border text-lg" placeholder="Bukti pembayaran" name="bukti" id="bukti" accept=".jpeg, .jpg"
                                 onchange="updateBuktiLabel(this)">
                         </div>
                         <div class="mt-3 pr-10 pl-10">
