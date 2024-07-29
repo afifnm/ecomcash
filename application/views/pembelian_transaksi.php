@@ -107,15 +107,17 @@
                         </tbody>
                     </table>
                     <form action="<?= base_url('admin/pembelian/bayarv2') ?>" method="post" id="form_pembayaran" enctype="multipart/form-data" onsubmit="return validateForm()">
-                        <div class="mt-1 pr-10 pl-10" id="bukti_transfer_container">
+                        <div class="mt-10 pr-10 pl-10" id="bukti_transfer_container">
                             <label for="bukti" class="input border text-xl" id="bukti_label">Masukan bukti pembayaran</label>
                             <input type="file" class="input border text-lg" placeholder="Bukti pembayaran" name="bukti" id="bukti" accept=".jpeg, .jpg"
                                 onchange="updateBuktiLabel(this)">
                         </div>
                         <div class="mt-3 pr-10 pl-10">
-                            <input type="hidden" name="bayar" value="<?= $total; ?>">
-                            <label for="bukti" class="input border text-xl" id="bukti_label">Supplier</label>
-                            <input type="text" class="input border text-lg" placeholder="Nama Supplier" name="supplier" required>
+                            <select class="select2 w-full border mt-2 bg-gray-100" name="id_supplier">
+                                <?php foreach($this->View_model->get_supplier() as $bb){ ?>
+                                    <option value="<?= $bb['id_supplier'] ?>"> <?= $bb['nama'] ?> </option>
+                                <?php } ?>
+                            </select>
                             <button type="submit"
                                     class="button w-32 mr-2 mb-2 mt-5 flex items-center justify-center bg-theme-1 text-white text-lg w-full"
                                     id="bayar_button">

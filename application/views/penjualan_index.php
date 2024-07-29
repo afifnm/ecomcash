@@ -7,8 +7,8 @@
 	<div class="w-full sm:w-auto flex mt-4 sm:mt-0">
 		<a href="javascript:;" data-toggle="modal" data-target="#nota"
 			class="button mr-1 inline-block bg-theme-1 text-white">Cek Nota </a>
-		<a href="javascript:;" data-toggle="modal" data-target="#import"
-			class="button mr-1 inline-block bg-theme-1 text-white">Laporan Penjualan </a>
+		<!-- <a href="javascript:;" data-toggle="modal" data-target="#import"
+			class="button mr-1 inline-block bg-theme-1 text-white">Laporan Penjualan </a> -->
 	</div>
 </div>
 <div class="modal" id="import">

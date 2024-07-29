@@ -12,8 +12,7 @@ class Pesanan extends CI_Controller {
                 ->from('penjualan')
                 ->order_by('id_penjualan','DESC')
                 ->join('pelanggan', 'pelanggan.id_pelanggan = penjualan.id_pelanggan')
-                ->where('transaksi','Online')
-                ->where('pembayaran','Tunai');
+                ->where('transaksi','Online');
         $user = $this->db->get()->result_array();
 		$data = array(
 			'judul_halaman' => 'Pesanan Online',

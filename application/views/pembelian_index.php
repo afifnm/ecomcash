@@ -54,7 +54,7 @@
 			<tr>
 				<td class="text-left border-b"><?= $no; ?></td>
 				<td class="text-left border-b"><?= $row['kode_pembelian']; ?></td>
-				<td class="text-left border-b"><?= $row['supplier']; ?></td>
+				<td class="text-left border-b"><?= $row['nama']; ?></td>
 				<td class="text-left border-b"><?= $row['status']; ?></td>
 				<td class="text-left border-b"><?= date_format(date_create($row['tanggal'])," D, d M Y"); ?></td>
 				<td class="text-right border-b">Rp. <?= number_format($row['bayar']); ?></td>

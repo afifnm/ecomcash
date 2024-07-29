@@ -42,11 +42,11 @@
 			<tr>
 				<th class="border-b-2 whitespace-no-wrap">NO </th>
 				<th class="border-b-2 whitespace-no-wrap">NAMA </th>
-				<th class="border-b-2 whitespace-no-wrap">KODE PRODUK </th>
+				<th class="border-b-2 whitespace-no-wrap">BARCODE </th>
 				<th class="border-b-2 whitespace-no-wrap">KATEGORI </th>
 				<th class="border-b-2 whitespace-no-wrap">JENIS </th>
-				<th class="border-b-2 whitespace-no-wrap">STOK TOKO </th>
-				<th class="border-b-2 whitespace-no-wrap">STOK GUDANG</th>
+				<th class="border-b-2 whitespace-no-wrap">TOKO </th>
+				<th class="border-b-2 whitespace-no-wrap">GUDANG</th>
 				<th class="border-b-2 whitespace-no-wrap text-right">HARGA </th>
 				<th class="border-b-2 text-center whitespace-no-wrap">ACTIONS</th>
 			</tr>
@@ -69,8 +69,17 @@
 							'<?= $row['nama'] ?>',
 							<?= $row['stok'] ?>,
 							<?= $row['stok_gudang'] ?>
-							)" class="flex items-center text-theme-3 ml-3 mr-2" data-toggle="modal" data-target="#mutasi-modal">
+							)" class="flex items-center text-theme-3 ml-1 mr-1" data-toggle="modal" data-target="#mutasi-modal">
 							<i data-feather="repeat" class="w-4 h-4 mr-1"></i> Mutasi
+						</a>
+						<a href="javascript:;" onclick="returnProduct(
+							<?= $row['id_produk'] ?>,
+							'<?= $row['nama'] ?>',
+							'<?= $row['kategori'] ?>',
+							<?= $row['stok'] ?>,
+							<?= $row['stok_gudang'] ?>
+							)" class="flex items-center text-theme-6 mr-2" data-toggle="modal" data-target="#return-modal">
+							<i data-feather="corner-down-left" class="w-4 h-4 mr-1"></i> Return
 						</a>
 						<a href="<?= base_url('assets/produk/'.$row['foto']); ?>" class="flex items-center text-theme-1" target="_blank">
 							<i data-feather="image" class="w-4 h-4 mr-1"></i>
@@ -109,7 +118,7 @@
 					<input type="text" name="nama" class="input w-full border mt-2 flex-1." required>
 				</div>
 				<div class="col-span-12 sm:col-span-12">
-					<label>Kode Produk</label>
+					<label>Barcode</label>
 					<input type="text" name="kode_produk" class="input w-full border mt-2 flex-1" required>
 				</div>
 				<div class="col-span-12 sm:col-span-12"><label>Kategori Produk</label>
@@ -158,7 +167,7 @@
 					<input type="text" name="nama" id="nama" class="input w-full border mt-2 flex-1.">
 				</div>
 				<div class="col-span-12 sm:col-span-12">
-					<label>Kode Produk</label>
+					<label>Barcode</label>
 					<input type="text" name="kode_produk" class="input w-full border mt-2 flex-1" id="kode_produk">
 				</div>
 				<div class="col-span-12 sm:col-span-12">
@@ -272,6 +281,43 @@
     </div>
 </div>
 <!-- END: Mutasi Produk Modal -->
+<div class="modal" id="return-modal">
+	<div class="modal__content">
+		<div class="flex items-center px-5 py-5 sm:py-3 border-b border-gray-200">
+			<h2 class="font-medium text-base mr-auto">RETURN PRODUCT</h2>
+		</div>
+		<form action="<?php echo site_url('admin/produk/return'); ?>" method="POST" onsubmit="return validateReturn()">
+			<input type="hidden" name="id_produk" id="return-id" class="input w-full border mt-2">
+			<div class="p-5 grid grid-cols-12 gap-4 row-gap-3">
+				<div class="col-span-12 sm:col-span-12">
+					<label>Product Name</label>
+					<input type="text" id="return-nama" class="input w-full border mt-2 flex-1" readonly>
+				</div>
+				<div class="col-span-12 sm:col-span-12">
+					<label>Category</label>
+					<input type="text" id="return-kategori" class="input w-full border mt-2 flex-1" readonly>
+				</div>
+				<div class="col-span-12 sm:col-span-12">
+					<label>Stock Store</label>
+					<input type="number" id="return-stok" class="input w-full border mt-2 flex-1" readonly>
+				</div>
+				<div class="col-span-12 sm:col-span-12">
+					<label>Stock Warehouse</label>
+					<input type="number" id="return-stok-gudang" class="input w-full border mt-2 flex-1" readonly>
+				</div>
+				<div class="col-span-12 sm:col-span-12">
+					<label>Quantity to Return</label>
+					<input type="number" name="jumlah" id="return-jumlah" class="input w-full border mt-2 flex-1" required min="0">
+					<span id="return-warning" style="color:red; display:none;">Quantity exceeds available stock!</span>
+				</div>
+			</div>
+			<div class="px-5 py-3 text-right border-t border-gray-200">
+				<button type="submit" class="button w-20 bg-theme-1 text-white">Submit</button>
+			</div>
+		</form>
+	</div>
+</div>
+
 <script>
     function edit(id, nama, kode_produk, stok, harga, id_kategori, jenis) {
         document.getElementById('id').value = id;

@@ -106,4 +106,9 @@ class View_model extends CI_Model{
                  ->where('id_pelanggan',$id_pelanggan);
         return $this->db->get()->result_array();
     }
+    //supplier
+    public function get_supplier(){
+        $this->db->order_by('nama', 'ASC')->from('supplier');
+        return $this->db->get()->result_array();
+    }
 }

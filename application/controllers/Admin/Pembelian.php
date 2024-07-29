@@ -8,7 +8,20 @@ class Pembelian extends CI_Controller {
 		}
 	}
 	public function index(){
-		$this->db->from('pembelian')->order_by('id_pembelian','DESC');
+		$this->db->from('pembelian a')->order_by('id_pembelian','DESC');
+		$this->db->join('supplier b','a.id_supplier=b.id_supplier','left');
+        $user = $this->db->get()->result_array();
+		$data = array(
+			'judul_halaman' => 'Pembelian',
+			'user'			=> $user,
+			'pelanggan'		=> $this->View_model->get_pelanggan()
+		);
+		$this->template->load('temp','pembelian_index',$data);
+	}
+	public function supplier($id_supplier){
+		$this->db->from('pembelian a')->order_by('id_pembelian','DESC');
+		$this->db->join('supplier b','a.id_supplier=b.id_supplier','left');
+		$this->db->where('a.id_supplier',$id_supplier);
         $user = $this->db->get()->result_array();
 		$data = array(
 			'judul_halaman' => 'Pembelian',
@@ -74,7 +87,8 @@ class Pembelian extends CI_Controller {
 	}
 	public function invoice($kode_pembelian){
 		$this->db->select('*');
-		$this->db->from('pembelian')->order_by('tanggal','DESC')->where('kode_pembelian',$kode_pembelian);
+		$this->db->from('pembelian a')->order_by('a.tanggal','DESC')->where('a.kode_pembelian',$kode_pembelian);
+		$this->db->join('supplier b','a.id_supplier=b.id_supplier','left');
         $pembelian = $this->db->get()->row();
 
 		$this->db->select('a.*, b.nama, b.kode_produk');
@@ -97,7 +111,7 @@ class Pembelian extends CI_Controller {
 		$stok_lama = $this->db->get()->row()->stok;
 
 		$this->db->from('temp2');
-		$this->db->where('id_produk',$this->input->post('id_produk'));
+		$this->db->where('id_produk',$this->input->post('id_produk'));  
 		$this->db->where('id_user',$this->session->userdata('id_user'));
 		$cek = $this->db->get()->result_array();
 
@@ -186,7 +200,7 @@ class Pembelian extends CI_Controller {
 		$data = array(
 			'kode_pembelian' 	=> $nota,
 			'bayar'				=> $total,
-			'supplier'  		=> $this->input->post('supplier'),
+			'id_supplier'  		=> $this->input->post('id_supplier'),
 			'bukti'				=> $nota.'.jpg',
 			'status'			=> 'selesai',
 			'tanggal'			=> date('Y-m-d'),

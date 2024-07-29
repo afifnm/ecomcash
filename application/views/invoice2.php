@@ -16,7 +16,7 @@
 		<div class="flex flex-col lg:flex-row px-5 sm:px-10 pt-10 pb-10 sm:pb-10">
 			<div class="">
 				<div class="text-base text-gray-600">Supplier</div>
-				<div class="text-lg font-medium text-theme-1 mt-2"><?= $pembelian->supplier ?></div>
+				<div class="text-lg font-medium text-theme-1 mt-2"><?= $pembelian->nama ?></div>
 			</div>
 		</div>
 	</div>

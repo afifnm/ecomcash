@@ -150,6 +150,13 @@
 				</a>
 			</li>
 			<li>
+				<a href="<?= base_url('admin/supplier') ?>"
+					class="top-menu top-menu--<?php if($halaman=='supplier'){ echo "active"; } ?>">
+					<div class="top-menu__icon"> <i data-feather="repeat"></i> </div>
+					<div class="top-menu__title"> Supplier </div>
+				</a>
+			</li>
+			<li>
 				<a href="<?= base_url('admin/pengguna') ?>"
 					class="top-menu top-menu--<?php if($halaman=='pengguna'){ echo "active"; } ?>">
 					<div class="top-menu__icon"> <i data-feather="user-check"></i> </div>
