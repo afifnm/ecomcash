@@ -67,7 +67,7 @@ class Login extends CI_Controller {
                 'login'         => 'Frontend'
             );
             $this->session->set_userdata($data);
-            redirect('customer');
+            redirect('produk');
         } else {
             $this->session->set_flashdata('notifikasi','
             <h2 class="block w-full py-2 text-center text-white bg-primary border border-primary rounded">

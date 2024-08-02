@@ -128,13 +128,21 @@ class Produk extends CI_Controller {
         redirect($_SERVER['HTTP_REFERER']);
     }
     public function mutasi(){
+        $jenis = $this->input->post('jenis');
         $this->db->from('produk')->where('id_produk',$this->input->post('id_produk'));
         $dataLama = $this->db->get()->row();
         $jumlah = $this->input->post('jumlah');
-        $data = array(
-            'stok'         => $dataLama->stok+$jumlah,
-            'stok_gudang'  => $dataLama->stok_gudang-$jumlah
-        );
+        if($jenis=="gudang_ke_toko"){
+            $data = array(
+                'stok'         => $dataLama->stok+$jumlah,
+                'stok_gudang'  => $dataLama->stok_gudang-$jumlah
+            );
+        } else {
+            $data = array(
+                'stok'         => $dataLama->stok-$jumlah,
+                'stok_gudang'  => $dataLama->stok_gudang+$jumlah
+            );
+        }
         $where = array('id_produk'   => $this->input->post('id_produk') );
         $this->db->update('produk',$data,$where);
         //bagian input ke tabel mutasi

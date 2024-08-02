@@ -244,6 +244,13 @@
                     <label>Stok Gudang</label>
                     <input type="number" id="mutasi-stok-gudang" class="input w-full border mt-2 flex-1" readonly>
                 </div>
+				<div class="col-span-12 sm:col-span-12">
+                    <label>Jenis Mutasi</label>
+                    <select id="mutasi-jenis" class="input w-full border mt-2 flex-1" name="jenis">
+                        <option value="gudang_ke_toko">Gudang ke Toko</option>
+						<option value="toko_ke_gudang">Toko ke Gudang</option>
+                    </select>
+                </div>
                 <div class="col-span-12 sm:col-span-12">
                     <label>Jumlah Mutasi</label>
                     <input type="number" name="jumlah" id="mutasi-jumlah" class="input w-full border mt-2 flex-1" required min="0">
@@ -334,34 +341,43 @@
         link.href = "<?php echo site_url('admin/produk/hapus/'); ?>" + id;
     }
 
-    function mutasi(id, nama, stok, stok_gudang) {
-        document.getElementById('mutasi-id').value = id;
-        document.getElementById('mutasi-nama').value = nama;
-        document.getElementById('mutasi-stok').value = stok;
-        document.getElementById('mutasi-stok-gudang').value = stok_gudang;
+	function mutasi(id, nama, stok, stok_gudang) {
+    document.getElementById('mutasi-id').value = id;
+    document.getElementById('mutasi-nama').value = nama;
+    document.getElementById('mutasi-stok').value = stok;
+    document.getElementById('mutasi-stok-gudang').value = stok_gudang;
+}
+
+document.getElementById('mutasi-jumlah').addEventListener('input', function() {
+    validateMutasi();
+});
+
+document.getElementById('mutasi-jenis').addEventListener('change', function() {
+    validateMutasi();
+});
+
+function validateMutasi() {
+    var jumlahMutasi = parseInt(document.getElementById('mutasi-jumlah').value);
+    var stokToko = parseInt(document.getElementById('mutasi-stok').value);
+    var stokGudang = parseInt(document.getElementById('mutasi-stok-gudang').value);
+    var jenisMutasi = document.getElementById('mutasi-jenis').value;
+
+    var isValid = true;
+    var warningText = '';
+
+    if (jenisMutasi === 'toko_ke_gudang' && jumlahMutasi > stokToko) {
+        isValid = false;
+        warningText = 'Jumlah mutasi melebihi stok toko!';
+    } else if (jenisMutasi === 'gudang_ke_toko' && jumlahMutasi > stokGudang) {
+        isValid = false;
+        warningText = 'Jumlah mutasi melebihi stok gudang!';
     }
 
-    document.getElementById('mutasi-jumlah').addEventListener('input', function() {
-        var jumlahMutasi = parseInt(this.value);
-        var stokGudang = parseInt(document.getElementById('mutasi-stok-gudang').value);
+    document.getElementById('mutasi-warning').style.display = isValid ? 'none' : 'block';
+    document.getElementById('mutasi-warning').textContent = warningText;
 
-        if (jumlahMutasi > stokGudang) {
-            document.getElementById('mutasi-warning').style.display = 'block';
-        } else {
-            document.getElementById('mutasi-warning').style.display = 'none';
-        }
-    });
-
-    function validateMutasi() {
-        var jumlahMutasi = parseInt(document.getElementById('mutasi-jumlah').value);
-        var stokGudang = parseInt(document.getElementById('mutasi-stok-gudang').value);
-
-        if (jumlahMutasi > stokGudang) {
-            alert('Jumlah mutasi melebihi stok gudang!');
-            return false;
-        }
-        return true;
-    }
+    return isValid;
+}
 </script>
 <script>
 	

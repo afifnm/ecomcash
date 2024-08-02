@@ -91,13 +91,15 @@ class View_model extends CI_Model{
     }
     //customer
     public function get_jumlah_keranjang($id_pelanggan) {
-        $this->db->where('id_pelanggan',$id_pelanggan);
-        return $this->db->count_all('keranjang');
+        $this->db->where('id_pelanggan', $id_pelanggan);
+        $this->db->from('keranjang'); // Asumsikan nama tabel keranjang adalah 'cart'
+        return $this->db->count_all_results();
     }
     public function get_keranjang($id_pelanggan){
 		$this->db->select('a.*, b.*, c.kategori')->from('keranjang a')
 		         ->join('produk b','a.id_produk=b.id_produk','left')
-		         ->join('kategori c','b.id_kategori=c.id_kategori','left');
+		         ->join('kategori c','b.id_kategori=c.id_kategori','left')
+                 ->where('a.id_pelanggan',$id_pelanggan);
         return $this->db->get()->result_array();
     }
     public function get_pesanan($id_pelanggan){
