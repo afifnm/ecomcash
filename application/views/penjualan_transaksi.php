@@ -11,7 +11,7 @@
                 </h2>
             </div>
             <div class="p-5">
-                <form action="<?= base_url('admin/penjualan/addtemp') ?>" method="post">
+                <form id="keranjangForm" action="<?= base_url('admin/penjualan/addtemp') ?>" method="post">
                     <input type="hidden" name="kode_penjualan" value="<?= $nota ?>">
                     <div class="preview">
                         <div class="mt-1">
@@ -25,24 +25,23 @@
                         </div>
                         <div class="mt-5">
                             <label>Produk</label>
-                            <select class="select2 w-full border mt-2 bg-gray-100" name="id_produk">
+                            <select class="select2 w-full border mt-2 bg-gray-100" name="id_produk" id="produk">
+                                <option value="">Pilih Produk</option>
                                 <?php foreach($produk as $aa){ ?>
-                                <option value="<?= $aa['id_produk'] ?>">
-                                    <?= $aa['kode_produk'] ?>
-                                    <?= $aa['nama'] ?> - (<?= $aa['stok'] ?>)
+                                <option value="<?= $aa['id_produk'] ?>" data-stok="<?= $aa['stok'] ?>">
+                                    <?= $aa['nama'] ?> - <?= $aa['kode_produk'] ?> (<?= $aa['stok'] ?>)
                                 </option>
                                 <?php } ?>
                             </select>
                         </div>
                         <div class="mt-5">
                             <label>Jumlah</label>
-                            <input type="number" class="input w-full border mt-2" placeholder="jumlah" min=1 required
-                                name="jumlah">
+                            <input type="number" class="input w-full border mt-2" placeholder="jumlah" min=1 required name="jumlah">
                         </div>
                         <div class="mt-5">
-                            <button
-                                class="button w-32 mr-2 mb-2 flex items-center justify-center bg-theme-1 text-white w-full text-lg">
-                                <i data-feather="plus" class="w-4 h-4 mr-2"></i> Tambah ke keranjang </button>
+                            <button type="submit" class="button w-32 mr-2 mb-2 flex items-center justify-center bg-theme-1 text-white w-full text-lg">
+                                <i data-feather="plus" class="w-4 h-4 mr-2"></i> Tambah ke keranjang
+                            </button>
                         </div>
                     </div>
                 </form>
@@ -141,6 +140,7 @@
     </div>
 </div>
 
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 <script>
     function total() {
         var total_harga, bayar;
@@ -188,4 +188,15 @@
 
         return true;
     }
+    document.getElementById('keranjangForm').addEventListener('submit', function(event) {
+        var produk = document.getElementById('produk').value;
+        if (!produk) {
+            event.preventDefault();
+            Swal.fire({
+                icon: 'warning',
+                title: 'Produk belum dipilih',
+                text: 'Silakan pilih produk terlebih dahulu.',
+            });
+        }
+    });
 </script>

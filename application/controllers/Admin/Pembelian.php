@@ -64,6 +64,7 @@ class Pembelian extends CI_Controller {
 		$this->db->where('a.kode_pembelian',$nota);
 		$detail = $this->db->get()->result_array();
 
+		$this->db->select('a.*, b.nama,b.kode_produk');
 		$this->db->from('temp2 a');
 		$this->db->join('produk b','a.id_produk=b.id_produk','left');
 		$this->db->where('a.id_user',$this->session->userdata('id_user'));
@@ -171,9 +172,8 @@ class Pembelian extends CI_Controller {
 		}else{
 			$data = array('upload_data' => $this->upload->data());
 		} 
-		$this->db->from('temp2 a')
-				->join('produk b','a.id_produk=b.id_produk','left')
-				->where('a.id_user',$this->session->userdata('id_user'));
+		$this->db->from('temp2')
+				->where('id_user',$this->session->userdata('id_user'));
 		$temp = $this->db->get()->result_array();
 		$total = 0; //nilai awal
 		foreach($temp as $row){

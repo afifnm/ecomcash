@@ -380,7 +380,6 @@ function validateMutasi() {
 }
 </script>
 <script>
-	
     function showMutasiProduk() {
         fetch("<?php echo site_url('admin/produk/get_mutasi_produk'); ?>")
             .then(response => response.json())
