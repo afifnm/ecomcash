@@ -43,7 +43,6 @@
 				<th class="border-b-2 whitespace-no-wrap">NO </th>
 				<th class="border-b-2 whitespace-no-wrap">NAMA </th>
 				<th class="border-b-2 whitespace-no-wrap">BARCODE </th>
-				<th class="border-b-2 whitespace-no-wrap">KATEGORI </th>
 				<th class="border-b-2 whitespace-no-wrap">JENIS </th>
 				<th class="border-b-2 whitespace-no-wrap">TOKO </th>
 				<th class="border-b-2 whitespace-no-wrap">GUDANG</th>
@@ -57,11 +56,11 @@
 				<td class="text-left border-b"><?= $no; ?></td>
 				<td class="text-left border-b"><?= $row['nama']; ?></td>
 				<td class="text-left border-b"><?= $row['kode_produk']; ?></td>
-				<td class="text-left border-b"><?php if($row['kategori']==NULL) { echo "Lain-lain"; } else { echo $row['kategori']; } ?></td>
+				<!-- <td class="text-left border-b"><?php if($row['kategori']==NULL) { echo "Lain-lain"; } else { echo $row['kategori']; } ?></td> -->
 				<td class="text-left border-b"><?= $row['jenis']; ?></td>
 				<td class="text-left border-b"><?= $row['stok']; ?></td>
 				<td class="text-left border-b"><?= $row['stok_gudang']; ?></td>
-				<td class="text-right border-b">Rp. <?=  number_format($row['harga']); ?></td>
+				<td class="text-right border-b"><?=  number_format($row['harga']); ?></td>
 				<td class="border-b w-5">
 					<div class="flex sm:justify-center items-center">
 						<a href="javascript:;" onclick="mutasi(
@@ -71,15 +70,6 @@
 							<?= $row['stok_gudang'] ?>
 							)" class="flex items-center text-theme-3 ml-1 mr-1" data-toggle="modal" data-target="#mutasi-modal">
 							<i data-feather="repeat" class="w-4 h-4 mr-1"></i> Mutasi
-						</a>
-						<a href="javascript:;" onclick="returnProduct(
-							<?= $row['id_produk'] ?>,
-							'<?= $row['nama'] ?>',
-							'<?= $row['kategori'] ?>',
-							<?= $row['stok'] ?>,
-							<?= $row['stok_gudang'] ?>
-							)" class="flex items-center text-theme-6 mr-2" data-toggle="modal" data-target="#return-modal">
-							<i data-feather="corner-down-left" class="w-4 h-4 mr-1"></i> Return
 						</a>
 						<a href="<?= base_url('assets/produk/'.$row['foto']); ?>" class="flex items-center text-theme-1" target="_blank">
 							<i data-feather="image" class="w-4 h-4 mr-1"></i>
@@ -187,7 +177,7 @@
 				</div>
 				<div class="col-span-12 sm:col-span-12">
 					<label>Stok</label>
-					<input type="number" name="stok" class="input w-full border mt-2 flex-1" id="stok" readonly>
+					<input type="number" name="stok" class="input w-full border mt-2 flex-1" id="stok">
 				</div>
 				<div class="col-span-12 sm:col-span-12">
 					<label>Harga</label>

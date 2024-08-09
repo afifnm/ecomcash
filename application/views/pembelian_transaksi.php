@@ -23,8 +23,7 @@
                             <select class="select2 w-full border mt-2 bg-gray-100" name="id_produk">
                                 <?php foreach($produk as $aa){ ?>
                                 <option value="<?= $aa['id_produk'] ?>">
-                                    <?= $aa['kode_produk'] ?>
-                                    <?= $aa['nama'] ?> - (<?= $aa['stok'] ?>)
+                                    <?= $aa['nama'] ?> - <?= $aa['kode_produk'] ?> (<?= $aa['stok'] ?>)
                                 </option>
                                 <?php } ?>
                             </select>
