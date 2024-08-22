@@ -65,8 +65,85 @@ class Penjualan extends CI_Controller {
 			'temp'			=> $temp,
 			'id_pelanggan'	=> $id_pelanggan
 		);
-		$this->template->load('temp','penjualan_transaksi',$data);
+		$this->template->load('temp','penjualan_transaksiRev',$data);
 	}
+	public function addtemp2(){
+		$this->db->from('produk')->where('kode_produk',$this->input->post('kode_produk'));
+		$produk = $this->db->get()->row();
+		if($produk==NULL){
+			$this->session->set_flashdata('notifikasi','
+			<div class="rounded-md px-5 py-4 mb-2 bg-theme-1 text-white">Kode barcode tidak ditemukan.</div>
+			');
+			redirect($_SERVER["HTTP_REFERER"]);
+		}
+		if($produk->stok<1){
+			$this->session->set_flashdata('notifikasi','
+			<div class="rounded-md px-5 py-4 mb-2 bg-theme-1 text-white">Stok tidak mencukupi.</div>
+			');
+			redirect($_SERVER["HTTP_REFERER"]);
+		}
+		$id_produk = $produk->id_produk;
+		$jumlah = 1;
+		$this->db->from('temp');
+		$this->db->where('id_produk',$id_produk);
+		$this->db->where('id_pelanggan',$this->input->post('id_pelanggan'));
+		$this->db->where('id_user',$this->session->userdata('id_user'));
+		$cek = $this->db->get()->row();
+		if($cek<>NULL){
+			if($cek->jumlah+1>$produk->stok){
+				$this->session->set_flashdata('notifikasi','
+				<div class="rounded-md px-5 py-4 mb-2 bg-theme-1 text-white">Produk yang dipilih tidak mencukupi stoknya.</div>
+				');
+				redirect($_SERVER["HTTP_REFERER"]);
+			}
+			$where = array(
+				'id_user'			=> $this->session->userdata('id_user'),
+				'id_produk'			=> $id_produk,
+				'id_pelanggan'		=> $this->input->post('id_pelanggan'),
+			);
+			$data = array(
+				'jumlah'			=> $cek->jumlah+1
+			);
+			$data = $this->db->update('temp',$data,$where);
+			$this->session->set_flashdata('notifikasi','
+			<div class="rounded-md px-5 py-4 mb-2 bg-theme-1 text-white">Jumlah beli produk berhasil ditambahkan!</div>
+			');
+			redirect($_SERVER["HTTP_REFERER"]);
+		} else {
+			$data = array (
+				'id_user'		=> $this->session->userdata('id_user'),
+				'id_produk'		=> $id_produk,
+				'id_pelanggan'	=> $this->input->post('id_pelanggan'),
+				'jumlah'		=> $jumlah
+			);
+			$this->db->insert('temp',$data);
+			$this->session->set_flashdata('notifikasi','
+			<div class="rounded-md px-5 py-4 mb-2 bg-theme-1 text-white">Produk berhasil ditambahkan</div>
+			');
+		}
+		redirect($_SERVER["HTTP_REFERER"]);
+	}
+	public function update_temp() {
+		$this->db->from('produk')->where('kode_produk',$this->input->post('kode_produk'));
+		$stok = $this->db->get()->row()->stok;
+		$id_temp = $this->input->post('id_temp');
+		$jumlah = $this->input->post('jumlah');
+		if($jumlah>$stok){
+			$this->session->set_flashdata('notifikasi','
+			<div class="rounded-md px-5 py-4 mb-2 bg-theme-1 text-white">Stok tidak mencukupi</div>
+			');
+			redirect($_SERVER["HTTP_REFERER"]);
+		} else {
+			$this->db->set('jumlah', $jumlah);
+			$this->db->where('id_temp', $id_temp);
+			$this->db->update('temp');
+			$this->session->set_flashdata('notifikasi','
+			<div class="rounded-md px-5 py-4 mb-2 bg-theme-1 text-white">Jumlah beli berhasil diperbarui</div>
+			');
+			redirect($_SERVER["HTTP_REFERER"]);
+		}
+	}
+	
 	public function hapus_temp($id_temp){
 		$where = array('id_temp'   => $id_temp );
         $this->db->delete('temp',$where);

@@ -3,7 +3,8 @@
 </div>
 <div class="intro-y flex flex-col sm:flex-row items-center mt-8">
 	<a href="javascript:;" data-toggle="modal" data-target="#header-footer-modal-preview"
-	class="button mr-auto inline-block bg-theme-1 text-white">Tambah Penjualan </a>
+	class="button inline-block bg-theme-1 text-white">Tambah Penjualan </a>
+	<a href="<?= base_url('admin/penjualan/transaksi/1') ?>" class="button ml-4 mr-auto inline-block bg-theme-1 text-white">Tambah Penjualan (Non Member)</a>
 	<div class="w-full sm:w-auto flex mt-4 sm:mt-0">
 		<a href="javascript:;" data-toggle="modal" data-target="#nota"
 			class="button mr-1 inline-block bg-theme-1 text-white">Cek Nota </a>
@@ -124,21 +125,7 @@
 						</tr>
 					</thead>
 					<tbody>
-						<tr>
-							<td class="text-left border-b">1</td>
-							<td class="text-left border-b">-</td>
-							<td class="text-left border-b">Bukan Pelanggan</td>
-							<td class="text-left border-b">-</td>
-							<td class="border-b w-5">
-								<div class="flex sm:justify-center items-center">
-									<a href="<?= base_url('admin/penjualan/transaksi/1') ?>"
-										class="flex items-center text-theme-1">
-										<i data-feather="file-minus" class="w-4 h-4 mr-1 ml-2"></i> PILIH
-									</a>
-								</div>
-							</td>
-						</tr>
-						<?php  $no = 2; foreach ($pelanggan as $row) {?>
+						<?php  $no = 1; foreach ($pelanggan as $row) {?>
 						<tr>
 							<td class="text-left border-b"><?= $no; ?></td>
 							<td class="text-left border-b"><?= $row['nama']; ?></td>
