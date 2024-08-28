@@ -5,6 +5,9 @@
 	<a href="javascript:;" data-toggle="modal" data-target="#header-footer-modal-preview"
 		class="button mr-auto inline-block bg-theme-1 text-white">Tambah Produk </a>
 		<a href="javascript:;" onclick="showMutasiProduk()" class="button bg-theme-1 text-white" data-toggle="modal" data-target="#mutasi-produk-modal">Lihat Mutasi Produk</a>
+	<button onclick="createAllBarcodesPDF()" class="button bg-theme-1 text-white ml-3">
+		Barcode Semua Produk
+	</button>
 
 	<!-- <div class="w-full sm:w-auto flex mt-4 ml-5 sm:mt-0">
 		<a href="javascript:;" data-toggle="modal" data-target="#import"
@@ -37,65 +40,87 @@
 </div>
 <!-- BEGIN: Datatable -->
 <div class="intro-y datatable-wrapper box p-5 mt-5">
-	<table class="table table-report table-report--bordered display datatable w-full">
-		<thead>
-			<tr>
-				<th class="border-b-2 whitespace-no-wrap">NO </th>
-				<th class="border-b-2 whitespace-no-wrap">NAMA </th>
-				<th class="border-b-2 whitespace-no-wrap">BARCODE </th>
-				<th class="border-b-2 whitespace-no-wrap">JENIS </th>
-				<th class="border-b-2 whitespace-no-wrap">TOKO </th>
-				<th class="border-b-2 whitespace-no-wrap">GUDANG</th>
-				<th class="border-b-2 whitespace-no-wrap text-right">HARGA </th>
-				<th class="border-b-2 text-center whitespace-no-wrap">ACTIONS</th>
-			</tr>
-		</thead>
-		<tbody>
-			<?php  $no = 1; foreach ($user as $row) {?>
-			<tr>
-				<td class="text-left border-b"><?= $no; ?></td>
-				<td class="text-left border-b"><?= $row['nama']; ?></td>
-				<td class="text-left border-b"><?= $row['kode_produk']; ?></td>
-				<!-- <td class="text-left border-b"><?php if($row['kategori']==NULL) { echo "Lain-lain"; } else { echo $row['kategori']; } ?></td> -->
-				<td class="text-left border-b"><?= $row['jenis']; ?></td>
-				<td class="text-left border-b"><?= $row['stok']; ?></td>
-				<td class="text-left border-b"><?= $row['stok_gudang']; ?></td>
-				<td class="text-right border-b"><?=  number_format($row['harga']); ?></td>
-				<td class="border-b w-5">
-					<div class="flex sm:justify-center items-center">
-						<a href="javascript:;" onclick="mutasi(
-							<?= $row['id_produk'] ?>,
-							'<?= $row['nama'] ?>',
-							<?= $row['stok'] ?>,
-							<?= $row['stok_gudang'] ?>
-							)" class="flex items-center text-theme-3 ml-1 mr-1" data-toggle="modal" data-target="#mutasi-modal">
-							<i data-feather="repeat" class="w-4 h-4 mr-1"></i> Mutasi
+    <table class="table table-report table-report--bordered display datatable w-full">
+        <thead>
+            <tr>
+                <th class="border-b-2 whitespace-no-wrap">NO </th>
+                <th class="border-b-2 whitespace-no-wrap">NAMA </th>
+                <th class="border-b-2 whitespace-no-wrap">BARCODE </th>
+                <th class="border-b-2 whitespace-no-wrap">JENIS </th>
+                <th class="border-b-2 whitespace-no-wrap">TOKO </th>
+                <th class="border-b-2 whitespace-no-wrap">GUDANG</th>
+                <th class="border-b-2 whitespace-no-wrap text-right">HARGA </th>
+                <th class="border-b-2 text-center whitespace-no-wrap">ACTIONS</th>
+            </tr>
+        </thead>
+        <tbody>
+            <?php  $no = 1; foreach ($user as $row) {?>
+            <tr>
+                <td class="text-left border-b"><?= $no; ?></td>
+                <td class="text-left border-b"><?= $row['nama']; ?></td>
+                <td class="text-left border-b"><?= $row['kode_produk']; ?></td>
+                <td class="text-left border-b"><?= $row['jenis']; ?></td>
+                <td class="text-left border-b"><?= $row['stok']; ?></td>
+                <td class="text-left border-b"><?= $row['stok_gudang']; ?></td>
+                <td class="text-right border-b"><?= number_format($row['harga']); ?></td>
+                <td class="border-b w-5">
+                    <div class="flex sm:justify-center items-center">
+						<a href="javascript:;" onclick="createBarcodePDF('<?= $row['kode_produk'] ?>','<?= $row['nama'] ?>')" class="flex items-center text-theme-6 ml-2">
+							<i data-feather="file" class="w-4 h-4"></i> Barcode
 						</a>
-						<a href="<?= base_url('assets/produk/'.$row['foto']); ?>" class="flex items-center text-theme-1" target="_blank">
-							<i data-feather="image" class="w-4 h-4 mr-1"></i>
-							Foto </a> 
-						<a href="javascript:;" onclick="edit(
-                                <?php echo $row['id_produk'] ?>,
-                                '<?php echo $row['nama'] ?>',
-                                '<?php echo $row['kode_produk'] ?>',
-                                '<?php echo $row['stok'] ?>',
-                                '<?php echo $row['harga'] ?>',
-                                '<?php echo $row['id_kategori'] ?>',
-                                '<?php echo $row['jenis'] ?>'
-                                )" class="flex items-center mr-3 ml-3" data-toggle="modal" data-target="#edit-data">
-							<i data-feather="check-square" class="w-4 h-4 mr-1"></i> Edit
-						</a>
-						<a href="javascript:;" onclick="hapus(<?php echo $row['id_produk'] ?>)"
-							class="flex items-center text-theme-6" data-toggle="modal" data-target="#hapus-data">
-							<i data-feather="trash-2" class="w-4 h-4 mr-1"></i>
-							Delete </a>
-					</div>
-				</td>
-			</tr>
-			<?php $no++; } ?>
-		</tbody>
-	</table>
+                        <a href="javascript:;" onclick="mutasi(
+                            <?= $row['id_produk'] ?>,
+                            '<?= $row['nama'] ?>',
+                            <?= $row['stok'] ?>,
+                            <?= $row['stok_gudang'] ?>
+                            )" class="flex items-center text-theme-3 ml-1 mr-1" data-toggle="modal" data-target="#mutasi-modal">
+                            <i data-feather="repeat" class="w-4 h-4 mr-1"></i> Mutasi
+                        </a>
+                        <a href="<?= base_url('assets/produk/'.$row['foto']); ?>" class="flex items-center text-theme-1" target="_blank">
+                            <i data-feather="image" class="w-4 h-4 mr-1"></i> Foto
+                        </a>
+                        <a href="javascript:;" onclick="edit(
+                            <?= $row['id_produk'] ?>,
+                            '<?= $row['nama'] ?>',
+                            '<?= $row['kode_produk'] ?>',
+                            '<?= $row['stok'] ?>',
+                            '<?= $row['harga'] ?>',
+                            '<?= $row['id_kategori'] ?>',
+                            '<?= $row['jenis'] ?>'
+                            )" class="flex items-center mr-3 ml-3" data-toggle="modal" data-target="#edit-data">
+                            <i data-feather="check-square" class="w-4 h-4 mr-1"></i> Edit
+                        </a>
+                        <a href="javascript:;" onclick="hapus(<?= $row['id_produk'] ?>)" class="flex items-center text-theme-6" data-toggle="modal" data-target="#hapus-data">
+                            <i data-feather="trash-2" class="w-4 h-4 mr-1"></i> Delete
+                        </a>
+                    </div>
+                </td>
+            </tr>
+            <?php $no++; } ?>
+        </tbody>
+    </table>
 </div>
+<script src="https://cdn.jsdelivr.net/npm/jsbarcode@3.11.5/dist/JsBarcode.all.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+<script>
+function createBarcodePDF(kode_produk,$nama) {
+    // Create a canvas element to render the barcode
+    const canvas = document.createElement('canvas');
+    JsBarcode(canvas, kode_produk, {
+        format: "CODE128",
+        displayValue: true,
+        height: 50
+    });
+    const barcodeDataUrl = canvas.toDataURL("image/png");
+    const { jsPDF } = window.jspdf;
+    const doc = new jsPDF();
+    doc.setFontSize(16);
+    doc.text($nama, 105, 20, null, null, 'center');
+    doc.addImage(barcodeDataUrl, 'PNG', 55, 40, 100, 30);
+    doc.save(`barcode_${kode_produk}.pdf`);
+}
+</script>
+
 <div class="modal" id="header-footer-modal-preview">
 	<div class="modal__content">
 		<div class="flex items-center px-5 py-5 sm:py-3 border-b border-gray-200">
@@ -389,4 +414,40 @@ function validateMutasi() {
             .catch(error => console.error('Error:', error));
     }
     document.getElementById('mutasi-produk-modal').addEventListener('show.bs.modal', showMutasiProduk);
+</script>
+<script>
+var produk = <?php echo json_encode($user); ?>;
+function createAllBarcodesPDF() {
+    const { jsPDF } = window.jspdf;
+    const doc = new jsPDF();
+    doc.setFontSize(16);
+    doc.text("Daftar Produk", 105, 10, null, null, 'center');
+    let startY = 20;
+    produk.forEach((item, index) => {
+        const canvas = document.createElement('canvas');
+        JsBarcode(canvas, item.kode_produk, {
+            format: "CODE128",
+            displayValue: true,
+            height: 30,
+            width: 1.5
+        });
+        const barcodeDataUrl = canvas.toDataURL("image/png");
+        // Add the product name and kode_produk to the PDF
+        doc.setFontSize(12);
+        doc.text(`${index + 1}. Nama: ${item.nama}`, 20, startY);
+        doc.text(`Kode Produk: ${item.kode_produk}`, 20, startY + 8);
+
+        // Add the barcode image to the PDF
+        doc.addImage(barcodeDataUrl, 'PNG', 150, startY - 5, 40, 20);
+        // Move to the next line in the PDF
+        startY += 20;
+        // Check if we need to add a new page
+        if (startY > 270) {
+            doc.addPage();
+            startY = 20;
+        }
+    });
+    // Save the PDF
+    doc.save('produk_barcodes.pdf');
+}
 </script>
